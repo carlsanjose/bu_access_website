@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BU ACCeSS Admin — Officer Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue:       #0A2463;
+      --blue-mid:   #1B4FD8;
+      --blue-light: #4A7FE5;
+      --blue-pale:  #EBF1FC;
+      --yellow:     #F5C518;
+      --yellow-deep:#C9960A;
+      --white:      #FFFFFF;
+      --off:        #F4F6FB;
+      --ink:        #0D1B3E;
+      --ink-mid:    #354570;
+      --muted:      #6979A4;
+      --border:     rgba(10,36,99,0.10);
+      --sidebar-w:  240px;
+      --topbar-h:   64px;
+      --serif:      'Fraunces', Georgia, serif;
+      --sans:       'Outfit', sans-serif;
+      --r:          10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: var(--sans); background: var(--off); color: var(--ink); display: flex; }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w); min-height: 100vh; background: var(--blue);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: transform .3s;
+    }
+    .sidebar-brand {
+      display: flex; align-items: center; gap: 10px;
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); text-decoration: none;
+    }
+    .sidebar-brand img { height: 32px; width: auto; object-fit: contain; }
+    .sidebar-brand-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--white); }
+    .sidebar-brand-name em { font-style: normal; color: var(--yellow); }
+    .sidebar-section { padding: 1.25rem 1rem 0.5rem; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .sidebar-nav { flex: 1; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 0.6rem 0.85rem; border-radius: 8px; color: rgba(255,255,255,0.6); font-size: 0.855rem; font-weight: 500; text-decoration: none; transition: background .18s, color .18s; }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
+    .nav-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .nav-item:hover svg { opacity: 1; }
+    .nav-item.active { background: rgba(245,197,24,0.12); color: var(--yellow); }
+    .nav-item.active svg { opacity: 1; }
+    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+    .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(245,197,24,0.18); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
+    .sidebar-user-name { font-size: 0.82rem; font-weight: 600; color: var(--white); }
+    .sidebar-user-role { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
+    .btn-logout { display: flex; align-items: center; gap: 8px; width: 100%; padding: 0.5rem 0.85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.45); font-family: var(--sans); font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-logout:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+    .btn-logout svg { width: 14px; height: 14px; }
+
+    /* Main */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+    .topbar { height: var(--topbar-h); background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; position: sticky; top: 0; z-index: 50; }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--blue); }
+    .topbar-sub { font-size: 0.78rem; color: var(--muted); }
+    .topbar-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink); }
+    .topbar-menu-btn svg { width: 22px; height: 22px; }
+    .topbar-actions { display: flex; gap: 0.6rem; align-items: center; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 7px; padding: 0.5rem 1.1rem; background: var(--blue); color: var(--white); border: none; border-radius: 8px; font-family: var(--sans); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn-primary:hover { background: var(--blue-mid); }
+    .btn-primary svg { width: 14px; height: 14px; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 7px; padding: 0.5rem 1rem; background: var(--white); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-secondary:hover { background: var(--off); border-color: var(--blue-light); }
+    .btn-secondary svg { width: 14px; height: 14px; }
+    .content { padding: 2rem; flex: 1; }
+
+    /* Term tabs */
+    .term-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .term-tab { padding: 0.4rem 1rem; border-radius: 99px; border: 1.5px solid var(--border); background: var(--white); font-size: 0.78rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .18s; }
+    .term-tab:hover { border-color: var(--blue-light); color: var(--blue); }
+    .term-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+    .term-tab.add-term { background: transparent; border-style: dashed; color: var(--blue-light); }
+    .term-tab.add-term:hover { background: var(--blue-pale); border-color: var(--blue-mid); color: var(--blue); }
+
+    /* Toolbar */
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .toolbar-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .search-box { display: flex; align-items: center; gap: 8px; padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 8px; }
+    .search-box svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+    .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: 0.85rem; color: var(--ink); width: 190px; }
+    .search-box input::placeholder { color: var(--muted); }
+    .filter-select { padding: 0.5rem 0.85rem; background: var(--white); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: 0.82rem; color: var(--ink); cursor: pointer; outline: none; }
+    .view-toggle { display: flex; gap: 2px; }
+    .view-btn { width: 34px; height: 34px; border-radius: 6px; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); transition: all .18s; }
+    .view-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
+    .view-btn.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+    .view-btn svg { width: 14px; height: 14px; }
+
+    /* Grid cards */
+    .officers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.25rem; }
+    .officer-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: box-shadow .2s, transform .2s; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem 1rem; text-align: center; position: relative; }
+    .officer-card:hover { box-shadow: 0 8px 24px rgba(10,36,99,0.09); transform: translateY(-2px); }
+    .officer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
+    .officer-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); margin-bottom: 0.75rem; }
+    .officer-initials { width: 72px; height: 72px; border-radius: 50%; background: var(--blue-pale); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--blue-mid); margin-bottom: 0.75rem; flex-shrink: 0; }
+    .officer-name  { font-family: var(--serif); font-size: 0.92rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: 0.25rem; }
+    .officer-role  { font-size: 0.75rem; color: var(--muted); font-weight: 500; margin-bottom: 0.2rem; }
+    .officer-dept  { font-size: 0.7rem; color: var(--blue-light); }
+    .officer-order { position: absolute; top: 0.6rem; left: 0.7rem; width: 20px; height: 20px; border-radius: 50%; background: var(--blue); color: var(--white); font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .card-actions { display: flex; gap: 6px; margin-top: 0.85rem; }
+
+    /* Table view */
+    .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--off); border-bottom: 1px solid var(--border); }
+    th { padding: 0.75rem 1rem; text-align: left; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--off); }
+    td { padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--ink-mid); vertical-align: middle; }
+    .td-officer { display: flex; align-items: center; gap: 10px; }
+    .td-photo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--blue-pale); flex-shrink: 0; }
+    .td-initials { width: 36px; height: 36px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; color: var(--blue-mid); flex-shrink: 0; }
+    .td-name { font-weight: 600; color: var(--ink); font-size: 0.85rem; }
+    .td-sub  { font-size: 0.72rem; color: var(--muted); }
+
+    /* Shared */
+    .icon-btn { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); transition: all .18s; }
+    .icon-btn:hover { background: var(--blue-pale); color: var(--blue-mid); border-color: var(--blue-pale); }
+    .icon-btn.del:hover { background: #FEE9E9; color: #B91C1C; border-color: #F5BEBE; }
+    .icon-btn svg { width: 13px; height: 13px; }
+    .row-actions { display: flex; align-items: center; gap: 6px; }
+
+    .empty-state { padding: 3.5rem; text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); }
+    .empty-state svg { width: 40px; height: 40px; color: var(--muted); opacity: 0.4; margin: 0 auto 1rem; display: block; }
+    .empty-state p { font-size: 0.9rem; color: var(--muted); }
+
+    /* Modal shared */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,0.35); backdrop-filter: blur(4px); z-index: 300; align-items: flex-start; justify-content: center; padding: 2rem 1.5rem; overflow-y: auto; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--white); border-radius: 14px; width: 100%; max-width: 560px; margin: auto; box-shadow: 0 24px 64px rgba(10,36,99,0.18); animation: modalIn .22s ease; }
+    @keyframes modalIn { from { opacity:0; transform:translateY(16px) scale(.97); } to { opacity:1; transform:none; } }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); border-radius: 14px 14px 0 0; }
+    .modal-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--blue); }
+    .modal-close { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 1.1rem; transition: all .18s; }
+    .modal-close:hover { background: var(--off); color: var(--ink); }
+    .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.75rem; border-radius: 0 0 14px 14px; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label.field-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--blue); }
+    .field input, .field select, .field textarea { padding: 0.65rem 0.9rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--white); font-family: var(--sans); font-size: 0.88rem; color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(27,79,216,0.09); }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field-hint { font-size: 0.72rem; color: var(--muted); }
+    .photo-preview-wrap { display: flex; align-items: center; gap: 1rem; }
+    .photo-preview { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); background: var(--blue-pale); flex-shrink: 0; }
+    .photo-preview-init { width: 56px; height: 56px; border-radius: 50%; background: var(--blue-pale); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--blue-mid); flex-shrink: 0; }
+    .btn-cancel { padding: 0.55rem 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; color: var(--ink-mid); cursor: pointer; transition: background .2s; }
+    .btn-cancel:hover { background: var(--off); }
+    .btn-save { padding: 0.55rem 1.3rem; border-radius: 8px; border: none; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn-save:hover { background: var(--blue-mid); }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--blue); color: var(--white); padding: 0.75rem 1.25rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 8px 24px rgba(10,36,99,0.2); transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 400; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #14532d; }
+    .toast.error   { background: #7f1d1d; }
+
+    /* Confirm */
+    .confirm-modal { display: none; position: fixed; inset: 0; background: rgba(10,36,99,0.4); backdrop-filter: blur(4px); z-index: 400; align-items: center; justify-content: center; }
+    .confirm-modal.open { display: flex; }
+    .confirm-box { background: var(--white); border-radius: 14px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; animation: modalIn .2s ease; box-shadow: 0 24px 64px rgba(10,36,99,0.18); }
+    .confirm-box h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--blue); margin-bottom: 0.5rem; }
+    .confirm-box p  { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .confirm-actions { display: flex; gap: 0.75rem; justify-content: center; }
+    .btn-danger { padding: 0.55rem 1.3rem; border-radius: 8px; border: none; background: #B91C1C; color: var(--white); font-family: var(--sans); font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .btn-danger:hover { background: #991b1b; }
+
+    /* Term modal */
+    .term-modal { display: none; position: fixed; inset: 0; background: rgba(10,36,99,0.4); backdrop-filter: blur(4px); z-index: 400; align-items: center; justify-content: center; }
+    .term-modal.open { display: flex; }
+    .term-box { background: var(--white); border-radius: 14px; padding: 1.5rem 2rem 2rem; max-width: 380px; width: 90%; animation: modalIn .2s ease; box-shadow: 0 24px 64px rgba(10,36,99,0.18); }
+    .term-box h3 { font-family: var(--serif); font-size: 1.05rem; color: var(--blue); margin-bottom: 1.25rem; }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .topbar-menu-btn { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .content { padding: 1rem; }
+      .field-row { grid-template-columns: 1fr; }
+      th:nth-child(4), td:nth-child(4),
+      th:nth-child(5), td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="../index.html" class="sidebar-brand">
+      <img src="../logo.png" alt="Logo" onerror="this.style.display='none'"/>
+      <span class="sidebar-brand-name">BU <em>ACCeSS</em></span>
+    </a>
+    <p class="sidebar-section">Main</p>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="events.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Events
+      </a>
+      <a href="news.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+        News &amp; Projects
+      </a>
+      <a href="directory.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Officer Directory
+      </a>
+      <p class="sidebar-section">Config</p>
+      <a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg>
+        Site Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebarName">Admin</div>
+          <div class="sidebar-user-role">Officer</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div>
+          <div class="topbar-title">Officer Directory</div>
+          <div class="topbar-sub">Manage officers per term</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-secondary" onclick="openTermModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          New Term
+        </button>
+        <button class="btn-primary" onclick="openModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Officer
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="term-tabs" id="termTabs"></div>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Search officers…" oninput="render()"/>
+          </div>
+          <select class="filter-select" id="filterDept" onchange="render()">
+            <option value="">All Departments</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;">
+          <span id="officerCount" style="font-size:.78rem;color:var(--muted);"></span>
+          <div class="view-toggle">
+            <button class="view-btn active" id="btnGrid" onclick="setView('grid')" title="Grid">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="view-btn" id="btnList" onclick="setView('list')" title="List">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="outputArea"></div>
+    </main>
+  </div>
+
+  <!-- Officer Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Add Officer</span>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label class="field-label">Photo Preview</label>
+          <div class="photo-preview-wrap">
+            <div class="photo-preview-init" id="photoInit">?</div>
+            <div style="flex:1;">
+              <input type="url" id="fPhoto" placeholder="https://… or images/officers/name.jpg" oninput="updatePhotoPreview()"/>
+              <div class="field-hint" style="margin-top:4px;">Leave blank to show initials automatically.</div>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="fFirst">First Name *</label>
+            <input type="text" id="fFirst" placeholder="Juan" oninput="updatePhotoPreview()"/>
+          </div>
+          <div class="field">
+            <label class="field-label" for="fLast">Last Name *</label>
+            <input type="text" id="fLast" placeholder="dela Cruz"/>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="fRole">Position / Role *</label>
+          <input type="text" id="fRole" placeholder="e.g. President, VP for Academics, Secretary"/>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="fDept">Department / Committee</label>
+            <input type="text" id="fDept" placeholder="e.g. Executive Board"/>
+          </div>
+          <div class="field">
+            <label class="field-label" for="fOrder">Display Order</label>
+            <input type="number" id="fOrder" placeholder="1" min="1"/>
+            <span class="field-hint">Lower = shown first.</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="fTerm">Term *</label>
+          <select id="fTerm"></select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="fEmail">Email</label>
+            <input type="email" id="fEmail" placeholder="officer@bicol-u.edu.ph"/>
+          </div>
+          <div class="field">
+            <label class="field-label" for="fFb">Facebook URL</label>
+            <input type="url" id="fFb" placeholder="https://facebook.com/…"/>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="fBio">Short Bio</label>
+          <textarea id="fBio" placeholder="A short description shown on the public directory…"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveOfficer()">Save Officer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Term Modal -->
+  <div class="term-modal" id="termModal">
+    <div class="term-box">
+      <h3>Add New Term</h3>
+      <div class="field" style="margin-bottom:1.25rem;">
+        <label class="field-label" for="fTermName">Term Name *</label>
+        <input type="text" id="fTermName" placeholder="e.g. A.Y. 2026–2027"/>
+        <span class="field-hint" style="margin-top:4px;">Appears as a tab on the officer directory.</span>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;">
+        <button class="btn-cancel" onclick="closeTermModal()">Cancel</button>
+        <button class="btn-save" onclick="saveTerm()">Add Term</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm delete -->
+  <div class="confirm-modal" id="confirmModal">
+    <div class="confirm-box">
+      <h3>Remove Officer?</h3>
+      <p>This will permanently remove the officer from the directory.</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+        <button class="btn-danger" onclick="confirmDelete()">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Auth guard
+    (function() {
+      const s = localStorage.getItem('access_session');
+      if (!s) { window.location.href = 'index.html'; return; }
+      const session = JSON.parse(s);
+      if (session.expires <= Date.now()) { localStorage.removeItem('access_session'); window.location.href = 'index.html'; return; }
+      const name = session.name || session.username || 'Admin';
+      document.getElementById('sidebarName').textContent = name;
+      document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
+    })();
+    function logout() { localStorage.removeItem('access_session'); window.location.href = 'index.html'; }
+
+    // Data
+    function loadOfficers() { return JSON.parse(localStorage.getItem('access_directory') || '[]'); }
+    function loadTerms()    { return JSON.parse(localStorage.getItem('access_terms')    || '[]'); }
+    function saveOfficers(d){ localStorage.setItem('access_directory', JSON.stringify(d)); }
+    function saveTerms(t)   { localStorage.setItem('access_terms',    JSON.stringify(t)); }
+    function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+    let activeTerm = '';
+    let viewMode   = 'grid';
+
+    function initTerms() {
+      let terms = loadTerms();
+      if (terms.length === 0) { terms = [{ id: uid(), name: 'A.Y. 2025–2026' }]; saveTerms(terms); }
+      activeTerm = terms[terms.length - 1].id;
+      renderTermTabs();
+      populateTermSelect();
+    }
+
+    function renderTermTabs() {
+      const terms = loadTerms();
+      document.getElementById('termTabs').innerHTML =
+        terms.map(t => `<button class="term-tab ${t.id===activeTerm?'active':''}" onclick="setTerm('${t.id}')">${t.name}</button>`).join('') +
+        `<button class="term-tab add-term" onclick="openTermModal()">+ New Term</button>`;
+    }
+
+    function populateTermSelect() {
+      const terms = loadTerms();
+      document.getElementById('fTerm').innerHTML =
+        terms.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+      document.getElementById('fTerm').value = activeTerm;
+    }
+
+    function setTerm(id) { activeTerm = id; renderTermTabs(); render(); }
+
+    function buildDeptFilter() {
+      const officers = loadOfficers().filter(o => o.term === activeTerm);
+      const depts    = [...new Set(officers.map(o => o.dept).filter(Boolean))].sort();
+      const sel      = document.getElementById('filterDept');
+      const cur      = sel.value;
+      sel.innerHTML  = '<option value="">All Departments</option>' +
+        depts.map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+    }
+
+    function setView(v) {
+      viewMode = v;
+      document.getElementById('btnGrid').classList.toggle('active', v==='grid');
+      document.getElementById('btnList').classList.toggle('active', v==='list');
+      render();
+    }
+
+    function render() {
+      buildDeptFilter();
+      const q      = document.getElementById('searchInput').value.toLowerCase();
+      const fDept  = document.getElementById('filterDept').value;
+      let officers = loadOfficers().filter(o => o.term === activeTerm);
+      if (fDept) officers = officers.filter(o => o.dept === fDept);
+      if (q)     officers = officers.filter(o =>
+        (`${o.first} ${o.last}`).toLowerCase().includes(q) ||
+        (o.role||'').toLowerCase().includes(q) ||
+        (o.dept||'').toLowerCase().includes(q)
+      );
+      officers.sort((a,b) => (Number(a.order)||99) - (Number(b.order)||99));
+      document.getElementById('officerCount').textContent = `${officers.length} officer${officers.length!==1?'s':''}`;
+
+      const area = document.getElementById('outputArea');
+      if (officers.length === 0) {
+        area.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>No officers for this term. Click <strong>Add Officer</strong> to get started.</p></div>`;
+        return;
+      }
+      if (viewMode === 'grid') {
+        area.innerHTML = `<div class="officers-grid">${officers.map(gridCard).join('')}</div>`;
+      } else {
+        area.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Officer</th><th>Role</th><th>Department</th><th>Order</th><th>Email</th><th>Actions</th></tr></thead><tbody>${officers.map(tableRow).join('')}</tbody></table></div>`;
+      }
+    }
+
+    function ini(o) { return ((o.first||'?').charAt(0)+(o.last||'').charAt(0)).toUpperCase(); }
+
+    function avatarHTML(o, sz=72) {
+      return o.photo
+        ? `<img class="officer-photo" style="width:${sz}px;height:${sz}px" src="${o.photo}" alt="${o.first}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="officer-initials" style="width:${sz}px;height:${sz}px;display:none">${ini(o)}</div>`
+        : `<div class="officer-initials" style="width:${sz}px;height:${sz}px">${ini(o)}</div>`;
+    }
+
+    function gridCard(o) {
+      return `<div class="officer-card"><div class="officer-order">${o.order||'—'}</div>${avatarHTML(o)}<div class="officer-name">${o.first||''} ${o.last||''}</div><div class="officer-role">${o.role||''}</div><div class="officer-dept">${o.dept||''}</div><div class="card-actions"><button class="icon-btn" onclick="openModal('${o.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icon-btn del" onclick="askDelete('${o.id}')" title="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div></div>`;
+    }
+
+    function tableRow(o) {
+      const av = o.photo
+        ? `<img class="td-photo" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=td-initials>${ini(o)}</div>'">`
+        : `<div class="td-initials">${ini(o)}</div>`;
+      return `<tr><td><div class="td-officer">${av}<div><div class="td-name">${o.first||''} ${o.last||''}</div></div></div></td><td>${o.role||'—'}</td><td>${o.dept||'—'}</td><td>${o.order||'—'}</td><td>${o.email?`<a href="mailto:${o.email}" style="color:var(--blue-mid);font-size:.8rem">${o.email}</a>`:'—'}</td><td><div class="row-actions"><button class="icon-btn" onclick="openModal('${o.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icon-btn del" onclick="askDelete('${o.id}')" title="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div></td></tr>`;
+    }
+
+    function updatePhotoPreview() {
+      const url  = document.getElementById('fPhoto').value.trim();
+      const first= document.getElementById('fFirst').value.trim();
+      const last = document.getElementById('fLast').value.trim();
+      const init = ((first.charAt(0)||'?')+(last.charAt(0)||'')).toUpperCase();
+      const wrap = document.getElementById('photoInit');
+      if (url) {
+        wrap.outerHTML = `<img class="photo-preview" id="photoInit" src="${url}" alt="preview" onerror="this.outerHTML='<div class=photo-preview-init id=photoInit>${init}</div>'"/>`;
+      } else {
+        if (wrap.tagName==='IMG') { wrap.outerHTML = `<div class="photo-preview-init" id="photoInit">${init}</div>`; }
+        else { wrap.textContent = init||'?'; }
+      }
+    }
+
+    let editingId = null;
+    function openModal(id) {
+      editingId = id||null;
+      document.getElementById('modalTitle').textContent = id ? 'Edit Officer' : 'Add Officer';
+      clearForm(); populateTermSelect();
+      if (id) { const o = loadOfficers().find(x=>x.id===id); if(o) populateForm(o); }
+      document.getElementById('modalBackdrop').classList.add('open');
+    }
+    function closeModal() { document.getElementById('modalBackdrop').classList.remove('open'); editingId=null; }
+    function clearForm() {
+      ['fFirst','fLast','fRole','fDept','fEmail','fFb','fBio','fPhoto'].forEach(i=>document.getElementById(i).value='');
+      document.getElementById('fOrder').value='';
+      document.getElementById('fTerm').value=activeTerm;
+      const w=document.getElementById('photoInit'); if(w) w.textContent='?';
+    }
+    function populateForm(o) {
+      document.getElementById('fFirst').value=o.first||''; document.getElementById('fLast').value=o.last||'';
+      document.getElementById('fRole').value=o.role||'';   document.getElementById('fDept').value=o.dept||'';
+      document.getElementById('fOrder').value=o.order||''; document.getElementById('fTerm').value=o.term||activeTerm;
+      document.getElementById('fEmail').value=o.email||''; document.getElementById('fFb').value=o.fb||'';
+      document.getElementById('fBio').value=o.bio||'';     document.getElementById('fPhoto').value=o.photo||'';
+      updatePhotoPreview();
+    }
+
+    function saveOfficer() {
+      const first=document.getElementById('fFirst').value.trim();
+      const last =document.getElementById('fLast').value.trim();
+      const role =document.getElementById('fRole').value.trim();
+      if (!first||!role) { showToast('First name and role are required.','error'); return; }
+      const officers=loadOfficers();
+      const entry={
+        id: editingId||uid(), first, last, role,
+        dept:  document.getElementById('fDept').value.trim(),
+        order: document.getElementById('fOrder').value||99,
+        term:  document.getElementById('fTerm').value,
+        email: document.getElementById('fEmail').value.trim(),
+        fb:    document.getElementById('fFb').value.trim(),
+        bio:   document.getElementById('fBio').value.trim(),
+        photo: document.getElementById('fPhoto').value.trim(),
+        updatedAt: new Date().toISOString(),
+      };
+      if (editingId) {
+        const idx=officers.findIndex(x=>x.id===editingId);
+        if(idx>-1) officers[idx]=entry;
+        logActivity(`updated officer "<strong>${first} ${last}</strong>"`, 'blue');
+      } else {
+        entry.createdAt=new Date().toISOString();
+        officers.push(entry);
+        logActivity(`added officer "<strong>${first} ${last}</strong>" as ${role}`, 'green');
+      }
+      saveOfficers(officers); closeModal(); render();
+      showToast(editingId?'Officer updated.':'Officer added.','success');
+    }
+
+    function openTermModal()  { document.getElementById('termModal').classList.add('open'); }
+    function closeTermModal() { document.getElementById('termModal').classList.remove('open'); document.getElementById('fTermName').value=''; }
+    function saveTerm() {
+      const name=document.getElementById('fTermName').value.trim();
+      if(!name){showToast('Term name is required.','error');return;}
+      const terms=loadTerms();
+      const t={id:uid(),name};
+      terms.push(t); saveTerms(terms);
+      activeTerm=t.id; closeTermModal(); renderTermTabs(); populateTermSelect(); render();
+      showToast('Term added.','success');
+    }
+
+    let deleteId=null;
+    function askDelete(id){deleteId=id;document.getElementById('confirmModal').classList.add('open');}
+    function closeConfirm(){deleteId=null;document.getElementById('confirmModal').classList.remove('open');}
+    function confirmDelete(){
+      if(!deleteId)return;
+      const officers=loadOfficers();
+      const removed=officers.find(o=>o.id===deleteId);
+      saveOfficers(officers.filter(o=>o.id!==deleteId));
+      logActivity(`removed officer "${removed?removed.first+' '+removed.last:deleteId}"`, 'yellow');
+      closeConfirm(); render(); showToast('Officer removed.','success');
+    }
+
+    function showToast(msg,type=''){
+      const t=document.getElementById('toast');
+      t.textContent=msg; t.className=`toast ${type}`; t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),3000);
+    }
+
+    function logActivity(action,color='blue'){
+      const session=JSON.parse(localStorage.getItem('access_session')||'{}');
+      const log=JSON.parse(localStorage.getItem('access_activity')||'[]');
+      log.unshift({actor:session.name||'Admin',action,color,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+      localStorage.setItem('access_activity',JSON.stringify(log.slice(0,50)));
+    }
+
+    if (new URLSearchParams(location.search).get('action')==='new') openModal();
+    initTerms();
+    render();
+  </script>
+</body>
+</html>
