@@ -45,6 +45,7 @@
     .nav-links { display: flex; align-items: center; gap: .1rem; }
     .nav-links a { padding: .4rem .85rem; font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.68); border-radius: var(--r-sm); transition: color .2s, background .2s; white-space: nowrap; }
     .nav-links a:hover { color: var(--yellow); background: rgba(255,255,255,.05); }
+    .nav-links a.active { color: var(--yellow); }
     .nav-actions { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
     .btn-nav-outline { padding: .42rem 1rem; border: 1px solid rgba(255,255,255,.2); border-radius: var(--r-sm); font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.75); background: transparent; transition: all .2s; }
     .btn-nav-outline:hover { border-color: rgba(255,255,255,.5); color: var(--white); }
@@ -214,12 +215,12 @@
       <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
         <span></span><span></span><span></span>
       </button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#directory">Directory</a></li>
-        <li><a href="#about">About</a></li>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active" data-section="hero">Home</a></li>
+        <li><a href="events.html"    data-section="events">Events</a></li>
+        <li><a href="news.html"      data-section="news">News</a></li>
+        <li><a href="directory.html" data-section="directory">Directory</a></li>
+        <li><a href="#about"         data-section="about">About</a></li>
       </ul>
       <div class="nav-actions">
         <a href="admin/index.html" class="btn-nav-outline">Admin</a>
@@ -271,6 +272,7 @@
     <div class="wrap">
       <div class="section-header">
         <div><p class="section-eyebrow">Mark Your Calendars</p><h2 class="section-title">Upcoming <em>Events</em></h2></div>
+        <a href="events.html" style="font-size:.82rem;font-weight:600;color:var(--blue-mid);border-bottom:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s,gap .2s" onmouseover="this.style.borderBottomColor='var(--blue-mid)';this.style.gap='10px'" onmouseout="this.style.borderBottomColor='transparent';this.style.gap='6px'">View All Events →</a>
       </div>
       <div class="events-list" id="eventsEl"></div>
     </div>
@@ -294,6 +296,7 @@
     <div class="wrap">
       <div class="section-header">
         <div><p class="section-eyebrow">News &amp; Announcements</p><h2 class="section-title">Latest <em>Updates</em></h2></div>
+        <a href="news.html" style="font-size:.82rem;font-weight:600;color:var(--blue-mid);border-bottom:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s,gap .2s" onmouseover="this.style.borderBottomColor='var(--blue-mid)';this.style.gap='10px'" onmouseout="this.style.borderBottomColor='transparent';this.style.gap='6px'">View All Posts →</a>
       </div>
       <div class="news-grid" id="newsEl"></div>
     </div>
@@ -336,9 +339,9 @@
           <h4>Quick Links</h4>
           <ul class="footer-links">
             <li><a href="#about">About ACCeSS</a></li>
-            <li><a href="#directory">Officers</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#news">News</a></li>
+            <li><a href="directory.html">Officers</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="news.html">News</a></li>
             <li><a href="admin/index.html">Admin Portal</a></li>
           </ul>
         </div>
@@ -362,7 +365,7 @@
     const DEFAULTS = {
       logoUrl:'logo.png', siteName:'BU ACCeSS',
       colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E',
-      foundedYear:'2015', college:'College of Science, Bicol University',
+      foundedYear:'2015', college:'Bicol University — College of Science',
       about:'BU ACCeSS creates space for every CS student to grow — technically, personally, and professionally.',
       mission:'The Academic Consortium of Computer Science Students shall promote the sustainable development of Computer Science in Bicol University.',
       address:'2nd Floor, College of Science Building 2, Bicol University, Legazpi City',
@@ -404,6 +407,9 @@
       });
       set('navBrandName', s.siteName || 'BU ACCeSS');
       set('footerName',   s.siteName || 'BU ACCeSS');
+
+      // Hero eyebrow — wired to college setting
+      set('heroEyebrow', s.college || 'Bicol University — College of Science');
 
       // Hero
       const bg = document.getElementById('heroBg');
@@ -454,12 +460,32 @@
       // Counter visibility
       if (!s.showCounter) { const cw=document.getElementById('counterWrap'); if(cw) cw.style.display='none'; }
 
-      // CTA
-      if (s.showCta) {
+      // CTA — show unless explicitly disabled (default true; fresh installs show it)
+      if (s.showCta !== false) {
         const ctaSec = document.getElementById('cta');
-        ctaSec.style.display = 'block';
+        if (ctaSec) ctaSec.style.display = 'block';
         setHref('ctaBtn', s.ctaLink||'register.html', s.ctaLabel||'Apply for Membership');
       }
+    }
+
+    /* ─────────────────────────────────────────────
+       SCROLL-SPY
+    ───────────────────────────────────────────── */
+    function initScrollSpy() {
+      const sectionIds = ['hero','pillars','events','about','news','directory','cta'];
+      const links = document.querySelectorAll('#navLinks a[data-section]');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          links.forEach(link => {
+            const sec = link.getAttribute('data-section');
+            const active = sec === id || (id === 'hero' && link.getAttribute('href') === 'index.html');
+            link.classList.toggle('active', active);
+          });
+        });
+      }, { rootMargin: `-70px 0px -55% 0px`, threshold: 0 });
+      sectionIds.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
     }
 
     /* ─────────────────────────────────────────────
@@ -611,6 +637,7 @@
     renderNews();
     renderDirectory();
     runCounter();
+    initScrollSpy();
   </script>
 </body>
 </html>

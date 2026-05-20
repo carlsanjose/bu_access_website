@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Officer Directory — BU ACCeSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue:        #0A2463;
+      --blue-mid:    #1B4FD8;
+      --blue-light:  #4A7FE5;
+      --blue-pale:   #EBF1FC;
+      --yellow:      #F5C518;
+      --yellow-deep: #C9960A;
+      --white:       #FFFFFF;
+      --off:         #F4F6FB;
+      --ink:         #0D1B3E;
+      --ink-mid:     #354570;
+      --ink-muted:   #6979A4;
+      --border:      rgba(10,36,99,0.10);
+      --serif: 'Fraunces', Georgia, serif;
+      --sans:  'Outfit', sans-serif;
+      --r-sm: 6px; --r-md: 12px; --r-lg: 20px;
+      --max: 1160px; --nav-h: 70px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--off); color: var(--ink); }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── NAVBAR ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); background: rgba(10,36,99,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-brand img { height: 36px; width: auto; object-fit: contain; }
+    .nav-brand-name { font-family: var(--serif); font-weight: 800; font-size: 1.15rem; color: var(--white); }
+    .nav-brand-name em { font-style: normal; color: var(--yellow); }
+    .nav-links { display: flex; align-items: center; gap: .1rem; }
+    .nav-links a { padding: .4rem .85rem; font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.68); border-radius: var(--r-sm); transition: color .2s, background .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--yellow); background: rgba(255,255,255,.05); }
+    .nav-links a.active { color: var(--yellow); }
+    .nav-actions { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+    .btn-nav-outline { padding: .42rem 1rem; border: 1px solid rgba(255,255,255,.2); border-radius: var(--r-sm); font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.75); background: transparent; transition: all .2s; }
+    .btn-nav-outline:hover { border-color: rgba(255,255,255,.5); color: var(--white); }
+    .btn-nav-solid { padding: .42rem 1.1rem; background: var(--yellow); color: var(--blue); border: 1px solid var(--yellow); border-radius: var(--r-sm); font-size: .82rem; font-weight: 700; transition: all .2s; }
+    .btn-nav-solid:hover { background: #ffd545; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { padding-top: var(--nav-h); background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; border: 80px solid rgba(245,197,24,0.06); right: -100px; top: -160px; pointer-events: none; }
+    .page-hero::after  { content: ''; position: absolute; width: 240px; height: 240px; border-radius: 50%; border: 40px solid rgba(255,255,255,0.04); left: -60px; bottom: -80px; pointer-events: none; }
+    .page-hero-inner { position: relative; padding: 4rem 0 3.5rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .page-hero-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,197,24,.7); margin-bottom: .6rem; }
+    .page-hero-title { font-family: var(--serif); font-size: clamp(2rem,5vw,3rem); font-weight: 600; color: var(--white); line-height: 1.15; }
+    .page-hero-title em { font-style: italic; color: var(--yellow); }
+    .page-hero-sub { font-size: .95rem; color: rgba(255,255,255,.6); font-weight: 300; max-width: 440px; line-height: 1.7; margin-top: .75rem; }
+    .page-hero-stats { display: flex; gap: 2rem; flex-shrink: 0; }
+    .hero-stat-num   { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .hero-stat-label { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 3px; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: var(--nav-h); z-index: 100; }
+    .filter-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; flex-wrap: wrap; }
+    .term-tabs { display: flex; gap: .35rem; flex-wrap: wrap; }
+    .term-tab { padding: .38rem .9rem; border-radius: 99px; border: 1.5px solid var(--border); background: transparent; font-size: .78rem; font-weight: 600; color: var(--ink-muted); cursor: pointer; transition: all .18s; font-family: var(--sans); }
+    .term-tab:hover  { border-color: var(--blue-light); color: var(--blue); }
+    .term-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+    .filter-right { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .search-box { display: flex; align-items: center; gap: 8px; padding: .45rem .9rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; }
+    .search-box svg { width: 14px; height: 14px; color: var(--ink-muted); flex-shrink: 0; }
+    .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: .82rem; color: var(--ink); width: 180px; }
+    .search-box input::placeholder { color: var(--ink-muted); }
+    .dept-select { padding: .45rem .85rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
+    .result-count { font-size: .78rem; color: var(--ink-muted); white-space: nowrap; }
+    .view-toggle { display: flex; gap: 2px; }
+    .view-btn { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink-muted); transition: all .18s; }
+    .view-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
+    .view-btn.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+    .view-btn svg { width: 13px; height: 13px; }
+
+    /* ── BODY ── */
+    .page-body { padding: 2.5rem 0 5rem; }
+
+    /* dept group heading */
+    .dept-heading {
+      font-family: var(--serif); font-size: 1rem; font-weight: 700;
+      color: var(--blue); margin: 2rem 0 1rem;
+      padding-bottom: .5rem; border-bottom: 2px solid var(--yellow);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .dept-heading span { font-family: var(--sans); font-size: .72rem; font-weight: 600; color: var(--ink-muted); }
+
+    /* ── GRID VIEW ── */
+    .officers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 1.25rem; }
+    .officer-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-lg); overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 1.75rem 1rem 1.1rem; text-align: center;
+      position: relative; cursor: pointer;
+      transition: box-shadow .22s, transform .22s;
+    }
+    .officer-card:hover { box-shadow: 0 10px 32px rgba(10,36,99,.1); transform: translateY(-3px); }
+    .officer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
+    .officer-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); margin-bottom: .85rem; display: block; }
+    .officer-init  { width: 80px; height: 80px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--blue-mid); margin: 0 auto .85rem; }
+    .officer-name  { font-family: var(--serif); font-size: .95rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: .3rem; }
+    .officer-role  { font-size: .75rem; color: var(--ink-muted); font-weight: 500; margin-bottom: .2rem; }
+    .officer-dept-tag { font-size: .68rem; color: var(--blue-light); font-weight: 600; }
+    .officer-socials { display: flex; gap: 6px; margin-top: .75rem; justify-content: center; }
+    .officer-social-btn { width: 26px; height: 26px; border-radius: 6px; background: var(--off); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: all .18s; }
+    .officer-social-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
+    .officer-social-btn svg { width: 12px; height: 12px; }
+
+    /* ── LIST VIEW ── */
+    .officers-list { display: flex; flex-direction: column; gap: .85rem; }
+    .officer-row {
+      display: grid; grid-template-columns: 56px 1fr auto;
+      gap: 1.25rem; align-items: center;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: .9rem 1.25rem;
+      cursor: pointer; transition: box-shadow .2s, transform .2s;
+    }
+    .officer-row:hover { box-shadow: 0 6px 20px rgba(10,36,99,.08); transform: translateX(3px); }
+    .row-photo { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); flex-shrink: 0; display: block; }
+    .row-init  { width: 48px; height: 48px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--blue-mid); flex-shrink: 0; }
+    .row-info  { }
+    .row-name  { font-family: var(--serif); font-size: .95rem; font-weight: 700; color: var(--blue); }
+    .row-role  { font-size: .78rem; color: var(--ink-muted); margin-top: 2px; }
+    .row-dept  { display: inline-block; font-size: .68rem; font-weight: 600; padding: .18rem .55rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; margin-top: 4px; }
+    .row-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .row-action-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--off); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: all .18s; }
+    .row-action-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
+    .row-action-btn svg { width: 13px; height: 13px; }
+
+    /* ── MODAL ── */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.45); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1.5rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 20px;
+      width: 100%; max-width: 480px;
+      box-shadow: 0 32px 80px rgba(10,36,99,.2);
+      animation: modalIn .25s ease; overflow: hidden;
+    }
+    @keyframes modalIn { from { opacity:0; transform:translateY(20px) scale(.96); } to { opacity:1; transform:none; } }
+    .modal-header-band { background: var(--blue); padding: 2.5rem 2rem 1.5rem; position: relative; text-align: center; }
+    .modal-header-band::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
+    .modal-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,.2); margin: 0 auto 1rem; display: block; }
+    .modal-avatar-init { width: 96px; height: 96px; border-radius: 50%; background: rgba(255,255,255,.1); border: 3px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--white); margin: 0 auto 1rem; }
+    .modal-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--white); }
+    .modal-role { font-size: .82rem; color: rgba(255,255,255,.65); margin-top: .3rem; }
+    .modal-body { padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .modal-dept-badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .25rem .75rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; }
+    .modal-bio { font-size: .88rem; color: var(--ink-mid); line-height: 1.7; font-weight: 300; }
+    .modal-contact-row { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--ink-mid); }
+    .modal-contact-row svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--blue-light); }
+    .modal-contact-row a { color: var(--blue-mid); border-bottom: 1px solid transparent; transition: border-color .2s; }
+    .modal-contact-row a:hover { border-bottom-color: var(--blue-mid); }
+    .modal-social-row { display: flex; gap: 8px; padding-top: .5rem; }
+    .modal-social-btn { display: inline-flex; align-items: center; gap: 6px; padding: .4rem .9rem; border-radius: 8px; border: 1px solid var(--border); background: var(--off); font-size: .75rem; font-weight: 600; color: var(--ink-mid); transition: all .18s; }
+    .modal-social-btn:hover { background: var(--blue-pale); color: var(--blue-mid); border-color: var(--blue-pale); }
+    .modal-social-btn svg { width: 13px; height: 13px; }
+    .modal-footer { padding: 1rem 2rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; }
+    .btn-close { padding: .55rem 1.4rem; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; font-family: var(--sans); font-size: .85rem; font-weight: 500; color: var(--ink-mid); cursor: pointer; transition: background .2s; }
+    .btn-close:hover { background: var(--off); }
+
+    /* ── EMPTY ── */
+    .empty-state { padding: 5rem 2rem; text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--blue); margin-bottom: .5rem; }
+    .empty-state p  { font-size: .88rem; color: var(--ink-muted); max-width: 340px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--blue); padding: 2.5rem 0; color: rgba(255,255,255,.45); }
+    .footer-bottom-wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom-wrap p { font-size: .78rem; }
+    .footer-accent { color: var(--yellow); font-weight: 600; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .nav-links, .nav-actions .btn-nav-outline { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--blue); padding: 1rem 1.5rem 1.5rem; border-bottom: 3px solid var(--yellow); z-index: 199; }
+      .nav-links.open a { padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+      .page-hero-stats { display: none; }
+      .officer-row { grid-template-columns: 48px 1fr; }
+      .row-actions { display: none; }
+      .modal { max-width: 100%; border-radius: 20px 20px 0 0; position: fixed; bottom: 0; left: 0; right: 0; }
+      .modal-backdrop { align-items: flex-end; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="wrap nav-wrap">
+      <a href="index.html" class="nav-brand">
+        <img id="navLogo" src="logo.png" alt="Logo" onerror="this.style.display='none'"/>
+        <span class="nav-brand-name" id="navBrandName">BU <em>ACCeSS</em></span>
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="directory.html" class="active">Directory</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="admin/index.html" class="btn-nav-outline">Admin</a>
+        <a href="index.html#cta" class="btn-nav-solid" id="navCtaBtn">Join Us</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="wrap page-hero-inner">
+      <div>
+        <p class="page-hero-eyebrow">BU ACCeSS</p>
+        <h1 class="page-hero-title">Officer <em>Directory</em></h1>
+        <p class="page-hero-sub">Meet the dedicated officers who lead and serve the Academic Consortium of Computer Science Students.</p>
+      </div>
+      <div class="page-hero-stats">
+        <div><div class="hero-stat-num" id="statOfficers">0</div><div class="hero-stat-label">Officers</div></div>
+        <div><div class="hero-stat-num" id="statDepts">0</div><div class="hero-stat-label">Departments</div></div>
+        <div><div class="hero-stat-num" id="statTerms">0</div><div class="hero-stat-label">Terms</div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="wrap filter-bar-inner">
+      <div class="term-tabs" id="termTabsEl"></div>
+      <div class="filter-right">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search officers…" oninput="render()"/>
+        </div>
+        <select class="dept-select" id="deptFilter" onchange="render()">
+          <option value="">All Departments</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="btnGrid" onclick="setView('grid')" title="Grid view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </button>
+          <button class="view-btn" id="btnList" onclick="setView('list')" title="List view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+        </div>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MAIN BODY -->
+  <main class="page-body">
+    <div class="wrap" id="pageOutput"></div>
+  </main>
+
+
+  <!-- OFFICER DETAIL MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal" id="officerModal">
+      <div class="modal-header-band">
+        <div id="modalAvatar"></div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-role" id="modalRole"></div>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-close" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap footer-bottom-wrap">
+      <p>&copy; <span id="footerYear">2026</span> <span class="footer-accent" id="footerName">BU ACCeSS</span>. All Rights Reserved.</p>
+      <p>Bicol University &mdash; College of Science</p>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ── Settings ── */
+    const SD = { logoUrl:'logo.png', siteName:'BU ACCeSS', colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E', ctaLabel:'Join Us', ctaLink:'index.html#cta' };
+    function S() { try { return { ...SD, ...JSON.parse(localStorage.getItem('access_settings')||'{}') }; } catch(e) { return {...SD}; } }
+
+    function applyBranding() {
+      const s = S();
+      const r = document.documentElement;
+      if (s.colorPrimary) r.style.setProperty('--blue',   s.colorPrimary);
+      if (s.colorAccent)  r.style.setProperty('--yellow', s.colorAccent);
+      if (s.colorText)    r.style.setProperty('--ink',    s.colorText);
+      const nl = document.getElementById('navLogo');
+      if (nl) { nl.src = s.logoUrl||'logo.png'; nl.style.display='block'; }
+      const bn = document.getElementById('navBrandName');
+      if (bn && s.siteName) bn.textContent = s.siteName;
+      const cta = document.getElementById('navCtaBtn');
+      if (cta) { cta.textContent = s.ctaLabel||'Join Us'; cta.href = s.ctaLink||'index.html#cta'; }
+      document.getElementById('footerYear').textContent = new Date().getFullYear();
+      const fn = document.getElementById('footerName');
+      if (fn && s.siteName) fn.textContent = s.siteName;
+    }
+
+    /* ── Data ── */
+    function loadOfficers() { return JSON.parse(localStorage.getItem('access_directory')||'[]'); }
+    function loadTerms()    { return JSON.parse(localStorage.getItem('access_terms')||'[]'); }
+
+    /* ── State ── */
+    let activeTerm = null;
+    let viewMode   = 'grid';
+
+    /* ── Init terms ── */
+    function initTerms() {
+      const terms    = loadTerms();
+      const officers = loadOfficers();
+
+      // Only show terms that have officers
+      const validTerms = terms.filter(t => officers.some(o => o.term === t.id));
+
+      // If no terms in store but officers exist, group by raw term id
+      const fallbackTermIds = [...new Set(officers.map(o => o.term).filter(Boolean))];
+
+      // Stats
+      document.getElementById('statTerms').textContent = validTerms.length || fallbackTermIds.length;
+
+      if (validTerms.length === 0 && fallbackTermIds.length === 0) {
+        renderEmpty('no-data');
+        return;
+      }
+
+      // Set active term to most recent
+      if (validTerms.length > 0) {
+        activeTerm = validTerms[validTerms.length - 1].id;
+        // Build tabs
+        document.getElementById('termTabsEl').innerHTML = validTerms.map(t => `
+          <button class="term-tab ${t.id===activeTerm?'active':''}"
+            onclick="setTerm('${t.id}',this)">${t.name}</button>
+        `).join('');
+      } else {
+        // No term names, just use IDs
+        activeTerm = fallbackTermIds[fallbackTermIds.length - 1];
+        document.getElementById('termTabsEl').innerHTML = fallbackTermIds.map(id => `
+          <button class="term-tab ${id===activeTerm?'active':''}"
+            onclick="setTerm('${id}',this)">${id}</button>
+        `).join('');
+      }
+
+      buildDeptFilter();
+      updateStats();
+      render();
+    }
+
+    function setTerm(id, btn) {
+      activeTerm = id;
+      document.querySelectorAll('.term-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      buildDeptFilter();
+      updateStats();
+      render();
+    }
+
+    /* ── Dept filter ── */
+    function buildDeptFilter() {
+      const officers = loadOfficers().filter(o => o.term === activeTerm);
+      const depts    = [...new Set(officers.map(o => o.dept).filter(Boolean))].sort();
+      const sel      = document.getElementById('deptFilter');
+      const cur      = sel.value;
+      sel.innerHTML  = '<option value="">All Departments</option>' +
+        depts.map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+    }
+
+    /* ── Stats ── */
+    function updateStats() {
+      const all      = loadOfficers();
+      const forTerm  = all.filter(o => o.term === activeTerm);
+      const depts    = [...new Set(forTerm.map(o => o.dept).filter(Boolean))];
+      document.getElementById('statOfficers').textContent = all.length;
+      document.getElementById('statDepts').textContent    = depts.length;
+    }
+
+    /* ── View ── */
+    function setView(v) {
+      viewMode = v;
+      document.getElementById('btnGrid').classList.toggle('active', v==='grid');
+      document.getElementById('btnList').classList.toggle('active', v==='list');
+      render();
+    }
+
+    /* ── Render ── */
+    function render() {
+      if (!activeTerm) return;
+
+      const q       = document.getElementById('searchInput').value.toLowerCase();
+      const deptFil = document.getElementById('deptFilter').value;
+      let officers  = loadOfficers().filter(o => o.term === activeTerm);
+
+      if (deptFil) officers = officers.filter(o => o.dept === deptFil);
+      if (q)       officers = officers.filter(o =>
+        (`${o.first} ${o.last}`).toLowerCase().includes(q) ||
+        (o.role||'').toLowerCase().includes(q) ||
+        (o.dept||'').toLowerCase().includes(q) ||
+        (o.bio||'').toLowerCase().includes(q)
+      );
+
+      officers.sort((a,b) => (Number(a.order)||99) - (Number(b.order)||99));
+
+      document.getElementById('resultCount').textContent =
+        `${officers.length} officer${officers.length!==1?'s':''}`;
+
+      const out = document.getElementById('pageOutput');
+
+      if (officers.length === 0) {
+        renderEmpty(q ? 'no-results' : 'no-officers', q);
+        return;
+      }
+
+      if (viewMode === 'grid') {
+        // Group by department
+        const depts = deptFil
+          ? [deptFil]
+          : [...new Set(officers.map(o => o.dept||'General').filter(Boolean))];
+
+        const ungrouped = depts.length <= 1 || q || deptFil;
+
+        if (ungrouped) {
+          out.innerHTML = `<div class="officers-grid">${officers.map(gridCard).join('')}</div>`;
+        } else {
+          out.innerHTML = depts.map(dept => {
+            const group = officers.filter(o => (o.dept||'General') === dept);
+            if (!group.length) return '';
+            return `
+              <div class="dept-heading">${dept} <span>${group.length} officer${group.length!==1?'s':''}</span></div>
+              <div class="officers-grid" style="margin-bottom:1rem">${group.map(gridCard).join('')}</div>`;
+          }).join('');
+        }
+      } else {
+        // Group by dept in list view too
+        const depts = deptFil
+          ? [deptFil]
+          : [...new Set(officers.map(o => o.dept||'General'))];
+
+        const ungrouped = depts.length <= 1 || q || deptFil;
+
+        if (ungrouped) {
+          out.innerHTML = `<div class="officers-list">${officers.map(listRow).join('')}</div>`;
+        } else {
+          out.innerHTML = depts.map(dept => {
+            const group = officers.filter(o => (o.dept||'General') === dept);
+            if (!group.length) return '';
+            return `
+              <div class="dept-heading">${dept} <span>${group.length} officer${group.length!==1?'s':''}</span></div>
+              <div class="officers-list" style="margin-bottom:1rem">${group.map(listRow).join('')}</div>`;
+          }).join('');
+        }
+      }
+    }
+
+    function renderEmpty(reason, q) {
+      const out = document.getElementById('pageOutput');
+      const msgs = {
+        'no-data':     ['No officers listed yet.', 'Officers will appear here once added by the organization through the admin panel.'],
+        'no-results':  [`No results for "${q}"`, 'Try a different name, role, or department.'],
+        'no-officers': ['No officers for this term.', 'This term has no officers listed yet.'],
+      };
+      const [h, p] = msgs[reason] || msgs['no-data'];
+      out.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">👥</div>
+          <h3>${h}</h3>
+          <p>${p}</p>
+        </div>`;
+    }
+
+    /* ── Card builders ── */
+    function ini(o) { return ((o.first||'?').charAt(0)+(o.last||'').charAt(0)).toUpperCase(); }
+
+    function avatarHTML(o, size, cls) {
+      return o.photo
+        ? `<img class="${cls}" style="width:${size}px;height:${size}px" src="${o.photo}" alt="${o.first}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="officer-init" style="width:${size}px;height:${size}px;display:none">${ini(o)}</div>`
+        : `<div class="officer-init" style="width:${size}px;height:${size}px">${ini(o)}</div>`;
+    }
+
+    function gridCard(o) {
+      const socialBtns = [
+        o.fb    ? `<a class="officer-social-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
+        o.email ? `<a class="officer-social-btn" href="mailto:${o.email}" title="Email" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
+      ].filter(Boolean).join('');
+
+      return `
+        <div class="officer-card" onclick="openModal('${o.id}')">
+          ${avatarHTML(o, 80, 'officer-photo')}
+          <div class="officer-name">${o.first||''} ${o.last||''}</div>
+          <div class="officer-role">${o.role||''}</div>
+          ${o.dept ? `<div class="officer-dept-tag">${o.dept}</div>` : ''}
+          ${socialBtns ? `<div class="officer-socials">${socialBtns}</div>` : ''}
+        </div>`;
+    }
+
+    function listRow(o) {
+      const avatarEl = o.photo
+        ? `<img class="row-photo" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=row-init>${ini(o)}</div>'"/>`
+        : `<div class="row-init">${ini(o)}</div>`;
+
+      const actionBtns = [
+        o.email ? `<a class="row-action-btn" href="mailto:${o.email}" title="Send email" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
+        o.fb    ? `<a class="row-action-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
+      ].filter(Boolean).join('');
+
+      return `
+        <div class="officer-row" onclick="openModal('${o.id}')">
+          ${avatarEl}
+          <div class="row-info">
+            <div class="row-name">${o.first||''} ${o.last||''}</div>
+            <div class="row-role">${o.role||''}</div>
+            ${o.dept ? `<span class="row-dept">${o.dept}</span>` : ''}
+          </div>
+          <div class="row-actions">${actionBtns}</div>
+        </div>`;
+    }
+
+    /* ── Modal ── */
+    function openModal(id) {
+      const o = loadOfficers().find(x => x.id === id);
+      if (!o) return;
+
+      // Avatar
+      const avatarEl = document.getElementById('modalAvatar');
+      if (o.photo) {
+        avatarEl.innerHTML = `<img class="modal-avatar" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=modal-avatar-init>${ini(o)}</div>'"/>`;
+      } else {
+        avatarEl.innerHTML = `<div class="modal-avatar-init">${ini(o)}</div>`;
+      }
+
+      document.getElementById('modalName').textContent = `${o.first||''} ${o.last||''}`.trim();
+      document.getElementById('modalRole').textContent = o.role || '';
+
+      // Body
+      const rows = [];
+      if (o.dept)  rows.push(`<span class="modal-dept-badge">${o.dept}</span>`);
+      if (o.bio)   rows.push(`<p class="modal-bio">${o.bio}</p>`);
+      if (o.email) rows.push(`
+        <div class="modal-contact-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:${o.email}">${o.email}</a>
+        </div>`);
+
+      // Social links
+      const socialLinks = [
+        o.fb ? `<a class="modal-social-btn" href="${o.fb}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>` : '',
+      ].filter(Boolean);
+      if (socialLinks.length) rows.push(`<div class="modal-social-row">${socialLinks.join('')}</div>`);
+
+      document.getElementById('modalBody').innerHTML = rows.join('') ||
+        '<p style="font-size:.85rem;color:var(--ink-muted);font-style:italic">No additional information available.</p>';
+
+      document.getElementById('modalBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('modalBackdrop')) closeModal();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── URL param: open officer directly ── */
+    function checkUrlParam() {
+      const id = new URLSearchParams(location.search).get('officer');
+      if (id) openModal(id);
+    }
+
+    /* ── Init ── */
+    applyBranding();
+    initTerms();
+    checkUrlParam();
+  </script>
+</body>
+</html>
