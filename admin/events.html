@@ -31,269 +31,133 @@
     html, body { height: 100%; }
     body { font-family: var(--sans); background: var(--off); color: var(--ink); display: flex; }
 
-    /* ── Sidebar (shared) ── */
-    .sidebar {
-      width: var(--sidebar-w); min-height: 100vh;
-      background: var(--blue); display: flex; flex-direction: column;
-      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
-      transition: transform .3s;
-    }
-    .sidebar-brand {
-      display: flex; align-items: center; gap: 10px;
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      text-decoration: none;
-    }
+    /* Page loader */
+    .page-loader { position: fixed; inset: 0; background: var(--blue); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; gap: 1rem; transition: opacity .4s; }
+    .page-loader.hidden { opacity: 0; pointer-events: none; }
+    .loader-logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .loader-logo em { font-style: normal; color: var(--yellow); }
+    .loader-spinner { width: 28px; height: 28px; border: 3px solid rgba(255,255,255,.2); border-top-color: var(--yellow); border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Sidebar */
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--blue); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: transform .3s; }
+    .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.07); text-decoration: none; }
     .sidebar-brand img { height: 32px; width: auto; object-fit: contain; }
     .sidebar-brand-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--white); }
     .sidebar-brand-name em { font-style: normal; color: var(--yellow); }
-    .sidebar-section {
-      padding: 1.25rem 1rem 0.5rem;
-      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(255,255,255,0.3);
-    }
-    .sidebar-nav { flex: 1; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 0.6rem 0.85rem; border-radius: 8px;
-      color: rgba(255,255,255,0.6); font-size: 0.855rem; font-weight: 500;
-      text-decoration: none; transition: background .18s, color .18s;
-    }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .sidebar-section { padding: 1.25rem 1rem .5rem; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+    .sidebar-nav { flex: 1; padding: .5rem .75rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: .6rem .85rem; border-radius: 8px; color: rgba(255,255,255,.6); font-size: .855rem; font-weight: 500; text-decoration: none; transition: background .18s, color .18s; }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+    .nav-item:hover { background: rgba(255,255,255,.07); color: var(--white); }
     .nav-item:hover svg { opacity: 1; }
-    .nav-item.active { background: rgba(245,197,24,0.12); color: var(--yellow); }
+    .nav-item.active { background: rgba(245,197,24,.12); color: var(--yellow); }
     .nav-item.active svg { opacity: 1; }
-    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
-    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
-    .sidebar-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(245,197,24,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0;
-    }
-    .sidebar-user-name { font-size: 0.82rem; font-weight: 600; color: var(--white); }
-    .sidebar-user-role { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
-    .btn-logout {
-      display: flex; align-items: center; gap: 8px;
-      width: 100%; padding: 0.5rem 0.85rem; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1); background: transparent;
-      color: rgba(255,255,255,0.45); font-family: var(--sans);
-      font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all .2s;
-    }
-    .btn-logout:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,.07); }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: .75rem; }
+    .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(245,197,24,.18); display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
+    .sidebar-user-name { font-size: .82rem; font-weight: 600; color: var(--white); }
+    .sidebar-user-role { font-size: .7rem; color: rgba(255,255,255,.35); }
+    .btn-logout { display: flex; align-items: center; gap: 8px; width: 100%; padding: .5rem .85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: rgba(255,255,255,.45); font-family: var(--sans); font-size: .78rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-logout:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); }
     .btn-logout svg { width: 14px; height: 14px; }
 
-    /* ── Main ── */
+    /* Main */
     .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-    .topbar {
-      height: var(--topbar-h); background: var(--white);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; position: sticky; top: 0; z-index: 50;
-    }
+    .topbar { height: var(--topbar-h); background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; position: sticky; top: 0; z-index: 50; }
     .topbar-left { display: flex; align-items: center; gap: 12px; }
     .topbar-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--blue); }
-    .topbar-sub { font-size: 0.78rem; color: var(--muted); }
-    .topbar-menu-btn {
-      display: none; background: none; border: none;
-      cursor: pointer; padding: 4px; color: var(--ink);
-    }
+    .topbar-sub { font-size: .78rem; color: var(--muted); }
+    .topbar-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink); }
     .topbar-menu-btn svg { width: 22px; height: 22px; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 0.5rem 1.1rem; background: var(--blue); color: var(--white);
-      border: none; border-radius: 8px; font-family: var(--sans);
-      font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background .2s;
-      text-decoration: none;
-    }
+    .btn-primary { display: inline-flex; align-items: center; gap: 7px; padding: .5rem 1.1rem; background: var(--blue); color: var(--white); border: none; border-radius: 8px; font-family: var(--sans); font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
     .btn-primary:hover { background: var(--blue-mid); }
     .btn-primary svg { width: 14px; height: 14px; }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
 
     .content { padding: 2rem; flex: 1; }
 
-    /* ── Toolbar ── */
-    .toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
-    }
-    .toolbar-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-    .search-box {
-      display: flex; align-items: center; gap: 8px;
-      padding: 0.5rem 1rem;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 8px;
-    }
+    /* Toolbar */
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .toolbar-left { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .search-box { display: flex; align-items: center; gap: 8px; padding: .5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 8px; }
     .search-box svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
-    .search-box input {
-      border: none; outline: none; background: transparent;
-      font-family: var(--sans); font-size: 0.85rem; color: var(--ink);
-      width: 200px;
-    }
+    .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: .85rem; color: var(--ink); width: 200px; }
     .search-box input::placeholder { color: var(--muted); }
-    .filter-select {
-      padding: 0.5rem 0.85rem;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 8px; font-family: var(--sans);
-      font-size: 0.82rem; color: var(--ink); cursor: pointer; outline: none;
-    }
+    .filter-select { padding: .5rem .85rem; background: var(--white); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
 
-    /* ── Events table ── */
-    .table-wrap {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r); overflow: hidden;
-    }
+    /* Table */
+    .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
     table { width: 100%; border-collapse: collapse; }
     thead { background: var(--off); border-bottom: 1px solid var(--border); }
-    th {
-      padding: 0.75rem 1rem; text-align: left;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background .15s;
-    }
+    th { padding: .75rem 1rem; text-align: left; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: var(--off); }
-    td { padding: 0.9rem 1rem; font-size: 0.85rem; color: var(--ink-mid); vertical-align: middle; }
+    td { padding: .9rem 1rem; font-size: .85rem; color: var(--ink-mid); vertical-align: middle; }
     td.title-cell { font-weight: 600; color: var(--ink); max-width: 220px; }
-    td.title-cell .td-sub { font-size: 0.75rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
-
-    .badge {
-      display: inline-block; padding: 0.2rem 0.6rem;
-      border-radius: 99px; font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.05em; text-transform: uppercase;
-    }
+    td.title-cell .td-sub { font-size: .75rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
+    .badge { display: inline-block; padding: .2rem .6rem; border-radius: 99px; font-size: .68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
     .badge-upcoming { background: var(--blue-pale); color: var(--blue-mid); }
     .badge-ongoing  { background: #E6F5EE; color: #1A7A46; }
     .badge-past     { background: var(--off); color: var(--muted); }
-    .badge-draft    { background: rgba(245,197,24,0.13); color: var(--yellow-deep); }
-
+    .badge-draft    { background: rgba(245,197,24,.13); color: var(--yellow-deep); }
     .row-actions { display: flex; align-items: center; gap: 6px; }
-    .icon-btn {
-      width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border);
-      background: transparent; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--muted); transition: all .18s;
-    }
+    .icon-btn { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); transition: all .18s; }
     .icon-btn:hover { background: var(--blue-pale); color: var(--blue-mid); border-color: var(--blue-pale); }
     .icon-btn.del:hover { background: #FEE9E9; color: #B91C1C; border-color: #F5BEBE; }
     .icon-btn svg { width: 13px; height: 13px; }
+    .icon-btn:disabled { opacity: .4; cursor: not-allowed; }
 
-    .empty-state {
-      padding: 3.5rem; text-align: center;
-    }
-    .empty-state svg { width: 40px; height: 40px; color: var(--muted); opacity: 0.4; margin: 0 auto 1rem; }
-    .empty-state p { font-size: 0.9rem; color: var(--muted); }
+    /* Skeleton rows */
+    .skel-row td { padding: .85rem 1rem; }
+    .skel { height: 16px; background: var(--off); border-radius: 4px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-    /* ── Modal ── */
-    .modal-backdrop {
-      display: none; position: fixed; inset: 0;
-      background: rgba(10,36,99,0.35); backdrop-filter: blur(4px);
-      z-index: 300; align-items: center; justify-content: center; padding: 1.5rem;
-    }
+    .empty-state { padding: 3.5rem; text-align: center; }
+    .empty-state svg { width: 40px; height: 40px; color: var(--muted); opacity: .4; margin: 0 auto 1rem; }
+    .empty-state p { font-size: .9rem; color: var(--muted); }
+
+    /* Modal */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.35); backdrop-filter: blur(4px); z-index: 300; align-items: center; justify-content: center; padding: 1.5rem; overflow-y: auto; }
     .modal-backdrop.open { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 14px;
-      width: 100%; max-width: 560px;
-      max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 24px 64px rgba(10,36,99,0.18);
-      animation: modalIn .22s ease;
-    }
-    @keyframes modalIn { from { opacity:0; transform:translateY(16px) scale(.97); } to { opacity:1; transform:none; } }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; background: var(--white); z-index: 1;
-    }
+    .modal { background: var(--white); border-radius: 14px; width: 100%; max-width: 560px; margin: auto; box-shadow: 0 24px 64px rgba(10,36,99,.18); animation: modalIn .22s ease; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(16px) scale(.97)} to{opacity:1;transform:none} }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--white); z-index: 1; border-radius: 14px 14px 0 0; }
     .modal-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--blue); }
-    .modal-close {
-      width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border);
-      background: transparent; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--muted); font-size: 1.1rem; transition: all .18s;
-    }
+    .modal-close { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 1.1rem; transition: all .18s; }
     .modal-close:hover { background: var(--off); color: var(--ink); }
-    .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
-    .modal-footer {
-      padding: 1rem 1.5rem; border-top: 1px solid var(--border);
-      display: flex; justify-content: flex-end; gap: 0.75rem;
-    }
-
-    /* Form fields */
-    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; max-height: 70vh; overflow-y: auto; }
+    .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: .75rem; border-radius: 0 0 14px 14px; }
+    .field { display: flex; flex-direction: column; gap: .4rem; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    label.field-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--blue);
-    }
-    .field input, .field select, .field textarea {
-      padding: 0.65rem 0.9rem;
-      border: 1.5px solid var(--border); border-radius: 8px;
-      background: var(--white); font-family: var(--sans);
-      font-size: 0.88rem; color: var(--ink); outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(27,79,216,0.09);
-    }
+    label.field-label { font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--blue); }
+    .field input, .field select, .field textarea { padding: .65rem .9rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--white); font-family: var(--sans); font-size: .88rem; color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; width: 100%; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(27,79,216,.09); }
     .field textarea { resize: vertical; min-height: 90px; }
-    .field-hint { font-size: 0.72rem; color: var(--muted); }
-
-    .btn-cancel {
-      padding: 0.55rem 1.1rem; border-radius: 8px;
-      border: 1px solid var(--border); background: transparent;
-      font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
-      color: var(--ink-mid); cursor: pointer; transition: background .2s;
-    }
+    .field-hint { font-size: .72rem; color: var(--muted); }
+    .btn-cancel { padding: .55rem 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-family: var(--sans); font-size: .85rem; font-weight: 500; color: var(--ink-mid); cursor: pointer; transition: background .2s; }
     .btn-cancel:hover { background: var(--off); }
-    .btn-save {
-      padding: 0.55rem 1.3rem; border-radius: 8px; border: none;
-      background: var(--blue); color: var(--white);
-      font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
-      cursor: pointer; transition: background .2s;
-    }
+    .btn-save { padding: .55rem 1.3rem; border-radius: 8px; border: none; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: .85rem; font-weight: 600; cursor: pointer; transition: background .2s; }
     .btn-save:hover { background: var(--blue-mid); }
+    .btn-save:disabled { opacity: .6; cursor: not-allowed; }
 
     /* Toast */
-    .toast {
-      position: fixed; bottom: 2rem; right: 2rem;
-      background: var(--blue); color: var(--white);
-      padding: 0.75rem 1.25rem; border-radius: 10px;
-      font-size: 0.85rem; font-weight: 500;
-      box-shadow: 0 8px 24px rgba(10,36,99,0.2);
-      transform: translateY(80px); opacity: 0;
-      transition: all .3s; z-index: 400;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--blue); color: var(--white); padding: .75rem 1.25rem; border-radius: 10px; font-size: .85rem; font-weight: 500; box-shadow: 0 8px 24px rgba(10,36,99,.2); transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 400; }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { background: #14532d; }
     .toast.error   { background: #7f1d1d; }
 
-    /* Confirm dialog */
-    .confirm-modal {
-      display: none; position: fixed; inset: 0;
-      background: rgba(10,36,99,0.4); backdrop-filter: blur(4px);
-      z-index: 400; align-items: center; justify-content: center;
-    }
+    /* Confirm */
+    .confirm-modal { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.4); backdrop-filter: blur(4px); z-index: 400; align-items: center; justify-content: center; }
     .confirm-modal.open { display: flex; }
-    .confirm-box {
-      background: var(--white); border-radius: 14px;
-      padding: 2rem; max-width: 360px; width: 90%;
-      box-shadow: 0 24px 64px rgba(10,36,99,0.18);
-      text-align: center; animation: modalIn .2s ease;
-    }
-    .confirm-box h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--blue); margin-bottom: 0.5rem; }
-    .confirm-box p  { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
-    .confirm-actions { display: flex; gap: 0.75rem; justify-content: center; }
-    .btn-danger {
-      padding: 0.55rem 1.3rem; border-radius: 8px; border: none;
-      background: #B91C1C; color: var(--white);
-      font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
-      cursor: pointer; transition: background .2s;
-    }
+    .confirm-box { background: var(--white); border-radius: 14px; padding: 2rem; max-width: 360px; width: 90%; box-shadow: 0 24px 64px rgba(10,36,99,.18); text-align: center; animation: modalIn .2s ease; }
+    .confirm-box h3 { font-family: var(--serif); font-size: 1.1rem; color: var(--blue); margin-bottom: .5rem; }
+    .confirm-box p  { font-size: .85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .confirm-actions { display: flex; gap: .75rem; justify-content: center; }
+    .btn-danger { padding: .55rem 1.3rem; border-radius: 8px; border: none; background: #B91C1C; color: var(--white); font-family: var(--sans); font-size: .85rem; font-weight: 600; cursor: pointer; }
     .btn-danger:hover { background: #991b1b; }
 
-    /* Mobile */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
@@ -309,6 +173,11 @@
   </style>
 </head>
 <body>
+
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-logo">BU <em>ACCeSS</em></div>
+    <div class="loader-spinner"></div>
+  </div>
 
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
@@ -344,11 +213,11 @@
       <div class="sidebar-user">
         <div class="sidebar-avatar" id="sidebarAvatar">A</div>
         <div>
-          <div class="sidebar-user-name" id="sidebarName">Admin</div>
-          <div class="sidebar-user-role">Officer</div>
+          <div class="sidebar-user-name" id="sidebarName">Loading…</div>
+          <div class="sidebar-user-role" id="sidebarEmail"></div>
         </div>
       </div>
-      <button class="btn-logout" onclick="logout()">
+      <button class="btn-logout" id="logoutBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Sign Out
       </button>
@@ -367,7 +236,7 @@
           <div class="topbar-sub">Create and manage event announcements</div>
         </div>
       </div>
-      <button class="btn-primary" onclick="openModal()">
+      <button class="btn-primary" id="newEventBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Event
       </button>
@@ -378,9 +247,9 @@
         <div class="toolbar-left">
           <div class="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="searchInput" placeholder="Search events…" oninput="renderTable()"/>
+            <input type="text" id="searchInput" placeholder="Search events…"/>
           </div>
-          <select class="filter-select" id="filterStatus" onchange="renderTable()">
+          <select class="filter-select" id="filterStatus">
             <option value="">All Status</option>
             <option value="upcoming">Upcoming</option>
             <option value="ongoing">Ongoing</option>
@@ -388,7 +257,7 @@
             <option value="draft">Draft</option>
           </select>
         </div>
-        <span id="tableCount" style="font-size:.78rem; color:var(--muted);"></span>
+        <span id="tableCount" style="font-size:.78rem;color:var(--muted);"></span>
       </div>
 
       <div class="table-wrap">
@@ -402,9 +271,14 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="eventsTable"></tbody>
+          <tbody id="eventsTable">
+            <!-- skeleton -->
+            <tr class="skel-row"><td><div class="skel" style="width:60%"></div></td><td><div class="skel" style="width:80%"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:50%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+            <tr class="skel-row"><td><div class="skel" style="width:75%"></div></td><td><div class="skel" style="width:60%"></div></td><td><div class="skel" style="width:80%"></div></td><td><div class="skel" style="width:55%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+            <tr class="skel-row"><td><div class="skel" style="width:50%"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:65%"></div></td><td><div class="skel" style="width:60%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+          </tbody>
         </table>
-        <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-state" id="emptyState" style="display:none">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <p>No events found. Click <strong>+ New Event</strong> to add one.</p>
         </div>
@@ -417,21 +291,17 @@
     <div class="modal">
       <div class="modal-header">
         <span class="modal-title" id="modalTitle">New Event</span>
-        <button class="modal-close" onclick="closeModal()">✕</button>
+        <button class="modal-close" id="modalCloseBtn">✕</button>
       </div>
       <div class="modal-body">
-        <input type="hidden" id="editId"/>
-
         <div class="field">
           <label class="field-label" for="fTitle">Event Title *</label>
           <input type="text" id="fTitle" placeholder="e.g. Annual CS Summit 2026"/>
         </div>
-
         <div class="field">
           <label class="field-label" for="fDesc">Description</label>
           <textarea id="fDesc" placeholder="Brief description of the event…"></textarea>
         </div>
-
         <div class="field-row">
           <div class="field">
             <label class="field-label" for="fDate">Date *</label>
@@ -442,12 +312,10 @@
             <input type="time" id="fTime"/>
           </div>
         </div>
-
         <div class="field">
           <label class="field-label" for="fLocation">Location</label>
           <input type="text" id="fLocation" placeholder="e.g. COS Audio-Visual Room, BU Main Campus"/>
         </div>
-
         <div class="field-row">
           <div class="field">
             <label class="field-label" for="fCategory">Category</label>
@@ -471,21 +339,19 @@
             </select>
           </div>
         </div>
-
         <div class="field">
           <label class="field-label" for="fImage">Cover Image URL</label>
-          <input type="url" id="fImage" placeholder="https://… or relative path e.g. images/event1.jpg"/>
-          <span class="field-hint">Paste a URL or a relative path to an image in your project folder.</span>
+          <input type="url" id="fImage" placeholder="https://… or relative path"/>
+          <span class="field-hint">Paste a full URL to an image (e.g. from Cloudinary or Imgur).</span>
         </div>
-
         <div class="field">
           <label class="field-label" for="fLink">Registration / External Link</label>
           <input type="url" id="fLink" placeholder="https://forms.google.com/…"/>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveEvent()">Save Event</button>
+        <button class="btn-cancel" id="cancelBtn">Cancel</button>
+        <button class="btn-save"   id="saveBtn">Save Event</button>
       </div>
     </div>
   </div>
@@ -494,69 +360,76 @@
   <div class="confirm-modal" id="confirmModal">
     <div class="confirm-box">
       <h3>Delete Event?</h3>
-      <p>This will permanently remove the event. This action cannot be undone.</p>
+      <p>This will permanently remove the event from Firestore. This cannot be undone.</p>
       <div class="confirm-actions">
-        <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
-        <button class="btn-danger" onclick="confirmDelete()">Delete</button>
+        <button class="btn-cancel" id="confirmCancelBtn">Cancel</button>
+        <button class="btn-danger" id="confirmDeleteBtn">Delete</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
-  <script>
-    // ── Auth guard ──
-    (function() {
-      const s = localStorage.getItem('access_session');
-      if (!s) { window.location.href = 'index.html'; return; }
-      const session = JSON.parse(s);
-      if (session.expires <= Date.now()) {
-        localStorage.removeItem('access_session');
-        window.location.href = 'index.html'; return;
-      }
-      const name = session.name || session.username || 'Admin';
-      document.getElementById('sidebarName').textContent = name;
-      document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
-    })();
-    function logout() { localStorage.removeItem('access_session'); window.location.href = 'index.html'; }
+  <script type="module">
+    import {
+      requireAuth, logoutUser,
+      getAll, addDocument, setDocument, deleteDocument,
+      logActivity, timestamp, COLS,
+    } from "../firebase-config.js";
 
-    // ── Data helpers ──
-    const STORE = 'access_events';
-    function load()       { return JSON.parse(localStorage.getItem(STORE) || '[]'); }
-    function save(events) { localStorage.setItem(STORE, JSON.stringify(events)); }
-    function uid()        { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+    /* ── Auth ── */
+    const user = await requireAuth('index.html');
+    document.getElementById('pageLoader').classList.add('hidden');
+    setTimeout(() => document.getElementById('pageLoader').remove(), 500);
 
-    function autoStatus(event) {
-      if (event.status === 'draft') return 'draft';
-      if (!event.date) return event.status;
+    const dispName = user.displayName || user.email.split('@')[0] || 'Admin';
+    document.getElementById('sidebarName').textContent  = dispName;
+    document.getElementById('sidebarEmail').textContent = user.email;
+    document.getElementById('sidebarAvatar').textContent = dispName.charAt(0).toUpperCase();
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await logoutUser(); window.location.href = 'index.html';
+    });
+
+    /* ── State ── */
+    let allEvents  = [];
+    let editingId  = null;
+    let deleteId   = null;
+
+    /* ── Load from Firestore ── */
+    async function loadEvents() {
+      allEvents = await getAll(COLS.EVENTS, { orderByField: 'date', orderDir: 'asc' });
+      renderTable();
+    }
+
+    /* ── Auto-compute status from date ── */
+    function autoStatus(e) {
+      if (e.status === 'draft') return 'draft';
+      if (!e.date) return e.status || 'upcoming';
       const today = new Date(); today.setHours(0,0,0,0);
-      const d     = new Date(event.date); d.setHours(0,0,0,0);
-      if (d > today)  return 'upcoming';
+      const d     = new Date(e.date); d.setHours(0,0,0,0);
+      if (d > today) return 'upcoming';
       if (d.getTime() === today.getTime()) return 'ongoing';
       return 'past';
     }
 
-    // ── Render table ──
+    /* ── Render table ── */
     function renderTable() {
       const q      = document.getElementById('searchInput').value.toLowerCase();
       const filter = document.getElementById('filterStatus').value;
-      let   events = load();
 
-      events = events.map(e => ({ ...e, _computed: autoStatus(e) }));
-      if (filter) events = events.filter(e => e._computed === filter);
+      let events = allEvents.map(e => ({ ...e, _s: autoStatus(e) }));
+      if (filter) events = events.filter(e => e._s === filter);
       if (q)      events = events.filter(e =>
         (e.title||'').toLowerCase().includes(q) ||
         (e.location||'').toLowerCase().includes(q) ||
         (e.category||'').toLowerCase().includes(q)
       );
 
-      events.sort((a,b) => (a.date||'') < (b.date||'') ? -1 : 1);
+      document.getElementById('tableCount').textContent =
+        `${events.length} event${events.length !== 1 ? 's' : ''}`;
 
       const tbody = document.getElementById('eventsTable');
       const empty = document.getElementById('emptyState');
-      document.getElementById('tableCount').textContent =
-        `${events.length} event${events.length !== 1 ? 's' : ''}`;
 
       if (events.length === 0) {
         tbody.innerHTML = '';
@@ -565,55 +438,46 @@
       }
       empty.style.display = 'none';
 
-      tbody.innerHTML = events.map(e => {
-        const status = e._computed;
-        const badgeClass = {
-          upcoming: 'badge-upcoming',
-          ongoing:  'badge-ongoing',
-          past:     'badge-past',
-          draft:    'badge-draft',
-        }[status] || 'badge-past';
+      const badgeCls = { upcoming:'badge-upcoming', ongoing:'badge-ongoing', past:'badge-past', draft:'badge-draft' };
+      const dateStr  = d => d ? new Date(d).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}) : '—';
 
-        const dateStr = e.date
-          ? new Date(e.date).toLocaleDateString('en-PH', { year:'numeric', month:'short', day:'numeric' })
-          : '—';
-        const timeStr = e.time ? ` · ${e.time}` : '';
+      tbody.innerHTML = events.map(e => `
+        <tr>
+          <td class="title-cell">
+            ${e.title||'Untitled'}
+            <div class="td-sub">${e.category||''}</div>
+          </td>
+          <td>${dateStr(e.date)}${e.time ? ' · '+e.time : ''}</td>
+          <td>${e.location||'—'}</td>
+          <td><span class="badge ${badgeCls[e._s]||'badge-past'}">${e._s}</span></td>
+          <td>
+            <div class="row-actions">
+              <button class="icon-btn edit-btn" data-id="${e.id}" title="Edit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="icon-btn del del-btn" data-id="${e.id}" data-title="${e.title||'Untitled'}" title="Delete">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>`).join('');
 
-        return `
-          <tr>
-            <td class="title-cell">
-              ${e.title || 'Untitled'}
-              <div class="td-sub">${e.category || ''}</div>
-            </td>
-            <td>${dateStr}${timeStr}</td>
-            <td>${e.location || '—'}</td>
-            <td><span class="badge ${badgeClass}">${status}</span></td>
-            <td>
-              <div class="row-actions">
-                <button class="icon-btn" onclick="openModal('${e.id}')" title="Edit">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                </button>
-                <button class="icon-btn del" onclick="askDelete('${e.id}')" title="Delete">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-                </button>
-              </div>
-            </td>
-          </tr>`;
-      }).join('');
+      // Attach row button listeners
+      tbody.querySelectorAll('.edit-btn').forEach(btn =>
+        btn.addEventListener('click', () => openModal(btn.dataset.id)));
+      tbody.querySelectorAll('.del-btn').forEach(btn =>
+        btn.addEventListener('click', () => askDelete(btn.dataset.id, btn.dataset.title)));
     }
 
-    // ── Modal ──
-    let editingId = null;
-
+    /* ── Modal ── */
     function openModal(id) {
       editingId = id || null;
       document.getElementById('modalTitle').textContent = id ? 'Edit Event' : 'New Event';
       clearForm();
       if (id) {
-        const e = load().find(x => x.id === id);
+        const e = allEvents.find(x => x.id === id);
         if (e) populateForm(e);
       }
-      // Check URL param for auto-open
       document.getElementById('modalBackdrop').classList.add('open');
     }
 
@@ -628,7 +492,6 @@
       });
       document.getElementById('fCategory').value = '';
       document.getElementById('fStatus').value   = 'upcoming';
-      document.getElementById('editId').value    = '';
     }
 
     function populateForm(e) {
@@ -643,59 +506,83 @@
       document.getElementById('fLink').value     = e.link     || '';
     }
 
-    function saveEvent() {
+    /* ── Save to Firestore ── */
+    async function saveEvent() {
       const title = document.getElementById('fTitle').value.trim();
       const date  = document.getElementById('fDate').value;
       if (!title) { showToast('Event title is required.', 'error'); return; }
       if (!date)  { showToast('Please set a date.', 'error'); return; }
 
-      const events = load();
-      const entry = {
-        id:       editingId || uid(),
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving…';
+
+      const data = {
         title,
-        desc:     document.getElementById('fDesc').value.trim(),
+        desc:      document.getElementById('fDesc').value.trim(),
         date,
-        time:     document.getElementById('fTime').value,
-        location: document.getElementById('fLocation').value.trim(),
-        category: document.getElementById('fCategory').value,
-        status:   document.getElementById('fStatus').value,
-        image:    document.getElementById('fImage').value.trim(),
-        link:     document.getElementById('fLink').value.trim(),
-        updatedAt: new Date().toISOString(),
+        time:      document.getElementById('fTime').value,
+        location:  document.getElementById('fLocation').value.trim(),
+        category:  document.getElementById('fCategory').value,
+        status:    document.getElementById('fStatus').value,
+        image:     document.getElementById('fImage').value.trim(),
+        link:      document.getElementById('fLink').value.trim(),
+        updatedAt: timestamp(),
+        updatedBy: user.email,
       };
 
+      let ok;
       if (editingId) {
-        const idx = events.findIndex(x => x.id === editingId);
-        if (idx > -1) events[idx] = entry;
-        logActivity(`updated event "<strong>${title}</strong>"`, 'blue');
+        ok = await setDocument(COLS.EVENTS, editingId, { ...data, id: editingId });
+        if (ok) await logActivity(`updated event "<strong>${title}</strong>"`, 'blue');
       } else {
-        entry.createdAt = new Date().toISOString();
-        events.push(entry);
-        logActivity(`created event "<strong>${title}</strong>"`, 'green');
+        data.createdAt = timestamp();
+        data.createdBy = user.email;
+        const newId = await addDocument(COLS.EVENTS, data);
+        ok = !!newId;
+        if (ok) await logActivity(`created event "<strong>${title}</strong>"`, 'green');
       }
 
-      save(events);
-      closeModal();
-      renderTable();
-      showToast(editingId ? 'Event updated.' : 'Event created.', 'success');
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Event';
+
+      if (ok) {
+        closeModal();
+        await loadEvents();
+        showToast(editingId ? 'Event updated.' : 'Event created.', 'success');
+      } else {
+        showToast('Save failed. Please try again.', 'error');
+      }
     }
 
-    // ── Delete ──
-    let deleteId = null;
-    function askDelete(id) { deleteId = id; document.getElementById('confirmModal').classList.add('open'); }
-    function closeConfirm() { deleteId = null; document.getElementById('confirmModal').classList.remove('open'); }
-    function confirmDelete() {
+    /* ── Delete ── */
+    function askDelete(id, title) {
+      deleteId = id;
+      document.getElementById('confirmModal').classList.add('open');
+    }
+
+    async function confirmDelete() {
       if (!deleteId) return;
-      const events  = load();
-      const removed = events.find(e => e.id === deleteId);
-      save(events.filter(e => e.id !== deleteId));
-      logActivity(`deleted event "${removed?.title || deleteId}"`, 'yellow');
-      closeConfirm();
-      renderTable();
-      showToast('Event deleted.', 'success');
+      document.getElementById('confirmDeleteBtn').disabled = true;
+      const e   = allEvents.find(x => x.id === deleteId);
+      const ok  = await deleteDocument(COLS.EVENTS, deleteId);
+      if (ok) {
+        await logActivity(`deleted event "${e?.title || deleteId}"`, 'yellow');
+        closeConfirm();
+        await loadEvents();
+        showToast('Event deleted.', 'success');
+      } else {
+        showToast('Delete failed. Please try again.', 'error');
+      }
+      document.getElementById('confirmDeleteBtn').disabled = false;
     }
 
-    // ── Toast ──
+    function closeConfirm() {
+      deleteId = null;
+      document.getElementById('confirmModal').classList.remove('open');
+    }
+
+    /* ── Toast ── */
     function showToast(msg, type = '') {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -704,21 +591,26 @@
       setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // ── Activity log (shared helper) ──
-    function logActivity(action, color = 'blue') {
-      const session = JSON.parse(localStorage.getItem('access_session') || '{}');
-      const log = JSON.parse(localStorage.getItem('access_activity') || '[]');
-      log.unshift({
-        actor: session.name || 'Admin', action, color,
-        time: new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
-      });
-      localStorage.setItem('access_activity', JSON.stringify(log.slice(0,50)));
-    }
+    /* ── Wire up listeners ── */
+    document.getElementById('newEventBtn').addEventListener('click', () => openModal());
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+    document.getElementById('saveBtn').addEventListener('click', saveEvent);
+    document.getElementById('confirmCancelBtn').addEventListener('click', closeConfirm);
+    document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+    document.getElementById('searchInput').addEventListener('input', renderTable);
+    document.getElementById('filterStatus').addEventListener('change', renderTable);
 
-    // Auto-open modal if ?action=new in URL
+    // Close modal on backdrop click
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
+      if (e.target === document.getElementById('modalBackdrop')) closeModal();
+    });
+
+    // Auto-open new event modal if ?action=new in URL
     if (new URLSearchParams(location.search).get('action') === 'new') openModal();
 
-    renderTable();
+    /* ── Init ── */
+    await loadEvents();
   </script>
 </body>
 </html>
