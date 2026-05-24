@@ -31,298 +31,125 @@
     html, body { height: 100%; }
     body { font-family: var(--sans); background: var(--off); color: var(--ink); display: flex; }
 
-    /* ====================== SIDEBAR ====================== */
-    .sidebar {
-      width: var(--sidebar-w);
-      min-height: 100vh;
-      background: var(--blue);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      z-index: 100;
-      transition: transform .3s;
+    /* ── Page loader ── */
+    .page-loader {
+      position: fixed; inset: 0; background: var(--blue);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 9999; gap: 1rem; transition: opacity .4s;
     }
+    .page-loader.hidden { opacity: 0; pointer-events: none; }
+    .loader-logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .loader-logo em { font-style: normal; color: var(--yellow); }
+    .loader-spinner { width: 28px; height: 28px; border: 3px solid rgba(255,255,255,.2); border-top-color: var(--yellow); border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .sidebar-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      text-decoration: none;
-    }
+    /* ── Sidebar ── */
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--blue); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: transform .3s; }
+    .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.07); text-decoration: none; }
     .sidebar-brand img { height: 32px; width: auto; object-fit: contain; }
-    .sidebar-brand-name {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white);
-    }
+    .sidebar-brand-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--white); }
     .sidebar-brand-name em { font-style: normal; color: var(--yellow); }
-
-    .sidebar-section {
-      padding: 1.25rem 1rem 0.5rem;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-
-    .sidebar-nav { flex: 1; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 2px; }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0.6rem 0.85rem;
-      border-radius: 8px;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.855rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background .18s, color .18s;
-      cursor: pointer;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-    }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .sidebar-section { padding: 1.25rem 1rem .5rem; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+    .sidebar-nav { flex: 1; padding: .5rem .75rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: .6rem .85rem; border-radius: 8px; color: rgba(255,255,255,.6); font-size: .855rem; font-weight: 500; text-decoration: none; transition: background .18s, color .18s; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: var(--sans); }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+    .nav-item:hover { background: rgba(255,255,255,.07); color: var(--white); }
     .nav-item:hover svg { opacity: 1; }
-    .nav-item.active { background: rgba(245,197,24,0.12); color: var(--yellow); }
+    .nav-item.active { background: rgba(245,197,24,.12); color: var(--yellow); }
     .nav-item.active svg { opacity: 1; }
-
-    .sidebar-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.07);
-    }
-    .sidebar-user {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
-    }
-    .sidebar-avatar {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: rgba(245,197,24,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: var(--yellow);
-      flex-shrink: 0;
-    }
-    .sidebar-user-name { font-size: 0.82rem; font-weight: 600; color: var(--white); }
-    .sidebar-user-role { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
-    .btn-logout {
-      display: flex; align-items: center; gap: 8px;
-      width: 100%; padding: 0.5rem 0.85rem;
-      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-      background: transparent; color: rgba(255,255,255,0.45);
-      font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
-      cursor: pointer; transition: all .2s;
-    }
-    .btn-logout:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,.07); }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: .75rem; }
+    .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(245,197,24,.18); display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
+    .sidebar-user-name { font-size: .82rem; font-weight: 600; color: var(--white); }
+    .sidebar-user-role { font-size: .7rem; color: rgba(255,255,255,.35); }
+    .btn-logout { display: flex; align-items: center; gap: 8px; width: 100%; padding: .5rem .85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: rgba(255,255,255,.45); font-family: var(--sans); font-size: .78rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-logout:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); }
     .btn-logout svg { width: 14px; height: 14px; }
 
-    /* ====================== MAIN ====================== */
-    .main {
-      margin-left: var(--sidebar-w);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* Topbar */
-    .topbar {
-      height: var(--topbar-h);
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      position: sticky; top: 0; z-index: 50;
-    }
+    /* ── Main ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+    .topbar { height: var(--topbar-h); background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; position: sticky; top: 0; z-index: 50; }
     .topbar-left { display: flex; align-items: center; gap: 12px; }
     .topbar-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--blue); }
-    .topbar-subtitle { font-size: 0.78rem; color: var(--muted); }
-    .topbar-right { display: flex; align-items: center; gap: 0.75rem; }
-
-    .topbar-badge {
-      display: flex; align-items: center; gap: 6px;
-      padding: 0.3rem 0.75rem;
-      background: rgba(245,197,24,0.12);
-      border: 1px solid rgba(245,197,24,0.25);
-      border-radius: 99px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--yellow-deep);
-    }
-    .topbar-badge::before {
-      content: ''; width: 6px; height: 6px;
-      border-radius: 50%; background: var(--yellow);
-    }
-
-    .btn-view-site {
-      display: flex; align-items: center; gap: 6px;
-      padding: 0.4rem 1rem;
-      background: var(--blue); color: var(--white);
-      border-radius: 8px; font-size: 0.78rem; font-weight: 600;
-      text-decoration: none; transition: background .2s;
-    }
+    .topbar-subtitle { font-size: .78rem; color: var(--muted); }
+    .topbar-right { display: flex; align-items: center; gap: .75rem; }
+    .topbar-badge { display: flex; align-items: center; gap: 6px; padding: .3rem .75rem; background: rgba(245,197,24,.12); border: 1px solid rgba(245,197,24,.25); border-radius: 99px; font-size: .72rem; font-weight: 600; color: var(--yellow-deep); }
+    .topbar-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); }
+    .btn-view-site { display: flex; align-items: center; gap: 6px; padding: .4rem 1rem; background: var(--blue); color: var(--white); border-radius: 8px; font-size: .78rem; font-weight: 600; text-decoration: none; transition: background .2s; }
     .btn-view-site:hover { background: var(--blue-mid); }
     .btn-view-site svg { width: 13px; height: 13px; }
+    .topbar-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink); }
+    .topbar-menu-btn svg { width: 22px; height: 22px; }
 
-    /* Content area */
+    /* ── Content ── */
     .content { padding: 2rem; flex: 1; }
 
-    /* ====================== STAT CARDS ====================== */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .stat-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      transition: box-shadow .2s;
-    }
-    .stat-card:hover { box-shadow: 0 4px 16px rgba(10,36,99,0.07); }
-    .stat-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
+    /* ── Stat cards ── */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; transition: box-shadow .2s; }
+    .stat-card:hover { box-shadow: 0 4px 16px rgba(10,36,99,.07); }
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .stat-icon svg { width: 18px; height: 18px; }
     .stat-icon.blue   { background: var(--blue-pale); color: var(--blue-mid); }
-    .stat-icon.yellow { background: rgba(245,197,24,0.12); color: var(--yellow-deep); }
+    .stat-icon.yellow { background: rgba(245,197,24,.12); color: var(--yellow-deep); }
     .stat-icon.green  { background: #E6F5EE; color: #1A7A46; }
     .stat-icon.red    { background: #FEE9E9; color: #B91C1C; }
+    .stat-value { font-family: var(--serif); font-size: 1.75rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: .25rem; }
+    .stat-label { font-size: .78rem; color: var(--muted); }
+    .stat-loading { width: 40px; height: 22px; background: var(--off); border-radius: 4px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-    .stat-info {}
-    .stat-value {
-      font-family: var(--serif);
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--blue);
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
-
-    /* ====================== GRID LOWER ====================== */
-    .lower-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 1.5rem;
-    }
-
-    /* Quick actions */
-    .panel {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-    }
-    .panel-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .panel-title {
-      font-family: var(--serif);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--blue);
-    }
-    .panel-link {
-      font-size: 0.75rem; color: var(--blue-mid); font-weight: 500;
-      text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s;
-    }
+    /* ── Lower grid ── */
+    .lower-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
+    .panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .panel-title { font-family: var(--serif); font-size: .95rem; font-weight: 700; color: var(--blue); }
+    .panel-link { font-size: .75rem; color: var(--blue-mid); font-weight: 500; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
     .panel-link:hover { border-bottom-color: var(--blue-mid); }
     .panel-body { padding: 1.25rem 1.5rem; }
 
-    /* Quick action buttons */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
-    }
-    .qa-btn {
-      display: flex; flex-direction: column; align-items: flex-start;
-      gap: 6px; padding: 1rem 1.1rem;
-      border-radius: 10px; border: 1.5px solid var(--border);
-      background: var(--off); cursor: pointer; text-decoration: none;
-      transition: border-color .2s, background .2s, transform .15s;
-      font-family: var(--sans);
-    }
+    /* Quick actions */
+    .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+    .qa-btn { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 1rem 1.1rem; border-radius: 10px; border: 1.5px solid var(--border); background: var(--off); cursor: pointer; text-decoration: none; transition: border-color .2s, background .2s, transform .15s; font-family: var(--sans); }
     .qa-btn:hover { border-color: var(--blue-mid); background: var(--blue-pale); transform: translateY(-1px); }
-    .qa-icon {
-      width: 34px; height: 34px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-    }
+    .qa-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
     .qa-icon.blue   { background: var(--blue-pale); }
-    .qa-icon.yellow { background: rgba(245,197,24,0.13); }
+    .qa-icon.yellow { background: rgba(245,197,24,.13); }
     .qa-icon.green  { background: #E6F5EE; }
     .qa-icon.purple { background: #F0EAFF; }
-    .qa-label { font-size: 0.8rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
-    .qa-sub   { font-size: 0.7rem; color: var(--muted); }
+    .qa-label { font-size: .8rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
+    .qa-sub   { font-size: .7rem; color: var(--muted); }
 
-    /* Recent activity feed */
-    .activity-list { display: flex; flex-direction: column; gap: 0; }
-    .activity-item {
-      display: flex; align-items: flex-start; gap: 0.85rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
+    /* Activity feed */
+    .activity-list { display: flex; flex-direction: column; }
+    .activity-item { display: flex; align-items: flex-start; gap: .85rem; padding: .85rem 0; border-bottom: 1px solid var(--border); }
     .activity-item:last-child { border-bottom: none; }
-    .activity-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      margin-top: 5px; flex-shrink: 0;
-    }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
     .dot-blue   { background: var(--blue-mid); }
     .dot-yellow { background: var(--yellow); }
     .dot-green  { background: #22c55e; }
-    .activity-text { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.5; flex: 1; }
+    .activity-text { font-size: .82rem; color: var(--ink-mid); line-height: 1.5; flex: 1; }
     .activity-text strong { color: var(--blue); font-weight: 600; }
-    .activity-time { font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
+    .activity-time { font-size: .7rem; color: var(--muted); white-space: nowrap; }
+    .activity-empty { font-size: .82rem; color: var(--muted); font-style: italic; padding: .5rem 0; }
 
-    /* Upcoming events mini list */
-    .event-mini { display: flex; flex-direction: column; gap: 0.75rem; }
-    .event-mini-item {
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 0.75rem; border-radius: 8px; background: var(--off);
-      border: 1px solid var(--border);
-    }
-    .event-mini-date {
-      width: 42px; text-align: center;
-      background: var(--blue); border-radius: 6px; padding: 0.35rem 0.25rem;
-      flex-shrink: 0;
-    }
-    .event-mini-month { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); }
+    /* Upcoming events mini */
+    .event-mini { display: flex; flex-direction: column; gap: .75rem; }
+    .event-mini-item { display: flex; align-items: center; gap: .85rem; padding: .75rem; border-radius: 8px; background: var(--off); border: 1px solid var(--border); }
+    .event-mini-date { width: 42px; text-align: center; background: var(--blue); border-radius: 6px; padding: .35rem .25rem; flex-shrink: 0; }
+    .event-mini-month { font-size: .55rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--yellow); }
     .event-mini-day   { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--white); line-height: 1; }
-    .event-mini-title { font-size: 0.82rem; font-weight: 600; color: var(--blue); line-height: 1.3; }
-    .event-mini-loc   { font-size: 0.72rem; color: var(--muted); }
+    .event-mini-title { font-size: .82rem; font-weight: 600; color: var(--blue); line-height: 1.3; }
+    .event-mini-loc   { font-size: .72rem; color: var(--muted); }
+    .event-mini-empty { font-size: .82rem; color: var(--muted); font-style: italic; text-align: center; padding: 1rem 0; }
 
-    /* ====================== MOBILE ====================== */
-    .sidebar-close { display: none; }
-    .topbar-menu-btn {
-      display: none; background: none; border: none;
-      cursor: pointer; padding: 4px; color: var(--ink);
-    }
-    .topbar-menu-btn svg { width: 22px; height: 22px; }
+    /* Skeleton loader for events */
+    .skel { background: var(--off); border-radius: 6px; animation: pulse 1.4s ease-in-out infinite; }
 
+    /* Responsive */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
-      .sidebar-close { display: flex; }
       .main { margin-left: 0; }
       .topbar-menu-btn { display: flex; }
       .lower-grid { grid-template-columns: 1fr; }
@@ -336,13 +163,18 @@
 </head>
 <body>
 
-  <!-- ====================== SIDEBAR ====================== -->
+  <!-- Page loader shown while Firebase auth resolves -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-logo">BU <em>ACCeSS</em></div>
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <a href="../index.html" class="sidebar-brand">
       <img src="../logo.png" alt="Logo" onerror="this.style.display='none'"/>
       <span class="sidebar-brand-name">BU <em>ACCeSS</em></span>
     </a>
-
     <p class="sidebar-section">Main</p>
     <nav class="sidebar-nav">
       <a href="dashboard.html" class="nav-item active">
@@ -361,30 +193,28 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Officer Directory
       </a>
-
       <p class="sidebar-section">Config</p>
       <a href="settings.html" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg>
         Site Settings
       </a>
     </nav>
-
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <div class="sidebar-avatar" id="sidebarAvatar">A</div>
         <div>
-          <div class="sidebar-user-name" id="sidebarName">Admin</div>
-          <div class="sidebar-user-role">Officer</div>
+          <div class="sidebar-user-name" id="sidebarName">Loading…</div>
+          <div class="sidebar-user-role" id="sidebarEmail"></div>
         </div>
       </div>
-      <button class="btn-logout" onclick="logout()">
+      <button class="btn-logout" id="logoutBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Sign Out
       </button>
     </div>
   </aside>
 
-  <!-- ====================== MAIN ====================== -->
+  <!-- Main -->
   <div class="main">
 
     <!-- Topbar -->
@@ -395,7 +225,7 @@
         </button>
         <div>
           <div class="topbar-title">Dashboard</div>
-          <div class="topbar-subtitle" id="topbarGreeting">Good morning</div>
+          <div class="topbar-subtitle" id="topbarGreeting">Welcome back</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -416,17 +246,17 @@
           <div class="stat-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
-          <div class="stat-info">
-            <div class="stat-value" id="statEvents">—</div>
-            <div class="stat-label">Events</div>
+          <div>
+            <div class="stat-value" id="statEvents"><div class="stat-loading"></div></div>
+            <div class="stat-label">Total Events</div>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon yellow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
           </div>
-          <div class="stat-info">
-            <div class="stat-value" id="statNews">—</div>
+          <div>
+            <div class="stat-value" id="statNews"><div class="stat-loading"></div></div>
             <div class="stat-label">News &amp; Projects</div>
           </div>
         </div>
@@ -434,8 +264,8 @@
           <div class="stat-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <div class="stat-info">
-            <div class="stat-value" id="statOfficers">—</div>
+          <div>
+            <div class="stat-value" id="statOfficers"><div class="stat-loading"></div></div>
             <div class="stat-label">Officers Listed</div>
           </div>
         </div>
@@ -443,8 +273,8 @@
           <div class="stat-icon red">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
-          <div class="stat-info">
-            <div class="stat-value" id="statUpcoming">—</div>
+          <div>
+            <div class="stat-value" id="statUpcoming"><div class="stat-loading"></div></div>
             <div class="stat-label">Upcoming Events</div>
           </div>
         </div>
@@ -454,7 +284,7 @@
       <div class="lower-grid">
 
         <!-- Left column -->
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+        <div style="display:flex;flex-direction:column;gap:1.5rem">
 
           <!-- Quick actions -->
           <div class="panel">
@@ -494,11 +324,7 @@
             </div>
             <div class="panel-body">
               <div class="activity-list" id="activityList">
-                <div class="activity-item">
-                  <div class="activity-dot dot-blue"></div>
-                  <div class="activity-text">No activity yet. Start by adding an event or news post.</div>
-                  <div class="activity-time">Now</div>
-                </div>
+                <p class="activity-empty">Loading activity…</p>
               </div>
             </div>
           </div>
@@ -513,9 +339,7 @@
           </div>
           <div class="panel-body">
             <div class="event-mini" id="upcomingList">
-              <p style="font-size:.82rem; color:var(--muted); text-align:center; padding:1rem 0;">
-                No upcoming events yet.
-              </p>
+              <p class="event-mini-empty">Loading…</p>
             </div>
           </div>
         </div>
@@ -524,108 +348,118 @@
     </main>
   </div>
 
-  <script>
-    // ── Auth guard ──
-    (function() {
-      const s = localStorage.getItem('access_session');
-      if (!s) { window.location.href = 'index.html'; return; }
-      const session = JSON.parse(s);
-      if (session.expires <= Date.now()) {
-        localStorage.removeItem('access_session');
-        window.location.href = 'index.html';
-        return;
-      }
-      // Set user info
-      const name = session.name || session.username || 'Admin';
-      document.getElementById('sidebarName').textContent = name;
-      document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
+  <script type="module">
+    import {
+      requireAuth, logoutUser, getCurrentUser,
+      getAll, COLS,
+    } from "../firebase-config.js";
 
-      // Greeting
-      const hr = new Date().getHours();
-      const greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
-      document.getElementById('topbarGreeting').textContent = `${greet}, ${name}`;
-    })();
+    /* ── Auth guard — waits for Firebase to resolve ── */
+    const user = await requireAuth('index.html');
 
-    function logout() {
-      localStorage.removeItem('access_session');
+    /* ── Hide loader, reveal page ── */
+    const loader = document.getElementById('pageLoader');
+    loader.classList.add('hidden');
+    setTimeout(() => loader.remove(), 500);
+
+    /* ── Populate user info ── */
+    const email    = user.email || '';
+    const dispName = user.displayName || email.split('@')[0] || 'Admin';
+    document.getElementById('sidebarName').textContent  = dispName;
+    document.getElementById('sidebarEmail').textContent = email;
+    document.getElementById('sidebarAvatar').textContent = dispName.charAt(0).toUpperCase();
+
+    const hr     = new Date().getHours();
+    const greet  = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('topbarGreeting').textContent = `${greet}, ${dispName}`;
+
+    /* ── Logout ── */
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await logoutUser();
       window.location.href = 'index.html';
-    }
+    });
 
-    // ── Load stats from localStorage data ──
-    function loadStats() {
-      const events    = JSON.parse(localStorage.getItem('access_events')    || '[]');
-      const news      = JSON.parse(localStorage.getItem('access_news')      || '[]');
-      const directory = JSON.parse(localStorage.getItem('access_directory') || '[]');
+    /* ── Load stats from Firestore ── */
+    async function loadStats() {
+      const [events, news, officers] = await Promise.all([
+        getAll(COLS.EVENTS),
+        getAll(COLS.NEWS),
+        getAll(COLS.DIRECTORY),
+      ]);
 
       document.getElementById('statEvents').textContent   = events.length;
       document.getElementById('statNews').textContent     = news.length;
-      document.getElementById('statOfficers').textContent = directory.length;
+      document.getElementById('statOfficers').textContent = officers.length;
 
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const upcoming = events.filter(e => e.date && new Date(e.date) >= today);
+      // Upcoming = non-draft events with a future date
+      const today = new Date(); today.setHours(0,0,0,0);
+      const upcoming = events.filter(e => {
+        if (e.status === 'draft' || !e.date) return false;
+        return new Date(e.date) >= today;
+      }).sort((a,b) => new Date(a.date) - new Date(b.date));
+
       document.getElementById('statUpcoming').textContent = upcoming.length;
 
       // Upcoming events mini list
       const listEl = document.getElementById('upcomingList');
       if (upcoming.length === 0) {
-        listEl.innerHTML = '<p style="font-size:.82rem;color:var(--muted);text-align:center;padding:1rem 0;">No upcoming events yet.</p>';
+        listEl.innerHTML = '<p class="event-mini-empty">No upcoming events yet.</p>';
       } else {
-        listEl.innerHTML = upcoming
-          .sort((a,b) => new Date(a.date) - new Date(b.date))
-          .slice(0, 5)
-          .map(e => {
-            const d = new Date(e.date);
-            const month = d.toLocaleString('default', { month: 'short' }).toUpperCase();
-            const day   = d.getDate();
-            return `
-              <div class="event-mini-item">
-                <div class="event-mini-date">
-                  <div class="event-mini-month">${month}</div>
-                  <div class="event-mini-day">${day}</div>
-                </div>
-                <div>
-                  <div class="event-mini-title">${e.title || 'Untitled Event'}</div>
-                  <div class="event-mini-loc">${e.location || 'Location TBD'}</div>
-                </div>
-              </div>`;
-          }).join('');
-      }
-
-      // Recent activity log
-      const log = JSON.parse(localStorage.getItem('access_activity') || '[]');
-      const logEl = document.getElementById('activityList');
-      if (log.length === 0) {
-        logEl.innerHTML = `
-          <div class="activity-item">
-            <div class="activity-dot dot-blue"></div>
-            <div class="activity-text">No activity yet. Start by adding an event or news post.</div>
-            <div class="activity-time">Now</div>
-          </div>`;
-      } else {
-        logEl.innerHTML = log.slice(0,8).map(item => `
-          <div class="activity-item">
-            <div class="activity-dot dot-${item.color || 'blue'}"></div>
-            <div class="activity-text"><strong>${item.actor || 'Admin'}</strong> ${item.action}</div>
-            <div class="activity-time">${item.time || ''}</div>
-          </div>`).join('');
+        listEl.innerHTML = upcoming.slice(0, 5).map(e => {
+          const d     = new Date(e.date);
+          const month = d.toLocaleString('default',{month:'short'}).toUpperCase();
+          const day   = d.getDate();
+          return `
+            <div class="event-mini-item">
+              <div class="event-mini-date">
+                <div class="event-mini-month">${month}</div>
+                <div class="event-mini-day">${day}</div>
+              </div>
+              <div>
+                <div class="event-mini-title">${e.title||'Untitled'}</div>
+                <div class="event-mini-loc">${e.location||'Location TBD'}</div>
+              </div>
+            </div>`;
+        }).join('');
       }
     }
 
-    // Helper used by other admin pages to log activity
-    window.logActivity = function(action, color = 'blue') {
-      const session = JSON.parse(localStorage.getItem('access_session') || '{}');
-      const log = JSON.parse(localStorage.getItem('access_activity') || '[]');
-      log.unshift({
-        actor: session.name || 'Admin',
-        action,
-        color,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    /* ── Load recent activity from Firestore ── */
+    async function loadActivity() {
+      const log = await getAll(COLS.ACTIVITY, {
+        orderByField: 'createdAt',
+        orderDir:     'desc',
       });
-      localStorage.setItem('access_activity', JSON.stringify(log.slice(0,50)));
-    };
 
-    loadStats();
+      const listEl = document.getElementById('activityList');
+
+      if (log.length === 0) {
+        listEl.innerHTML = '<p class="activity-empty">No activity yet. Start by adding an event or post.</p>';
+        return;
+      }
+
+      const colorClass = { blue:'dot-blue', green:'dot-green', yellow:'dot-yellow' };
+
+      listEl.innerHTML = log.slice(0, 8).map(item => {
+        // Format the Firestore timestamp
+        let timeStr = '';
+        if (item.createdAt?.toDate) {
+          timeStr = item.createdAt.toDate().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+        }
+        const dot = colorClass[item.color] || 'dot-blue';
+        return `
+          <div class="activity-item">
+            <div class="activity-dot ${dot}"></div>
+            <div class="activity-text">
+              <strong>${item.actor||'Admin'}</strong> ${item.action||''}
+            </div>
+            <div class="activity-time">${timeStr}</div>
+          </div>`;
+      }).join('');
+    }
+
+    /* ── Run both in parallel ── */
+    await Promise.all([loadStats(), loadActivity()]);
   </script>
 </body>
 </html>
