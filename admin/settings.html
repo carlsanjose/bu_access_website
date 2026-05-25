@@ -31,107 +31,83 @@
     html, body { height: 100%; }
     body { font-family: var(--sans); background: var(--off); color: var(--ink); display: flex; }
 
-    /* ── Sidebar ── */
+    /* Page loader */
+    .page-loader { position: fixed; inset: 0; background: var(--blue); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; gap: 1rem; transition: opacity .4s; }
+    .page-loader.hidden { opacity: 0; pointer-events: none; }
+    .loader-logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .loader-logo em { font-style: normal; color: var(--yellow); }
+    .loader-spinner { width: 28px; height: 28px; border: 3px solid rgba(255,255,255,.2); border-top-color: var(--yellow); border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Sidebar */
     .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--blue); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: transform .3s; }
-    .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); text-decoration: none; }
+    .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.07); text-decoration: none; }
     .sidebar-brand img { height: 32px; width: auto; object-fit: contain; }
     .sidebar-brand-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--white); }
     .sidebar-brand-name em { font-style: normal; color: var(--yellow); }
-    .sidebar-section { padding: 1.25rem 1rem 0.5rem; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
-    .sidebar-nav { flex: 1; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 0.6rem 0.85rem; border-radius: 8px; color: rgba(255,255,255,0.6); font-size: 0.855rem; font-weight: 500; text-decoration: none; transition: background .18s, color .18s; }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .sidebar-section { padding: 1.25rem 1rem .5rem; font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+    .sidebar-nav { flex: 1; padding: .5rem .75rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: .6rem .85rem; border-radius: 8px; color: rgba(255,255,255,.6); font-size: .855rem; font-weight: 500; text-decoration: none; transition: background .18s, color .18s; }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+    .nav-item:hover { background: rgba(255,255,255,.07); color: var(--white); }
     .nav-item:hover svg { opacity: 1; }
-    .nav-item.active { background: rgba(245,197,24,0.12); color: var(--yellow); }
+    .nav-item.active { background: rgba(245,197,24,.12); color: var(--yellow); }
     .nav-item.active svg { opacity: 1; }
-    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
-    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
-    .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(245,197,24,0.18); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
-    .sidebar-user-name { font-size: 0.82rem; font-weight: 600; color: var(--white); }
-    .sidebar-user-role { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
-    .btn-logout { display: flex; align-items: center; gap: 8px; width: 100%; padding: 0.5rem 0.85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.45); font-family: var(--sans); font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all .2s; }
-    .btn-logout:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+    .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,.07); }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; margin-bottom: .75rem; }
+    .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(245,197,24,.18); display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
+    .sidebar-user-name { font-size: .82rem; font-weight: 600; color: var(--white); }
+    .sidebar-user-role { font-size: .7rem; color: rgba(255,255,255,.35); }
+    .btn-logout { display: flex; align-items: center; gap: 8px; width: 100%; padding: .5rem .85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: rgba(255,255,255,.45); font-family: var(--sans); font-size: .78rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-logout:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); }
     .btn-logout svg { width: 14px; height: 14px; }
 
-    /* ── Main ── */
+    /* Main */
     .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
     .topbar { height: var(--topbar-h); background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; position: sticky; top: 0; z-index: 50; }
     .topbar-left { display: flex; align-items: center; gap: 12px; }
     .topbar-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--blue); }
-    .topbar-sub { font-size: 0.78rem; color: var(--muted); }
+    .topbar-sub { font-size: .78rem; color: var(--muted); }
     .topbar-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink); }
     .topbar-menu-btn svg { width: 22px; height: 22px; }
     .topbar-actions { display: flex; gap: .6rem; align-items: center; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 7px; padding: 0.5rem 1.2rem; background: var(--blue); color: var(--white); border: none; border-radius: 8px; font-family: var(--sans); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 7px; padding: .5rem 1.2rem; background: var(--blue); color: var(--white); border: none; border-radius: 8px; font-family: var(--sans); font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
     .btn-primary:hover { background: var(--blue-mid); }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
     .btn-primary svg { width: 14px; height: 14px; }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 7px; padding: 0.5rem 1rem; background: var(--white); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 7px; padding: .5rem 1rem; background: var(--white); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
     .btn-secondary:hover { background: var(--off); }
-    .btn-secondary svg { width: 14px; height: 14px; }
 
     .content { padding: 2rem; flex: 1; }
 
-    /* ── Settings layout ── */
-    .settings-layout {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    /* ── Settings sidenav ── */
-    .settings-nav {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      position: sticky;
-      top: calc(var(--topbar-h) + 2rem);
-    }
-    .settings-nav-item {
-      display: flex; align-items: center; gap: 9px;
-      padding: 0.7rem 1rem;
-      font-size: 0.82rem; font-weight: 500; color: var(--muted);
-      cursor: pointer; border-left: 3px solid transparent;
-      transition: all .18s; border-bottom: 1px solid var(--border);
-      background: none; width: 100%; text-align: left; font-family: var(--sans);
-    }
+    /* Settings layout */
+    .settings-layout { display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem; align-items: start; }
+    .settings-nav { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; position: sticky; top: calc(var(--topbar-h) + 2rem); }
+    .settings-nav-item { display: flex; align-items: center; gap: 9px; padding: .7rem 1rem; font-size: .82rem; font-weight: 500; color: var(--muted); cursor: pointer; border-left: 3px solid transparent; transition: all .18s; border-bottom: 1px solid var(--border); background: none; width: 100%; text-align: left; font-family: var(--sans); }
     .settings-nav-item:last-child { border-bottom: none; }
     .settings-nav-item svg { width: 14px; height: 14px; flex-shrink: 0; }
     .settings-nav-item:hover { color: var(--blue); background: var(--off); }
     .settings-nav-item.active { color: var(--blue); border-left-color: var(--yellow); background: var(--blue-pale); font-weight: 600; }
 
-    /* ── Panels ── */
+    /* Panels */
     .settings-panels { display: flex; flex-direction: column; gap: 1.5rem; }
-    .panel {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r); overflow: hidden;
-    }
-    .panel-header {
-      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .panel-heading {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .panel-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
-    }
+    .panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .panel-header { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .panel-heading { display: flex; align-items: center; gap: 10px; }
+    .panel-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .9rem; }
     .panel-icon.blue   { background: var(--blue-pale); }
-    .panel-icon.yellow { background: rgba(245,197,24,0.12); }
+    .panel-icon.yellow { background: rgba(245,197,24,.12); }
     .panel-icon.green  { background: #E6F5EE; }
     .panel-icon.red    { background: #FEE9E9; }
-    .panel-title { font-family: var(--serif); font-size: 0.98rem; font-weight: 700; color: var(--blue); }
-    .panel-desc  { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+    .panel-title { font-family: var(--serif); font-size: .98rem; font-weight: 700; color: var(--blue); }
+    .panel-desc  { font-size: .75rem; color: var(--muted); margin-top: 1px; }
     .panel-body  { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
 
-    /* ── Fields ── */
-    .field { display: flex; flex-direction: column; gap: 0.4rem; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    /* Fields */
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-    label.field-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--blue); }
+    label.field-label { font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--blue); }
     .field input[type="text"],
     .field input[type="url"],
     .field input[type="email"],
@@ -140,78 +116,45 @@
     .field input[type="password"],
     .field select,
     .field textarea {
-      padding: 0.65rem 0.9rem; border: 1.5px solid var(--border); border-radius: 8px;
-      background: var(--white); font-family: var(--sans); font-size: 0.88rem;
-      color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s;
-      width: 100%;
+      padding: .65rem .9rem; border: 1.5px solid var(--border); border-radius: 8px;
+      background: var(--white); font-family: var(--sans); font-size: .88rem;
+      color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; width: 100%;
     }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(27,79,216,0.09);
-    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(27,79,216,.09); }
     .field textarea { resize: vertical; min-height: 80px; }
-    .field-hint { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+    .field-hint { font-size: .72rem; color: var(--muted); line-height: 1.5; }
 
-    /* Color input */
+    /* Color field */
     .color-field { display: flex; align-items: center; gap: 8px; }
-    .color-field input[type="color"] {
-      width: 40px; height: 36px; border-radius: 6px; border: 1.5px solid var(--border);
-      padding: 2px; cursor: pointer; background: var(--white);
-    }
+    .color-field input[type="color"] { width: 40px; height: 36px; border-radius: 6px; border: 1.5px solid var(--border); padding: 2px; cursor: pointer; background: var(--white); }
     .color-field input[type="text"] { flex: 1; }
 
     /* Logo preview */
     .logo-preview-wrap { display: flex; align-items: center; gap: 1.25rem; }
-    .logo-preview-box {
-      width: 80px; height: 80px; border-radius: 12px;
-      border: 1.5px dashed var(--border); background: var(--off);
-      display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
-    }
+    .logo-preview-box { width: 80px; height: 80px; border-radius: 12px; border: 1.5px dashed var(--border); background: var(--off); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
     .logo-preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .logo-preview-box .logo-placeholder { font-size: 0.7rem; color: var(--muted); text-align: center; padding: 0.5rem; }
+    .logo-placeholder { font-size: .7rem; color: var(--muted); text-align: center; padding: .5rem; }
 
     /* Social row */
     .social-row { display: flex; align-items: center; gap: 10px; }
     .social-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--off); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--muted); }
     .social-icon svg { width: 14px; height: 14px; }
 
-    /* Toggle switch */
-    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+    /* Toggle */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: .6rem 0; border-bottom: 1px solid var(--border); }
     .toggle-row:last-child { border-bottom: none; }
     .toggle-info { flex: 1; }
-    .toggle-label { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
-    .toggle-desc  { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .toggle-label { font-size: .85rem; font-weight: 600; color: var(--ink); }
+    .toggle-desc  { font-size: .75rem; color: var(--muted); margin-top: 2px; }
     .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider {
-      position: absolute; inset: 0; cursor: pointer;
-      background: #CBD5E1; border-radius: 99px; transition: background .2s;
-    }
-    .toggle-slider::before {
-      content: ''; position: absolute;
-      width: 16px; height: 16px; left: 3px; top: 3px;
-      background: var(--white); border-radius: 50%; transition: transform .2s;
-    }
+    .toggle-slider { position: absolute; inset: 0; cursor: pointer; background: #CBD5E1; border-radius: 99px; transition: background .2s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: var(--white); border-radius: 50%; transition: transform .2s; }
     .toggle input:checked + .toggle-slider { background: var(--blue-mid); }
     .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
 
-    /* Account list */
-    .account-list { display: flex; flex-direction: column; gap: 0.75rem; }
-    .account-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 0.85rem 1rem; border-radius: 8px;
-      background: var(--off); border: 1px solid var(--border);
-    }
-    .account-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); flex-shrink: 0; }
-    .account-name  { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
-    .account-uname { font-size: 0.72rem; color: var(--muted); }
-    .account-role  { margin-left: auto; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 99px; background: var(--blue-pale); color: var(--blue-mid); }
-    .account-actions { display: flex; gap: 6px; }
-    .icon-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); transition: all .18s; }
-    .icon-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
-    .icon-btn.del:hover { background: #FEE9E9; color: #B91C1C; border-color: #F5BEBE; }
-    .icon-btn svg { width: 12px; height: 12px; }
-    .btn-add-account { display: inline-flex; align-items: center; gap: 7px; padding: 0.5rem 1rem; border: 1.5px dashed var(--border); border-radius: 8px; background: transparent; color: var(--blue-light); font-family: var(--sans); font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all .2s; width: 100%; justify-content: center; }
-    .btn-add-account:hover { background: var(--blue-pale); border-color: var(--blue-mid); color: var(--blue); }
+    /* Change password section */
+    .change-pw-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; align-items: flex-end; }
 
     /* Danger zone */
     .danger-zone { border: 1px solid #F5BEBE; border-radius: var(--r); overflow: hidden; }
@@ -219,40 +162,29 @@
     .danger-zone .panel-title  { color: #B91C1C; }
     .danger-zone .panel-body   { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
     .danger-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-    .danger-item-info h4  { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-    .danger-item-info p   { font-size: 0.78rem; color: var(--muted); }
-    .btn-danger { padding: 0.45rem 1rem; border-radius: 8px; border: 1px solid #F5BEBE; background: var(--white); color: #B91C1C; font-family: var(--sans); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap; }
+    .danger-item-info h4 { font-size: .88rem; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+    .danger-item-info p  { font-size: .78rem; color: var(--muted); }
+    .btn-danger { padding: .45rem 1rem; border-radius: 8px; border: 1px solid #F5BEBE; background: var(--white); color: #B91C1C; font-family: var(--sans); font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap; }
     .btn-danger:hover { background: #B91C1C; color: var(--white); border-color: #B91C1C; }
 
     /* Toast */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--blue); color: var(--white); padding: 0.75rem 1.25rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 8px 24px rgba(10,36,99,0.2); transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 400; display: flex; align-items: center; gap: 8px; }
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--blue); color: var(--white); padding: .75rem 1.25rem; border-radius: 10px; font-size: .85rem; font-weight: 500; box-shadow: 0 8px 24px rgba(10,36,99,.2); transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 400; display: flex; align-items: center; gap: 8px; }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { background: #14532d; }
     .toast.error   { background: #7f1d1d; }
 
-    /* Modal (account) */
-    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,0.35); backdrop-filter: blur(4px); z-index: 300; align-items: center; justify-content: center; padding: 1.5rem; }
-    .modal-backdrop.open { display: flex; }
-    .modal { background: var(--white); border-radius: 14px; width: 100%; max-width: 440px; box-shadow: 0 24px 64px rgba(10,36,99,0.18); animation: modalIn .22s ease; }
-    @keyframes modalIn { from { opacity:0; transform:translateY(12px) scale(.97); } to { opacity:1; transform:none; } }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); border-radius: 14px 14px 0 0; }
-    .modal-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--blue); }
-    .modal-close { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 1rem; transition: all .18s; }
-    .modal-close:hover { background: var(--off); }
-    .modal-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-    .modal-footer { padding: 0.9rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.75rem; border-radius: 0 0 14px 14px; }
-    .btn-cancel { padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-family: var(--sans); font-size: 0.82rem; font-weight: 500; color: var(--ink-mid); cursor: pointer; }
-    .btn-cancel:hover { background: var(--off); }
-    .btn-save { padding: 0.5rem 1.2rem; border-radius: 8px; border: none; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
-    .btn-save:hover { background: var(--blue-mid); }
-
-    /* Confirm modal */
-    .confirm-modal { display: none; position: fixed; inset: 0; background: rgba(10,36,99,0.4); backdrop-filter: blur(4px); z-index: 400; align-items: center; justify-content: center; }
+    /* Confirm */
+    .confirm-modal { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.4); backdrop-filter: blur(4px); z-index: 400; align-items: center; justify-content: center; }
     .confirm-modal.open { display: flex; }
-    .confirm-box { background: var(--white); border-radius: 14px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; animation: modalIn .2s ease; box-shadow: 0 24px 64px rgba(10,36,99,0.18); }
-    .confirm-box h3 { font-family: var(--serif); font-size: 1.05rem; color: var(--blue); margin-bottom: 0.5rem; }
-    .confirm-box p  { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .confirm-box { background: var(--white); border-radius: 14px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; box-shadow: 0 24px 64px rgba(10,36,99,.18); }
+    .confirm-box h3 { font-family: var(--serif); font-size: 1.05rem; color: var(--blue); margin-bottom: .5rem; }
+    .confirm-box p  { font-size: .82rem; color: var(--muted); margin-bottom: 1.5rem; }
     .confirm-actions { display: flex; gap: .75rem; justify-content: center; }
+    .btn-cancel { padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-family: var(--sans); font-size: .82rem; font-weight: 500; color: var(--ink-mid); cursor: pointer; }
+    .btn-cancel:hover { background: var(--off); }
+    .btn-save { padding: .5rem 1.2rem; border-radius: 8px; border: none; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn-save:hover { background: var(--blue-mid); }
+    .btn-save:disabled { opacity: .6; cursor: not-allowed; }
 
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
@@ -264,11 +196,16 @@
     }
     @media (max-width: 600px) {
       .content { padding: 1rem; }
-      .field-row, .field-row-3 { grid-template-columns: 1fr; }
+      .field-row, .field-row-3, .change-pw-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-logo">BU <em>ACCeSS</em></div>
+    <div class="loader-spinner"></div>
+  </div>
 
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
@@ -304,11 +241,11 @@
       <div class="sidebar-user">
         <div class="sidebar-avatar" id="sidebarAvatar">A</div>
         <div>
-          <div class="sidebar-user-name" id="sidebarName">Admin</div>
-          <div class="sidebar-user-role">Officer</div>
+          <div class="sidebar-user-name" id="sidebarName">Loading…</div>
+          <div class="sidebar-user-role" id="sidebarEmail"></div>
         </div>
       </div>
-      <button class="btn-logout" onclick="logout()">
+      <button class="btn-logout" id="logoutBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Sign Out
       </button>
@@ -324,12 +261,12 @@
         </button>
         <div>
           <div class="topbar-title">Site Settings</div>
-          <div class="topbar-sub">Manage branding, content, accounts, and preferences</div>
+          <div class="topbar-sub">Manage branding, content, and preferences</div>
         </div>
       </div>
       <div class="topbar-actions">
-        <button class="btn-secondary" onclick="resetAll()">Reset to Defaults</button>
-        <button class="btn-primary" onclick="saveAll()">
+        <button class="btn-secondary" id="resetBtn">Reset to Defaults</button>
+        <button class="btn-primary"   id="saveAllBtn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           Save All Changes
         </button>
@@ -340,36 +277,36 @@
       <div class="settings-layout">
 
         <!-- Settings sidenav -->
-        <nav class="settings-nav">
-          <button class="settings-nav-item active" onclick="scrollTo('sec-branding', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <nav class="settings-nav" id="settingsNav">
+          <button class="settings-nav-item active" data-target="sec-branding">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
             Branding
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-identity', this)">
+          <button class="settings-nav-item" data-target="sec-identity">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             Org Identity
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-contact', this)">
+          <button class="settings-nav-item" data-target="sec-contact">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.67 18a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 3.18 2 2 0 0 1 4.11 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Contact
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-socials', this)">
+          <button class="settings-nav-item" data-target="sec-socials">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             Social Links
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-hero', this)">
+          <button class="settings-nav-item" data-target="sec-hero">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             Hero Section
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-prefs', this)">
+          <button class="settings-nav-item" data-target="sec-prefs">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg>
             Preferences
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-accounts', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Accounts
+          <button class="settings-nav-item" data-target="sec-account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            My Account
           </button>
-          <button class="settings-nav-item" onclick="scrollTo('sec-danger', this)">
+          <button class="settings-nav-item" data-target="sec-danger">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             Danger Zone
           </button>
@@ -378,15 +315,12 @@
         <!-- Panels -->
         <div class="settings-panels">
 
-          <!-- ── Branding ── -->
+          <!-- Branding -->
           <div class="panel" id="sec-branding">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon blue">🎨</div>
-                <div>
-                  <div class="panel-title">Branding</div>
-                  <div class="panel-desc">Logo, colors, and site name</div>
-                </div>
+                <div><div class="panel-title">Branding</div><div class="panel-desc">Logo, colors, and site name</div></div>
               </div>
             </div>
             <div class="panel-body">
@@ -394,16 +328,15 @@
                 <label class="field-label">Logo URL</label>
                 <div class="logo-preview-wrap">
                   <div class="logo-preview-box">
-                    <img id="logoPreview" src="" alt="Logo" onerror="this.style.display='none'" style="display:none"/>
-                    <div class="logo-placeholder" id="logoPlaceholder">No logo set</div>
+                    <img id="logoPreview" src="" alt="Logo" style="display:none"/>
+                    <div class="logo-placeholder" id="logoPlaceholder">No logo</div>
                   </div>
-                  <div style="flex:1;">
-                    <input type="url" id="sLogoUrl" placeholder="logo.png or https://…" oninput="previewLogo()"/>
-                    <div class="field-hint" style="margin-top:4px;">Path relative to the site root, or an absolute URL.</div>
+                  <div style="flex:1">
+                    <input type="url" id="sLogoUrl" placeholder="https://… (Cloudinary, Imgur, or GitHub raw URL)"/>
+                    <div class="field-hint" style="margin-top:4px">Full URL to your logo image. Updates across the entire site.</div>
                   </div>
                 </div>
               </div>
-
               <div class="field-row">
                 <div class="field">
                   <label class="field-label">Site Name</label>
@@ -414,46 +347,39 @@
                   <input type="text" id="sSiteTagline" placeholder="Academic Consortium of CS Students"/>
                 </div>
               </div>
-
               <div class="field-row-3">
                 <div class="field">
                   <label class="field-label">Primary Color</label>
                   <div class="color-field">
                     <input type="color" id="sColorPrimary" value="#0A2463"/>
-                    <input type="text" id="sColorPrimaryHex" value="#0A2463" maxlength="7"
-                      oninput="syncColor('sColorPrimary','sColorPrimaryHex')"/>
+                    <input type="text"  id="sColorPrimaryHex" value="#0A2463" maxlength="7"/>
                   </div>
                 </div>
                 <div class="field">
                   <label class="field-label">Accent Color</label>
                   <div class="color-field">
                     <input type="color" id="sColorAccent" value="#F5C518"/>
-                    <input type="text" id="sColorAccentHex" value="#F5C518" maxlength="7"
-                      oninput="syncColor('sColorAccent','sColorAccentHex')"/>
+                    <input type="text"  id="sColorAccentHex" value="#F5C518" maxlength="7"/>
                   </div>
                 </div>
                 <div class="field">
                   <label class="field-label">Text Color</label>
                   <div class="color-field">
                     <input type="color" id="sColorText" value="#0D1B3E"/>
-                    <input type="text" id="sColorTextHex" value="#0D1B3E" maxlength="7"
-                      oninput="syncColor('sColorText','sColorTextHex')"/>
+                    <input type="text"  id="sColorTextHex" value="#0D1B3E" maxlength="7"/>
                   </div>
                 </div>
               </div>
-              <div class="field-hint">These colors are written to the public site's CSS variables on save.</div>
+              <div class="field-hint">Colors are written to CSS variables on the public site when saved.</div>
             </div>
           </div>
 
-          <!-- ── Org Identity ── -->
+          <!-- Org Identity -->
           <div class="panel" id="sec-identity">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon yellow">🏫</div>
-                <div>
-                  <div class="panel-title">Org Identity</div>
-                  <div class="panel-desc">Mission, vision, about text, founding year</div>
-                </div>
+                <div><div class="panel-title">Org Identity</div><div class="panel-desc">Mission, vision, about text, founding year</div></div>
               </div>
             </div>
             <div class="panel-body">
@@ -469,7 +395,7 @@
               </div>
               <div class="field">
                 <label class="field-label">About / Hero Description</label>
-                <textarea id="sAbout" placeholder="Short description shown on the hero section of the public site…"></textarea>
+                <textarea id="sAbout" placeholder="Short description shown on the hero section…"></textarea>
               </div>
               <div class="field">
                 <label class="field-label">Mission Statement</label>
@@ -482,21 +408,18 @@
             </div>
           </div>
 
-          <!-- ── Contact ── -->
+          <!-- Contact -->
           <div class="panel" id="sec-contact">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon green">📍</div>
-                <div>
-                  <div class="panel-title">Contact Information</div>
-                  <div class="panel-desc">Address, phone, email shown in the footer</div>
-                </div>
+                <div><div class="panel-title">Contact Information</div><div class="panel-desc">Address, phone, email shown in the footer</div></div>
               </div>
             </div>
             <div class="panel-body">
               <div class="field">
                 <label class="field-label">Physical Address</label>
-                <input type="text" id="sAddress" placeholder="2nd Floor, College of Science Building 2, Bicol University, Legazpi City"/>
+                <input type="text" id="sAddress" placeholder="2nd Floor, College of Science Building 2, BU, Legazpi City"/>
               </div>
               <div class="field-row">
                 <div class="field">
@@ -511,15 +434,12 @@
             </div>
           </div>
 
-          <!-- ── Social Links ── -->
+          <!-- Social Links -->
           <div class="panel" id="sec-socials">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon blue">🔗</div>
-                <div>
-                  <div class="panel-title">Social Media Links</div>
-                  <div class="panel-desc">Shown in the footer and social section</div>
-                </div>
+                <div><div class="panel-title">Social Media Links</div><div class="panel-desc">Shown in the footer and social section</div></div>
               </div>
             </div>
             <div class="panel-body">
@@ -536,11 +456,11 @@
                 <div class="field" style="flex:1"><input type="url" id="sTwitter" placeholder="https://twitter.com/bu_access"/></div>
               </div>
               <div class="social-row">
-                <div class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></div>
+                <div class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.77.61 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 12.67 0V8.69a8.27 8.27 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></div>
                 <div class="field" style="flex:1"><input type="url" id="sTiktok" placeholder="https://tiktok.com/@bu_access"/></div>
               </div>
               <div class="social-row">
-                <div class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+                <div class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.1.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
                 <div class="field" style="flex:1"><input type="url" id="sDiscord" placeholder="https://discord.gg/…"/></div>
               </div>
               <div class="social-row">
@@ -550,22 +470,19 @@
             </div>
           </div>
 
-          <!-- ── Hero Section ── -->
+          <!-- Hero Section -->
           <div class="panel" id="sec-hero">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon yellow">🖼️</div>
-                <div>
-                  <div class="panel-title">Hero Section</div>
-                  <div class="panel-desc">Background photo, headline, CTA button</div>
-                </div>
+                <div><div class="panel-title">Hero Section</div><div class="panel-desc">Background photo, headline, CTA button</div></div>
               </div>
             </div>
             <div class="panel-body">
               <div class="field">
                 <label class="field-label">Hero Background Image URL</label>
-                <input type="url" id="sHeroBg" placeholder="hero-bg.jpg or https://…"/>
-                <span class="field-hint">Recommended: a wide team photo, at least 1400×800px.</span>
+                <input type="url" id="sHeroBg" placeholder="https://… (full URL to your team photo)"/>
+                <span class="field-hint">Recommended: wide team photo, at least 1400×800px. Use Cloudinary or Imgur.</span>
               </div>
               <div class="field">
                 <label class="field-label">Hero Headline</label>
@@ -577,230 +494,162 @@
               </div>
               <div class="field-row">
                 <div class="field">
-                  <label class="field-label">Primary CTA Label</label>
+                  <label class="field-label">CTA Button Label</label>
                   <input type="text" id="sCtaLabel" placeholder="Join the Org"/>
                 </div>
                 <div class="field">
-                  <label class="field-label">Primary CTA Link</label>
+                  <label class="field-label">CTA Button Link</label>
                   <input type="url" id="sCtaLink" placeholder="register.html"/>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- ── Preferences ── -->
+          <!-- Preferences -->
           <div class="panel" id="sec-prefs">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon green">⚙️</div>
-                <div>
-                  <div class="panel-title">Site Preferences</div>
-                  <div class="panel-desc">Visibility and feature toggles</div>
-                </div>
+                <div><div class="panel-title">Site Preferences</div><div class="panel-desc">Visibility and feature toggles</div></div>
               </div>
             </div>
             <div class="panel-body">
               <div class="toggle-row">
-                <div class="toggle-info">
-                  <div class="toggle-label">Show Events Section</div>
-                  <div class="toggle-desc">Display the upcoming events section on the public homepage.</div>
-                </div>
+                <div class="toggle-info"><div class="toggle-label">Show Events Section</div><div class="toggle-desc">Display upcoming events on the homepage.</div></div>
                 <label class="toggle"><input type="checkbox" id="tShowEvents" checked/><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
-                <div class="toggle-info">
-                  <div class="toggle-label">Show News &amp; Projects Section</div>
-                  <div class="toggle-desc">Display news and project updates on the homepage.</div>
-                </div>
+                <div class="toggle-info"><div class="toggle-label">Show News &amp; Projects</div><div class="toggle-desc">Display news and project updates on the homepage.</div></div>
                 <label class="toggle"><input type="checkbox" id="tShowNews" checked/><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
-                <div class="toggle-info">
-                  <div class="toggle-label">Show Officer Directory</div>
-                  <div class="toggle-desc">Show the officer directory section on the public site.</div>
-                </div>
+                <div class="toggle-info"><div class="toggle-label">Show Officer Directory</div><div class="toggle-desc">Show the officer directory section on the homepage.</div></div>
                 <label class="toggle"><input type="checkbox" id="tShowDirectory" checked/><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
-                <div class="toggle-info">
-                  <div class="toggle-label">Show Visitor Counter</div>
-                  <div class="toggle-desc">Display the animated visitor counter in the footer.</div>
-                </div>
+                <div class="toggle-info"><div class="toggle-label">Show Visitor Counter</div><div class="toggle-desc">Display the animated visitor counter in the footer.</div></div>
                 <label class="toggle"><input type="checkbox" id="tShowCounter" checked/><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
-                <div class="toggle-info">
-                  <div class="toggle-label">Show Join / Register CTA</div>
-                  <div class="toggle-desc">Show the "Be One of Us" call-to-action banner on the homepage.</div>
-                </div>
+                <div class="toggle-info"><div class="toggle-label">Show Join / Register CTA</div><div class="toggle-desc">Show the "Be One of Us" call-to-action banner.</div></div>
                 <label class="toggle"><input type="checkbox" id="tShowCta" checked/><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
 
-          <!-- ── Accounts ── -->
-          <div class="panel" id="sec-accounts">
+          <!-- My Account -->
+          <div class="panel" id="sec-account">
             <div class="panel-header">
               <div class="panel-heading">
-                <div class="panel-icon blue">👥</div>
-                <div>
-                  <div class="panel-title">Admin Accounts</div>
-                  <div class="panel-desc">Manage who can access the admin panel</div>
-                </div>
+                <div class="panel-icon blue">👤</div>
+                <div><div class="panel-title">My Account</div><div class="panel-desc">Update your display name and password</div></div>
               </div>
             </div>
             <div class="panel-body">
-              <div class="account-list" id="accountList"></div>
-              <button class="btn-add-account" onclick="openAccountModal()">
-                + Add Admin Account
-              </button>
+              <div class="field">
+                <label class="field-label">Email (read-only)</label>
+                <input type="email" id="aEmail" disabled style="opacity:.6;cursor:not-allowed"/>
+              </div>
+              <div class="field">
+                <label class="field-label">Display Name</label>
+                <input type="text" id="aDisplayName" placeholder="e.g. Maria Santos"/>
+              </div>
+              <button class="btn-save" id="updateProfileBtn" style="align-self:flex-start">Update Profile</button>
+
+              <hr style="border:none;border-top:1px solid var(--border);margin:.25rem 0"/>
+
+              <div class="change-pw-row">
+                <div class="field">
+                  <label class="field-label">New Password</label>
+                  <input type="password" id="aNewPw" placeholder="Min. 8 characters" autocomplete="new-password"/>
+                </div>
+                <div class="field">
+                  <label class="field-label">Confirm Password</label>
+                  <input type="password" id="aConfirmPw" placeholder="Repeat password" autocomplete="new-password"/>
+                </div>
+                <button class="btn-save" id="changePwBtn" style="align-self:flex-end">Change Password</button>
+              </div>
+              <span class="field-hint">Leave password fields blank if you don't want to change it.</span>
             </div>
           </div>
 
-          <!-- ── Danger Zone ── -->
+          <!-- Danger Zone -->
           <div class="danger-zone" id="sec-danger">
             <div class="panel-header">
               <div class="panel-heading">
                 <div class="panel-icon red">⚠️</div>
-                <div>
-                  <div class="panel-title">Danger Zone</div>
-                  <div class="panel-desc">Irreversible actions — proceed with caution</div>
-                </div>
+                <div><div class="panel-title">Danger Zone</div><div class="panel-desc">Irreversible actions — proceed with caution</div></div>
               </div>
             </div>
             <div class="panel-body">
               <div class="danger-item">
-                <div class="danger-item-info">
-                  <h4>Clear All Events</h4>
-                  <p>Permanently deletes all event announcements from the site.</p>
-                </div>
-                <button class="btn-danger" onclick="clearStore('access_events','All events cleared.')">Clear Events</button>
+                <div class="danger-item-info"><h4>Clear All Events</h4><p>Permanently deletes all event documents from Firestore.</p></div>
+                <button class="btn-danger" data-clear="events">Clear Events</button>
               </div>
               <div class="danger-item">
-                <div class="danger-item-info">
-                  <h4>Clear All News &amp; Projects</h4>
-                  <p>Permanently deletes all news posts and project entries.</p>
-                </div>
-                <button class="btn-danger" onclick="clearStore('access_news','All news &amp; projects cleared.')">Clear News</button>
+                <div class="danger-item-info"><h4>Clear All News &amp; Projects</h4><p>Permanently deletes all news and project documents.</p></div>
+                <button class="btn-danger" data-clear="news">Clear News</button>
               </div>
               <div class="danger-item">
-                <div class="danger-item-info">
-                  <h4>Clear Officer Directory</h4>
-                  <p>Removes all officer entries and term data.</p>
-                </div>
-                <button class="btn-danger" onclick="clearDirectory()">Clear Directory</button>
+                <div class="danger-item-info"><h4>Clear Officer Directory</h4><p>Removes all officer entries and term data from Firestore.</p></div>
+                <button class="btn-danger" data-clear="directory">Clear Directory</button>
               </div>
               <div class="danger-item">
-                <div class="danger-item-info">
-                  <h4>Reset All Settings</h4>
-                  <p>Restores all site settings to their default values.</p>
-                </div>
-                <button class="btn-danger" onclick="resetAll()">Reset Settings</button>
+                <div class="danger-item-info"><h4>Reset Site Settings</h4><p>Deletes the settings document and restores all defaults.</p></div>
+                <button class="btn-danger" data-clear="settings">Reset Settings</button>
               </div>
             </div>
           </div>
 
         </div><!-- end panels -->
-      </div><!-- end layout -->
+      </div>
     </main>
-  </div>
-
-  <!-- Account Modal -->
-  <div class="modal-backdrop" id="accountModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title" id="accountModalTitle">Add Admin Account</span>
-        <button class="modal-close" onclick="closeAccountModal()">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="field">
-          <label class="field-label" for="aName">Display Name *</label>
-          <input type="text" id="aName" placeholder="e.g. Maria Santos"/>
-        </div>
-        <div class="field">
-          <label class="field-label" for="aUsername">Username *</label>
-          <input type="text" id="aUsername" placeholder="e.g. msantos" autocomplete="off"/>
-        </div>
-        <div class="field">
-          <label class="field-label" for="aPassword">Password *</label>
-          <input type="password" id="aPassword" placeholder="Minimum 8 characters" autocomplete="new-password"/>
-          <span class="field-hint">Use a strong password. Officers should change this after first login.</span>
-        </div>
-        <div class="field">
-          <label class="field-label" for="aRole">Role</label>
-          <select id="aRole">
-            <option value="admin">Admin (full access)</option>
-            <option value="editor">Editor (no settings access)</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-cancel" onclick="closeAccountModal()">Cancel</button>
-        <button class="btn-save" onclick="saveAccount()">Save Account</button>
-      </div>
-    </div>
   </div>
 
   <!-- Confirm modal -->
   <div class="confirm-modal" id="confirmModal">
     <div class="confirm-box">
       <h3 id="confirmTitle">Are you sure?</h3>
-      <p id="confirmDesc">This action cannot be undone.</p>
+      <p  id="confirmDesc">This action cannot be undone.</p>
       <div class="confirm-actions">
-        <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
-        <button class="btn-danger" id="confirmBtn">Confirm</button>
+        <button class="btn-cancel" id="confirmCancelBtn">Cancel</button>
+        <button class="btn-danger" id="confirmOkBtn">Confirm</button>
       </div>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
 
-  <script>
-    // ── Auth guard ──
-    (function() {
-      const s = localStorage.getItem('access_session');
-      if (!s) { window.location.href = 'index.html'; return; }
-      const session = JSON.parse(s);
-      if (session.expires <= Date.now()) { localStorage.removeItem('access_session'); window.location.href = 'index.html'; return; }
-      const name = session.name || session.username || 'Admin';
-      document.getElementById('sidebarName').textContent = name;
-      document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
-    })();
-    function logout() { localStorage.removeItem('access_session'); window.location.href = 'index.html'; }
+  <script type="module">
+    import {
+      requireAuth, logoutUser, getCurrentUser,
+      loadSettings, saveSettings, SETTINGS_DEFAULTS,
+      getAll, deleteDocument, logActivity, COLS,
+      auth,
+    } from "../firebase-config.js";
 
-    // ── Settings data ──
-    const STORE = 'access_settings';
-    const DEFAULTS = {
-      logoUrl: 'logo.png', siteName: 'BU ACCeSS', siteTagline: 'Academic Consortium of Computer Science Students',
-      colorPrimary: '#0A2463', colorAccent: '#F5C518', colorText: '#0D1B3E',
-      foundedYear: '2015', college: 'College of Science, Bicol University',
-      about: 'The official College Based Organization of the CS students of the College of Science, Bicol University.',
-      mission: 'The Academic Consortium of Computer Science Students shall promote the sustainable development of Computer Science in Bicol University.',
-      vision:  'ACCeSS members will be empowered to build comprehensive networks and prepare for the future through meaningful experiences.',
-      address: '2nd Floor, College of Science Building 2, Bicol University, Legazpi City',
-      email:   'bu_access@bicol-u.edu.ph', phone: '+69548754621',
-      facebook: 'https://www.facebook.com/BUACCeSS2015',
-      instagram:'https://www.instagram.com/bu_access/',
-      twitter:  'https://twitter.com/bu_access',
-      tiktok:   'https://www.tiktok.com/@bu_access',
-      discord:  'https://discord.gg/RXbrhwU5Df',
-      twitch:   'https://www.twitch.tv/bu_access',
-      heroBg: 'hero-bg.jpg',
-      heroHeadline: 'Academic Consortium of Computer Science Students',
-      heroSub: 'Empowering CS students through community, sustainable development, and meaningful experiences since 2015.',
-      ctaLabel: 'Join the Org', ctaLink: 'register.html',
-      showEvents: true, showNews: true, showDirectory: true, showCounter: true, showCta: true,
-    };
+    import {
+      updateProfile,
+      updatePassword,
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    function loadSettings() {
-      const s = localStorage.getItem(STORE);
-      return s ? { ...DEFAULTS, ...JSON.parse(s) } : { ...DEFAULTS };
-    }
-    function persist(settings) { localStorage.setItem(STORE, JSON.stringify(settings)); }
+    /* ── Auth ── */
+    const user = await requireAuth('index.html');
+    document.getElementById('pageLoader').classList.add('hidden');
+    setTimeout(() => document.getElementById('pageLoader').remove(), 500);
 
-    // ── Populate form ──
-    function populate() {
-      const s = loadSettings();
+    const dispName = user.displayName || user.email.split('@')[0] || 'Admin';
+    document.getElementById('sidebarName').textContent  = dispName;
+    document.getElementById('sidebarEmail').textContent = user.email;
+    document.getElementById('sidebarAvatar').textContent = dispName.charAt(0).toUpperCase();
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await logoutUser(); window.location.href = 'index.html';
+    });
+
+    /* ── Load settings from Firestore ── */
+    async function populate() {
+      const s = await loadSettings();
+
       document.getElementById('sLogoUrl').value     = s.logoUrl     || '';
       document.getElementById('sSiteName').value    = s.siteName    || '';
       document.getElementById('sSiteTagline').value = s.siteTagline || '';
@@ -826,76 +675,101 @@
       document.getElementById('sHeroSub').value      = s.heroSub     || '';
       document.getElementById('sCtaLabel').value     = s.ctaLabel    || '';
       document.getElementById('sCtaLink').value      = s.ctaLink     || '';
-      document.getElementById('tShowEvents').checked    = !!s.showEvents;
-      document.getElementById('tShowNews').checked      = !!s.showNews;
-      document.getElementById('tShowDirectory').checked = !!s.showDirectory;
-      document.getElementById('tShowCounter').checked   = !!s.showCounter;
-      document.getElementById('tShowCta').checked       = !!s.showCta;
+      document.getElementById('tShowEvents').checked    = s.showEvents !== false;
+      document.getElementById('tShowNews').checked      = s.showNews !== false;
+      document.getElementById('tShowDirectory').checked = s.showDirectory !== false;
+      document.getElementById('tShowCounter').checked   = s.showCounter !== false;
+      document.getElementById('tShowCta').checked       = s.showCta !== false;
+
+      // Account fields
+      document.getElementById('aEmail').value       = user.email || '';
+      document.getElementById('aDisplayName').value = user.displayName || '';
+
       previewLogo();
-      renderAccounts();
     }
 
-    // ── Save all ──
-    function saveAll() {
-      const s = {
-        logoUrl:      document.getElementById('sLogoUrl').value.trim(),
-        siteName:     document.getElementById('sSiteName').value.trim(),
-        siteTagline:  document.getElementById('sSiteTagline').value.trim(),
-        colorPrimary: document.getElementById('sColorPrimaryHex').value.trim(),
-        colorAccent:  document.getElementById('sColorAccentHex').value.trim(),
-        colorText:    document.getElementById('sColorTextHex').value.trim(),
-        foundedYear:  document.getElementById('sFoundedYear').value.trim(),
-        college:      document.getElementById('sCollege').value.trim(),
-        about:        document.getElementById('sAbout').value.trim(),
-        mission:      document.getElementById('sMission').value.trim(),
-        vision:       document.getElementById('sVision').value.trim(),
-        address:      document.getElementById('sAddress').value.trim(),
-        email:        document.getElementById('sEmail').value.trim(),
-        phone:        document.getElementById('sPhone').value.trim(),
-        facebook:     document.getElementById('sFacebook').value.trim(),
-        instagram:    document.getElementById('sInstagram').value.trim(),
-        twitter:      document.getElementById('sTwitter').value.trim(),
-        tiktok:       document.getElementById('sTiktok').value.trim(),
-        discord:      document.getElementById('sDiscord').value.trim(),
-        twitch:       document.getElementById('sTwitch').value.trim(),
-        heroBg:       document.getElementById('sHeroBg').value.trim(),
-        heroHeadline: document.getElementById('sHeroHeadline').value.trim(),
-        heroSub:      document.getElementById('sHeroSub').value.trim(),
-        ctaLabel:     document.getElementById('sCtaLabel').value.trim(),
-        ctaLink:      document.getElementById('sCtaLink').value.trim(),
+    /* ── Save all settings to Firestore ── */
+    async function saveAll() {
+      const saveBtn = document.getElementById('saveAllBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving…';
+
+      const data = {
+        logoUrl:       document.getElementById('sLogoUrl').value.trim(),
+        siteName:      document.getElementById('sSiteName').value.trim(),
+        siteTagline:   document.getElementById('sSiteTagline').value.trim(),
+        colorPrimary:  document.getElementById('sColorPrimaryHex').value.trim(),
+        colorAccent:   document.getElementById('sColorAccentHex').value.trim(),
+        colorText:     document.getElementById('sColorTextHex').value.trim(),
+        foundedYear:   document.getElementById('sFoundedYear').value.trim(),
+        college:       document.getElementById('sCollege').value.trim(),
+        about:         document.getElementById('sAbout').value.trim(),
+        mission:       document.getElementById('sMission').value.trim(),
+        vision:        document.getElementById('sVision').value.trim(),
+        address:       document.getElementById('sAddress').value.trim(),
+        email:         document.getElementById('sEmail').value.trim(),
+        phone:         document.getElementById('sPhone').value.trim(),
+        facebook:      document.getElementById('sFacebook').value.trim(),
+        instagram:     document.getElementById('sInstagram').value.trim(),
+        twitter:       document.getElementById('sTwitter').value.trim(),
+        tiktok:        document.getElementById('sTiktok').value.trim(),
+        discord:       document.getElementById('sDiscord').value.trim(),
+        twitch:        document.getElementById('sTwitch').value.trim(),
+        heroBg:        document.getElementById('sHeroBg').value.trim(),
+        heroHeadline:  document.getElementById('sHeroHeadline').value.trim(),
+        heroSub:       document.getElementById('sHeroSub').value.trim(),
+        ctaLabel:      document.getElementById('sCtaLabel').value.trim(),
+        ctaLink:       document.getElementById('sCtaLink').value.trim(),
         showEvents:    document.getElementById('tShowEvents').checked,
         showNews:      document.getElementById('tShowNews').checked,
         showDirectory: document.getElementById('tShowDirectory').checked,
         showCounter:   document.getElementById('tShowCounter').checked,
         showCta:       document.getElementById('tShowCta').checked,
       };
-      persist(s);
-      logActivity('saved site settings', 'blue');
-      showToast('✓ Settings saved successfully.', 'success');
+
+      const ok = await saveSettings(data);
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save All Changes';
+
+      if (ok) {
+        await logActivity('saved site settings', 'blue');
+        showToast('✓ Settings saved to Firestore.', 'success');
+      } else {
+        showToast('Save failed. Please try again.', 'error');
+      }
     }
 
-    function resetAll() {
-      askConfirm('Reset all settings?', 'This will restore all settings to their default values.', () => {
-        localStorage.removeItem(STORE);
-        populate();
-        showToast('Settings reset to defaults.', 'success');
-      });
+    /* ── Reset to defaults ── */
+    async function resetToDefaults() {
+      askConfirm(
+        'Reset all settings?',
+        'This will restore all site settings to their default values in Firestore.',
+        async () => {
+          const ok = await saveSettings(SETTINGS_DEFAULTS);
+          if (ok) { await populate(); showToast('Settings reset to defaults.', 'success'); }
+          else    { showToast('Reset failed.', 'error'); }
+        }
+      );
     }
 
-    // ── Color helpers ──
+    /* ── Color helpers ── */
     function setColor(pickerId, hexId, value) {
       document.getElementById(pickerId).value = value;
       document.getElementById(hexId).value    = value;
+    }
+
+    function wireColorSync(pickerId, hexId) {
       document.getElementById(pickerId).addEventListener('input', () => {
         document.getElementById(hexId).value = document.getElementById(pickerId).value;
       });
-    }
-    function syncColor(pickerId, hexId) {
-      const hex = document.getElementById(hexId).value.trim();
-      if (/^#[0-9A-Fa-f]{6}$/.test(hex)) document.getElementById(pickerId).value = hex;
+      document.getElementById(hexId).addEventListener('input', () => {
+        const hex = document.getElementById(hexId).value.trim();
+        if (/^#[0-9A-Fa-f]{6}$/.test(hex))
+          document.getElementById(pickerId).value = hex;
+      });
     }
 
-    // ── Logo preview ──
+    /* ── Logo preview ── */
     function previewLogo() {
       const url = document.getElementById('sLogoUrl').value.trim();
       const img = document.getElementById('logoPreview');
@@ -908,112 +782,119 @@
       }
     }
 
-    // ── Accounts ──
-    const USERS_STORE = 'access_users';
-    const DEFAULT_USERS = [{ username:'access_admin', password:'BUACCeSS2025!', role:'admin', name:'Admin' }];
-    function loadUsers() { const u=localStorage.getItem(USERS_STORE); return u?JSON.parse(u):DEFAULT_USERS; }
-    function saveUsers(u){ localStorage.setItem(USERS_STORE,JSON.stringify(u)); }
-
-    function renderAccounts() {
-      const users = loadUsers();
-      const list  = document.getElementById('accountList');
-      if (users.length === 0) { list.innerHTML='<p style="font-size:.82rem;color:var(--muted)">No accounts. Add one below.</p>'; return; }
-      list.innerHTML = users.map((u,i) => `
-        <div class="account-item">
-          <div class="account-avatar">${(u.name||u.username||'?').charAt(0).toUpperCase()}</div>
-          <div>
-            <div class="account-name">${u.name||u.username}</div>
-            <div class="account-uname">@${u.username}</div>
-          </div>
-          <span class="account-role">${u.role||'admin'}</span>
-          <div class="account-actions">
-            <button class="icon-btn del" onclick="removeAccount(${i})" title="Remove">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-            </button>
-          </div>
-        </div>`).join('');
+    /* ── Account: update display name ── */
+    async function updateUserProfile() {
+      const name = document.getElementById('aDisplayName').value.trim();
+      if (!name) { showToast('Display name cannot be empty.', 'error'); return; }
+      try {
+        await updateProfile(auth.currentUser, { displayName: name });
+        document.getElementById('sidebarName').textContent  = name;
+        document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
+        showToast('Profile updated.', 'success');
+      } catch (err) {
+        showToast('Update failed: ' + err.message, 'error');
+      }
     }
 
-    function removeAccount(idx) {
-      const users = loadUsers();
-      if (users.length === 1) { showToast('Cannot remove the last admin account.', 'error'); return; }
-      askConfirm('Remove account?', `This will remove @${users[idx].username} from admin access.`, () => {
-        users.splice(idx,1); saveUsers(users); renderAccounts();
-        showToast('Account removed.','success');
-      });
+    /* ── Account: change password ── */
+    async function changePassword() {
+      const pw1 = document.getElementById('aNewPw').value;
+      const pw2 = document.getElementById('aConfirmPw').value;
+      if (!pw1) { showToast('Enter a new password.', 'error'); return; }
+      if (pw1.length < 8) { showToast('Password must be at least 8 characters.', 'error'); return; }
+      if (pw1 !== pw2) { showToast('Passwords do not match.', 'error'); return; }
+      try {
+        await updatePassword(auth.currentUser, pw1);
+        document.getElementById('aNewPw').value     = '';
+        document.getElementById('aConfirmPw').value = '';
+        showToast('Password changed successfully.', 'success');
+      } catch (err) {
+        // Firebase requires recent login for password change
+        if (err.code === 'auth/requires-recent-login') {
+          showToast('Please sign out and sign back in before changing your password.', 'error');
+        } else {
+          showToast('Password change failed: ' + err.message, 'error');
+        }
+      }
     }
 
-    let editAccountIdx = null;
-    function openAccountModal(idx) {
-      editAccountIdx = idx != null ? idx : null;
-      document.getElementById('accountModalTitle').textContent = 'Add Admin Account';
-      ['aName','aUsername','aPassword'].forEach(i => document.getElementById(i).value='');
-      document.getElementById('aRole').value='admin';
-      document.getElementById('accountModal').classList.add('open');
-    }
-    function closeAccountModal() { document.getElementById('accountModal').classList.remove('open'); }
-    function saveAccount() {
-      const name     = document.getElementById('aName').value.trim();
-      const username = document.getElementById('aUsername').value.trim();
-      const password = document.getElementById('aPassword').value;
-      const role     = document.getElementById('aRole').value;
-      if (!name||!username||!password) { showToast('All fields are required.','error'); return; }
-      if (password.length < 8) { showToast('Password must be at least 8 characters.','error'); return; }
-      const users = loadUsers();
-      if (users.find(u => u.username === username)) { showToast('Username already exists.','error'); return; }
-      users.push({ name, username, password, role });
-      saveUsers(users); closeAccountModal(); renderAccounts();
-      showToast(`Account @${username} added.`, 'success');
+    /* ── Danger zone: clear collection ── */
+    async function clearCollection(colName, label) {
+      askConfirm(
+        `Clear all ${label}?`,
+        `This will permanently delete all documents in the "${colName}" collection from Firestore. This cannot be undone.`,
+        async () => {
+          const docs = await getAll(colName);
+          await Promise.all(docs.map(d => deleteDocument(colName, d.id)));
+          await logActivity(`cleared all ${label}`, 'yellow');
+          showToast(`All ${label} deleted.`, 'success');
+        }
+      );
     }
 
-    // ── Danger zone ──
-    function clearStore(key, msg) {
-      askConfirm('Are you sure?', 'This permanently deletes all data in this section.', () => {
-        localStorage.removeItem(key); showToast(msg,'success');
-      });
-    }
-    function clearDirectory() {
-      askConfirm('Clear directory?','This removes all officers and terms.', () => {
-        localStorage.removeItem('access_directory');
-        localStorage.removeItem('access_terms');
-        showToast('Officer directory cleared.','success');
-      });
-    }
-
-    // ── Confirm helper ──
-    let confirmCallback = null;
+    /* ── Confirm helper ── */
     function askConfirm(title, desc, cb) {
       document.getElementById('confirmTitle').textContent = title;
       document.getElementById('confirmDesc').textContent  = desc;
-      confirmCallback = cb;
       document.getElementById('confirmModal').classList.add('open');
-      document.getElementById('confirmBtn').onclick = () => { closeConfirm(); cb(); };
-    }
-    function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); confirmCallback=null; }
-
-    // ── Settings sidenav scroll ──
-    function scrollTo(id, btn) {
-      document.querySelectorAll('.settings-nav-item').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(id).scrollIntoView({ behavior:'smooth', block:'start' });
+      const okBtn = document.getElementById('confirmOkBtn');
+      const handler = async () => {
+        document.getElementById('confirmModal').classList.remove('open');
+        okBtn.removeEventListener('click', handler);
+        await cb();
+      };
+      okBtn.addEventListener('click', handler);
     }
 
-    // ── Toast ──
-    function showToast(msg,type='') {
-      const t=document.getElementById('toast');
-      t.textContent=msg; t.className=`toast ${type}`; t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'),3000);
+    /* ── Settings sidenav ── */
+    document.querySelectorAll('.settings-nav-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.settings-nav-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    /* ── Toast ── */
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast ${type}`;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
     }
 
-    // ── Activity log ──
-    function logActivity(action,color='blue') {
-      const session=JSON.parse(localStorage.getItem('access_session')||'{}');
-      const log=JSON.parse(localStorage.getItem('access_activity')||'[]');
-      log.unshift({actor:session.name||'Admin',action,color,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
-      localStorage.setItem('access_activity',JSON.stringify(log.slice(0,50)));
-    }
+    /* ── Wire all listeners ── */
+    document.getElementById('saveAllBtn').addEventListener('click', saveAll);
+    document.getElementById('resetBtn').addEventListener('click', resetToDefaults);
+    document.getElementById('updateProfileBtn').addEventListener('click', updateUserProfile);
+    document.getElementById('changePwBtn').addEventListener('click', changePassword);
+    document.getElementById('confirmCancelBtn').addEventListener('click', () => {
+      document.getElementById('confirmModal').classList.remove('open');
+    });
+    document.getElementById('sLogoUrl').addEventListener('input', previewLogo);
 
-    populate();
+    wireColorSync('sColorPrimary','sColorPrimaryHex');
+    wireColorSync('sColorAccent', 'sColorAccentHex');
+    wireColorSync('sColorText',   'sColorTextHex');
+
+    // Danger zone buttons
+    const clearMap = {
+      events:    [COLS.EVENTS,    'events'],
+      news:      [COLS.NEWS,      'news & projects'],
+      directory: [COLS.DIRECTORY, 'officer directory'],
+      settings:  [COLS.SETTINGS,  'settings'],
+    };
+    document.querySelectorAll('[data-clear]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const [col, label] = clearMap[btn.dataset.clear];
+        clearCollection(col, label);
+      });
+    });
+
+    /* ── Init ── */
+    await populate();
   </script>
 </body>
 </html>
