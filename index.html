@@ -24,8 +24,7 @@
       --serif:  'Fraunces', Georgia, serif;
       --sans:   'Outfit', sans-serif;
       --r-sm: 6px; --r-md: 12px; --r-lg: 20px;
-      --max: 1160px;
-      --nav-h: 70px;
+      --max: 1160px; --nav-h: 70px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -91,6 +90,7 @@
     .badge-upcoming { background: var(--blue-pale); color: var(--blue-mid); }
     .badge-ongoing  { background: #e6f5ee; color: #1a7a46; }
     .badge-past     { background: var(--off); color: var(--ink-muted); }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
 
     /* ── PILLARS ── */
     .pillars { padding: 6rem 0; background: var(--off); }
@@ -106,7 +106,6 @@
 
     /* ── EVENTS ── */
     .events { padding: 6rem 0; background: var(--off); }
-    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
     .events-list { display: flex; flex-direction: column; gap: 1rem; }
     .event-card { display: grid; grid-template-columns: 90px 1fr auto; gap: 1.5rem; align-items: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.5rem; transition: box-shadow .2s, transform .2s; color: inherit; }
     .event-card:hover { transform: translateX(4px); box-shadow: 0 8px 24px rgba(10,36,99,.08); }
@@ -115,7 +114,10 @@
     .event-day   { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--white); line-height: 1; }
     .event-title   { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--blue); margin: .4rem 0 .3rem; }
     .event-excerpt { font-size: .83rem; color: var(--ink-muted); line-height: 1.55; }
-    .event-img { width: 100px; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-md); background: var(--blue-pale); flex-shrink: 0; }
+    .event-info    { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-top: .3rem; }
+    .event-info-item { display: flex; align-items: center; gap: 4px; font-size: .75rem; color: var(--ink-muted); }
+    .event-info-item svg { width: 11px; height: 11px; opacity: .6; }
+    .event-cover { width: 100px; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-md); background: var(--blue-pale); flex-shrink: 0; }
 
     /* ── MISSION SPLIT ── */
     .mission-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
@@ -132,20 +134,20 @@
     /* ── NEWS ── */
     .news { padding: 6rem 0; background: var(--white); }
     .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
-    .news-card { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; background: var(--white); transition: transform .25s, box-shadow .25s; }
+    .news-card { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; background: var(--white); transition: transform .25s, box-shadow .25s; cursor: pointer; display: flex; flex-direction: column; }
     .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(10,36,99,.09); }
     .news-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--blue-pale); display: block; }
-    .news-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,var(--blue-pale),#d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
-    .news-body    { padding: 1.25rem 1.5rem 1.5rem; }
-    .news-meta    { display: flex; align-items: center; gap: 8px; margin-bottom: .6rem; font-size: .75rem; color: var(--ink-muted); }
-    .news-title   { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; color: var(--blue); line-height: 1.3; margin-bottom: .5rem; }
-    .news-excerpt { font-size: .83rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1rem; }
+    .news-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--blue-pale), #d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .news-body    { padding: 1.25rem 1.5rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+    .news-meta    { display: flex; align-items: center; gap: 8px; font-size: .75rem; color: var(--ink-muted); }
+    .news-title   { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; color: var(--blue); line-height: 1.3; }
+    .news-excerpt { font-size: .83rem; color: var(--ink-muted); line-height: 1.6; flex: 1; margin-bottom: .5rem; }
 
     /* ── DIRECTORY ── */
     .directory { padding: 6rem 0; background: var(--off); }
     .directory-header { text-align: center; margin-bottom: 1.5rem; }
     .dir-tabs { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
-    .dir-tab { padding: .4rem 1rem; border-radius: 99px; border: 1.5px solid var(--border); background: var(--white); font-size: .78rem; font-weight: 600; color: var(--ink-muted); cursor: pointer; transition: all .18s; }
+    .dir-tab { padding: .4rem 1rem; border-radius: 99px; border: 1.5px solid var(--border); background: var(--white); font-size: .78rem; font-weight: 600; color: var(--ink-muted); cursor: pointer; transition: all .18s; font-family: var(--sans); }
     .dir-tab:hover  { border-color: var(--blue-light); color: var(--blue); }
     .dir-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
     .officers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 1.25rem; }
@@ -153,7 +155,7 @@
     .officer-card:hover { box-shadow: 0 8px 24px rgba(10,36,99,.09); transform: translateY(-2px); }
     .officer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
     .officer-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); margin: 0 auto .75rem; display: block; }
-    .officer-init { width: 72px; height: 72px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--blue-mid); margin: 0 auto .75rem; }
+    .officer-init  { width: 72px; height: 72px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--blue-mid); margin: 0 auto .75rem; }
     .officer-name { font-family: var(--serif); font-size: .92rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: .25rem; }
     .officer-role { font-size: .75rem; color: var(--ink-muted); font-weight: 500; }
 
@@ -197,7 +199,7 @@
       .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--blue); padding: 1rem 1.5rem 1.5rem; border-bottom: 3px solid var(--yellow); z-index: 199; }
       .nav-links.open a { padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
       .event-card { grid-template-columns: 72px 1fr; }
-      .event-img  { display: none; }
+      .event-cover { display: none; }
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; text-align: center; }
     }
@@ -216,11 +218,11 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active" data-section="hero">Home</a></li>
-        <li><a href="events.html"    data-section="events">Events</a></li>
-        <li><a href="news.html"      data-section="news">News</a></li>
+        <li><a href="index.html"    class="active" data-section="hero">Home</a></li>
+        <li><a href="events.html"   data-section="events">Events</a></li>
+        <li><a href="news.html"     data-section="news">News</a></li>
         <li><a href="directory.html" data-section="directory">Directory</a></li>
-        <li><a href="#about"         data-section="about">About</a></li>
+        <li><a href="#about"        data-section="about">About</a></li>
       </ul>
       <div class="nav-actions">
         <a href="admin/index.html" class="btn-nav-outline">Admin</a>
@@ -229,9 +231,8 @@
     </div>
   </nav>
 
-
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="hero">
     <div class="hero-bg" id="heroBg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-body">
@@ -247,8 +248,7 @@
     <div class="hero-scroll"><div class="hero-scroll-line"></div><span>SCROLL</span></div>
   </section>
 
-
-  <!-- PILLARS (static — edit directly in HTML) -->
+  <!-- PILLARS (static) -->
   <section class="pillars" id="pillars">
     <div class="wrap">
       <div class="pillars-header">
@@ -266,20 +266,18 @@
     </div>
   </section>
 
-
-  <!-- EVENTS (dynamic) -->
+  <!-- EVENTS (dynamic — hidden until data loads) -->
   <section class="events" id="events" style="display:none">
     <div class="wrap">
       <div class="section-header">
         <div><p class="section-eyebrow">Mark Your Calendars</p><h2 class="section-title">Upcoming <em>Events</em></h2></div>
-        <a href="events.html" style="font-size:.82rem;font-weight:600;color:var(--blue-mid);border-bottom:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s,gap .2s" onmouseover="this.style.borderBottomColor='var(--blue-mid)';this.style.gap='10px'" onmouseout="this.style.borderBottomColor='transparent';this.style.gap='6px'">View All Events →</a>
+        <a href="events.html" class="link-arrow">View All Events</a>
       </div>
       <div class="events-list" id="eventsEl"></div>
     </div>
   </section>
 
-
-  <!-- MISSION SPLIT (text from settings) -->
+  <!-- MISSION SPLIT -->
   <div class="mission-split" id="about">
     <div class="mission-photo" id="missionPhoto"></div>
     <div class="mission-text">
@@ -290,20 +288,18 @@
     </div>
   </div>
 
-
-  <!-- NEWS (dynamic) -->
+  <!-- NEWS (dynamic — hidden until data loads) -->
   <section class="news" id="news" style="display:none">
     <div class="wrap">
       <div class="section-header">
         <div><p class="section-eyebrow">News &amp; Announcements</p><h2 class="section-title">Latest <em>Updates</em></h2></div>
-        <a href="news.html" style="font-size:.82rem;font-weight:600;color:var(--blue-mid);border-bottom:1px solid transparent;display:inline-flex;align-items:center;gap:6px;transition:border-color .2s,gap .2s" onmouseover="this.style.borderBottomColor='var(--blue-mid)';this.style.gap='10px'" onmouseout="this.style.borderBottomColor='transparent';this.style.gap='6px'">View All Posts →</a>
+        <a href="news.html" class="link-arrow">View All Posts</a>
       </div>
       <div class="news-grid" id="newsEl"></div>
     </div>
   </section>
 
-
-  <!-- DIRECTORY (dynamic) -->
+  <!-- DIRECTORY (dynamic — hidden until data loads) -->
   <section class="directory" id="directory" style="display:none">
     <div class="wrap">
       <div class="directory-header">
@@ -315,16 +311,14 @@
     </div>
   </section>
 
-
   <!-- CTA BANNER (dynamic) -->
   <section class="cta-banner" id="cta" style="display:none">
     <div class="wrap">
       <h2>Be One of Us</h2>
-      <p>Join a network of passionate Computer Science students. Get access to workshops, events, mentorship, and a community that grows together.</p>
+      <p>Join a network of passionate CS students. Get access to workshops, events, mentorship, and a community that grows together.</p>
       <a class="btn-cta" id="ctaBtn" href="register.html">Apply for Membership</a>
     </div>
   </section>
-
 
   <!-- FOOTER -->
   <footer>
@@ -357,77 +351,58 @@
     </div>
   </footer>
 
+  <script type="module">
+    import {
+      loadSettings, getAll, COLS,
+    } from "./firebase-config.js";
 
-  <script>
-    /* ─────────────────────────────────────────────
-       SETTINGS DEFAULTS (mirrors admin/settings.html)
-    ───────────────────────────────────────────── */
-    const DEFAULTS = {
-      logoUrl:'logo.png', siteName:'BU ACCeSS',
-      colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E',
-      foundedYear:'2015', college:'Bicol University — College of Science',
-      about:'BU ACCeSS creates space for every CS student to grow — technically, personally, and professionally.',
-      mission:'The Academic Consortium of Computer Science Students shall promote the sustainable development of Computer Science in Bicol University.',
-      address:'2nd Floor, College of Science Building 2, Bicol University, Legazpi City',
-      email:'bu_access@bicol-u.edu.ph', phone:'+69548754621',
-      facebook:'https://www.facebook.com/BUACCeSS2015',
-      instagram:'https://www.instagram.com/bu_access/',
-      twitter:'https://twitter.com/bu_access',
-      tiktok:'https://www.tiktok.com/@bu_access',
-      discord:'https://discord.gg/RXbrhwU5Df',
-      twitch:'https://www.twitch.tv/bu_access',
-      heroBg:'', heroHeadline:'Academic Consortium of<br/><em>Computer Science</em> Students',
-      heroSub:'Empowering CS students through community, sustainable development, and meaningful experiences since 2015.',
-      ctaLabel:'Join the Org', ctaLink:'register.html',
-      showEvents:true, showNews:true, showDirectory:true, showCounter:true, showCta:true,
-    };
+    /* ─────────────────────────────────────────
+       APPLY SETTINGS from Firestore
+    ───────────────────────────────────────── */
+    async function applySettings() {
+      const s = await loadSettings();
 
-    function S() {
-      try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem('access_settings')||'{}') }; }
-      catch(e) { return { ...DEFAULTS }; }
-    }
-
-    /* ─────────────────────────────────────────────
-       APPLY SETTINGS
-    ───────────────────────────────────────────── */
-    function applySettings() {
-      const s = S();
-
-      // Color tokens
+      // CSS token overrides
       const r = document.documentElement;
       if (s.colorPrimary) r.style.setProperty('--blue',   s.colorPrimary);
       if (s.colorAccent)  r.style.setProperty('--yellow', s.colorAccent);
       if (s.colorText)    r.style.setProperty('--ink',    s.colorText);
 
-      // Logo + brand name
+      // Logo
       const logo = s.logoUrl || 'logo.png';
       ['navLogo','heroLogo','footerLogo'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.src = logo; el.style.display = 'block'; }
       });
-      set('navBrandName', s.siteName || 'BU ACCeSS');
-      set('footerName',   s.siteName || 'BU ACCeSS');
 
-      // Hero eyebrow — wired to college setting
-      set('heroEyebrow', s.college || 'Bicol University — College of Science');
+      // Brand name
+      setText('navBrandName', s.siteName || 'BU ACCeSS');
+      setText('footerName',   s.siteName || 'BU ACCeSS');
 
-      // Hero
+      // Hero eyebrow — college field
+      setText('heroEyebrow', s.college || 'Bicol University — College of Science');
+
+      // Hero background
       const bg = document.getElementById('heroBg');
       if (s.heroBg) { bg.style.backgroundImage = `url('${s.heroBg}')`; }
       else { bg.classList.add('hero-bg-fallback'); }
-      setHTML('heroH1',  s.heroHeadline || DEFAULTS.heroHeadline);
-      set('heroSub', s.heroSub || DEFAULTS.heroSub);
+
+      // Hero content
+      setHTML('heroH1', s.heroHeadline || 'Academic Consortium of<br/><em>Computer Science</em> Students');
+      setText('heroSub', s.heroSub || '');
+
+      // CTA buttons
       setHref('heroCtaBtn', s.ctaLink || 'register.html', s.ctaLabel || 'Join the Org');
       setHref('navCtaBtn',  s.ctaLink || 'register.html', s.ctaLabel || 'Join Us');
 
-      // Mission photo — reuse hero bg or fallback
+      // Mission section
       const mp = document.getElementById('missionPhoto');
       if (s.heroBg) { mp.style.backgroundImage = `url('${s.heroBg}')`; }
       else { mp.classList.add('mission-photo-fallback'); }
-      set('missionText', s.mission || DEFAULTS.mission);
+      setText('missionText', s.mission || '');
 
       // Footer
-      set('footerDesc', s.about || DEFAULTS.about);
+      setText('footerDesc', s.about || '');
       document.getElementById('footerYear').textContent = new Date().getFullYear();
 
       // Footer contact
@@ -444,167 +419,196 @@
       const socialsEl = document.getElementById('footerSocials');
       if (socialsEl) {
         const list = [
-          { k:'facebook',  svg:`<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>`,                                                fill:true  },
+          { k:'facebook',  svg:`<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>`, fill:true },
           { k:'instagram', svg:`<rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>`, fill:false },
           { k:'twitter',   svg:`<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>`, fill:true },
           { k:'tiktok',    svg:`<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.77.61 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 12.67 0V8.69a8.27 8.27 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/>`, fill:true },
-          { k:'discord',   svg:`<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.1.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>`, fill:true },
+          { k:'discord',   svg:`<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.1.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>`, fill:true },
           { k:'twitch',    svg:`<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>`, fill:true },
         ];
         socialsEl.innerHTML = list.filter(x => s[x.k]).map(x => `
           <a href="${s[x.k]}" target="_blank" rel="noopener" class="footer-social-btn">
-            <svg viewBox="0 0 24 24" ${x.fill?'fill="currentColor"':'fill="none" stroke="currentColor" stroke-width="2"'}>${x.svg}</svg>
+            <svg viewBox="0 0 24 24" ${x.fill ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="2"'}>${x.svg}</svg>
           </a>`).join('');
       }
 
       // Counter visibility
-      if (!s.showCounter) { const cw=document.getElementById('counterWrap'); if(cw) cw.style.display='none'; }
-
-      // CTA — show unless explicitly disabled (default true; fresh installs show it)
-      if (s.showCta !== false) {
-        const ctaSec = document.getElementById('cta');
-        if (ctaSec) ctaSec.style.display = 'block';
-        setHref('ctaBtn', s.ctaLink||'register.html', s.ctaLabel||'Apply for Membership');
+      if (s.showCounter === false) {
+        const cw = document.getElementById('counterWrap');
+        if (cw) cw.style.display = 'none';
       }
+
+      // CTA banner
+      if (s.showCta !== false) {
+        document.getElementById('cta').style.display = 'block';
+        setHref('ctaBtn', s.ctaLink || 'register.html', s.ctaLabel || 'Apply for Membership');
+      }
+
+      return s;
     }
 
-    /* ─────────────────────────────────────────────
-       SCROLL-SPY
-    ───────────────────────────────────────────── */
-    function initScrollSpy() {
-      const sectionIds = ['hero','pillars','events','about','news','directory','cta'];
-      const links = document.querySelectorAll('#navLinks a[data-section]');
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const id = entry.target.id;
-          links.forEach(link => {
-            const sec = link.getAttribute('data-section');
-            const active = sec === id || (id === 'hero' && link.getAttribute('href') === 'index.html');
-            link.classList.toggle('active', active);
-          });
-        });
-      }, { rootMargin: `-70px 0px -55% 0px`, threshold: 0 });
-      sectionIds.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    }
+    /* ─────────────────────────────────────────
+       RENDER EVENTS from Firestore
+    ───────────────────────────────────────── */
+    async function renderEvents(showEvents) {
+      if (showEvents === false) return;
 
-    /* ─────────────────────────────────────────────
-       RENDER EVENTS
-    ───────────────────────────────────────────── */
-    function renderEvents() {
-      const s = S();
-      if (!s.showEvents) return;
-      const all = JSON.parse(localStorage.getItem('access_events')||'[]');
+      const all   = await getAll(COLS.EVENTS, { orderByField: 'date', orderDir: 'asc' });
       const today = new Date(); today.setHours(0,0,0,0);
-      const items = all
-        .filter(e => e.status !== 'draft' && e.date && new Date(e.date) >= today)
-        .sort((a,b) => new Date(a.date)-new Date(b.date))
-        .slice(0,5);
-      if (!items.length) return;
+
+      const upcoming = all.filter(e => {
+        if (e.status === 'draft' || !e.date) return false;
+        return new Date(e.date) >= today;
+      }).slice(0, 5);
+
+      if (!upcoming.length) return;
       document.getElementById('events').style.display = 'block';
-      document.getElementById('eventsEl').innerHTML = items.map(e => {
-        const d = new Date(e.date);
-        const badgeCls = e.status==='ongoing' ? 'badge-ongoing' : 'badge-upcoming';
-        const imgHTML = e.image ? `<img class="event-img" src="${e.image}" alt="" onerror="this.style.display='none'"/>` : '';
+
+      document.getElementById('eventsEl').innerHTML = upcoming.map(e => {
+        const d     = new Date(e.date);
+        const month = d.toLocaleString('default',{month:'short'}).toUpperCase();
+        const day   = d.getDate();
+        const badgeCls = e.status === 'ongoing' ? 'badge-ongoing' : 'badge-upcoming';
+        const imgHTML  = e.image
+          ? `<img class="event-cover" src="${e.image}" alt="${e.title}" onerror="this.style.display='none'"/>`
+          : '';
         return `
-          <a class="event-card" href="${e.link||'#'}">
+          <a class="event-card" href="${e.link||'events.html'}">
             <div class="event-date-box">
-              <div class="event-month">${d.toLocaleString('default',{month:'short'}).toUpperCase()}</div>
-              <div class="event-day">${d.getDate()}</div>
+              <div class="event-month">${month}</div>
+              <div class="event-day">${day}</div>
             </div>
             <div>
-              <div style="margin-bottom:.4rem"><span class="badge ${badgeCls}">${e.status||'upcoming'}</span>${e.category?` <span class="badge badge-blue">${e.category}</span>`:''}</div>
+              <div style="margin-bottom:.4rem">
+                <span class="badge ${badgeCls}">${e.status||'upcoming'}</span>
+                ${e.category ? `<span class="badge badge-blue" style="margin-left:4px">${e.category}</span>` : ''}
+              </div>
               <div class="event-title">${e.title||'Untitled'}</div>
-              <p class="event-excerpt">${(e.desc||e.location||'').substring(0,120)}</p>
+              <p class="event-excerpt">${(e.desc||'').substring(0,120)}</p>
+              <div class="event-info">
+                ${e.date ? `<span class="event-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${d.toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'})}</span>` : ''}
+                ${e.location ? `<span class="event-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${e.location}</span>` : ''}
+              </div>
             </div>
             ${imgHTML}
           </a>`;
       }).join('');
     }
 
-    /* ─────────────────────────────────────────────
-       RENDER NEWS
-    ───────────────────────────────────────────── */
-    function renderNews() {
-      const s = S();
-      if (!s.showNews) return;
-      const items = JSON.parse(localStorage.getItem('access_news')||'[]')
-        .filter(p => p.status==='published')
-        .sort((a,b) => (b.date||b.createdAt||'')>(a.date||a.createdAt||'')?1:-1)
-        .slice(0,3);
-      if (!items.length) return;
+    /* ─────────────────────────────────────────
+       RENDER NEWS from Firestore
+    ───────────────────────────────────────── */
+    async function renderNews(showNews) {
+      if (showNews === false) return;
+
+      const all = await getAll(COLS.NEWS, { orderByField: 'date', orderDir: 'desc' });
+      const published = all.filter(p => p.status === 'published').slice(0, 3);
+
+      if (!published.length) return;
       document.getElementById('news').style.display = 'block';
+
       const typeBadge = { news:'badge-blue', project:'badge-green', editorial:'badge-yellow' };
-      document.getElementById('newsEl').innerHTML = items.map(p => {
-        const dateStr = p.date ? new Date(p.date).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}) : '';
+      const typeEmoji = { news:'📰', project:'💻', editorial:'✍️' };
+
+      document.getElementById('newsEl').innerHTML = published.map(p => {
+        const dateStr = p.date
+          ? new Date(p.date).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'})
+          : '';
         const cover = p.cover
-          ? `<img class="news-cover" src="${p.cover}" alt="${p.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="news-cover-ph" style="display:none">${p.type==='project'?'💻':p.type==='editorial'?'✍️':'📰'}</div>`
-          : `<div class="news-cover-ph">${p.type==='project'?'💻':p.type==='editorial'?'✍️':'📰'}</div>`;
+          ? `<img class="news-cover" src="${p.cover}" alt="${p.title}"
+               onerror="this.outerHTML='<div class=news-cover-ph>${typeEmoji[p.type]||'📰'}</div>'"/>`
+          : `<div class="news-cover-ph">${typeEmoji[p.type]||'📰'}</div>`;
         return `
-          <div class="news-card">
+          <a class="news-card" href="news.html?post=${p.id}">
             ${cover}
             <div class="news-body">
-              <div class="news-meta"><span class="badge ${typeBadge[p.type]||'badge-blue'}">${p.type||'news'}</span>${dateStr?`<span>${dateStr}</span>`:''}</div>
+              <div class="news-meta">
+                <span class="badge ${typeBadge[p.type]||'badge-blue'}">${p.type||'news'}</span>
+                ${dateStr ? `<span>${dateStr}</span>` : ''}
+              </div>
               <div class="news-title">${p.title||'Untitled'}</div>
-              <p class="news-excerpt">${(p.excerpt||'').substring(0,140)}</p>
-              ${p.link?`<a href="${p.link}" class="link-arrow" target="_blank" rel="noopener">Read More</a>`:''}
+              <p class="news-excerpt">${(p.excerpt||'').substring(0,120)}</p>
+              <span class="link-arrow">Read More</span>
             </div>
+          </a>`;
+      }).join('');
+    }
+
+    /* ─────────────────────────────────────────
+       RENDER DIRECTORY from Firestore
+    ───────────────────────────────────────── */
+    async function renderDirectory(showDirectory) {
+      if (showDirectory === false) return;
+
+      const [officers, terms] = await Promise.all([
+        getAll(COLS.DIRECTORY),
+        getAll(COLS.TERMS),
+      ]);
+
+      if (!officers.length) return;
+      document.getElementById('directory').style.display = 'block';
+
+      const validTerms = terms.filter(t => officers.some(o => o.term === t.id));
+      let activeTerm   = validTerms.length ? validTerms[validTerms.length - 1].id : null;
+      if (!activeTerm) activeTerm = [...new Set(officers.map(o => o.term))].pop();
+
+      // Render tabs
+      if (validTerms.length > 1) {
+        document.getElementById('dirTabsEl').innerHTML = validTerms.map(t => `
+          <button class="dir-tab ${t.id === activeTerm ? 'active' : ''}" data-id="${t.id}">
+            ${t.name}
+          </button>`).join('');
+
+        document.querySelectorAll('.dir-tab').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.dir-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            paintOfficers(officers, btn.dataset.id);
+          });
+        });
+      }
+
+      paintOfficers(officers, activeTerm);
+    }
+
+    function paintOfficers(officers, termId) {
+      const list = officers
+        .filter(o => o.term === termId)
+        .sort((a,b) => (Number(a.order)||99) - (Number(b.order)||99));
+
+      document.getElementById('officersEl').innerHTML = list.map(o => {
+        const ini = ((o.first||'?').charAt(0)+(o.last||'').charAt(0)).toUpperCase();
+        const av  = o.photo
+          ? `<img class="officer-photo" src="${o.photo}" alt="${o.first}"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+             <div class="officer-init" style="display:none">${ini}</div>`
+          : `<div class="officer-init">${ini}</div>`;
+        return `
+          <div class="officer-card">
+            ${av}
+            <div class="officer-name">${o.first||''} ${o.last||''}</div>
+            <div class="officer-role">${o.role||''}</div>
           </div>`;
       }).join('');
     }
 
-    /* ─────────────────────────────────────────────
-       RENDER DIRECTORY
-    ───────────────────────────────────────────── */
-    function renderDirectory() {
-      const s = S();
-      if (!s.showDirectory) return;
-      const officers = JSON.parse(localStorage.getItem('access_directory')||'[]');
-      const terms    = JSON.parse(localStorage.getItem('access_terms')||'[]');
-      if (!officers.length) return;
-      document.getElementById('directory').style.display = 'block';
-      const validTerms = terms.filter(t => officers.some(o => o.term===t.id));
-      const activeTerm = validTerms.length ? validTerms[validTerms.length-1].id
-        : [...new Set(officers.map(o=>o.term))].pop();
-      document.getElementById('dirTabsEl').innerHTML = validTerms.map(t => `
-        <button class="dir-tab ${t.id===activeTerm?'active':''}"
-          onclick="switchTerm('${t.id}',this)">${t.name}</button>`).join('');
-      paintOfficers(activeTerm);
-    }
-
-    function switchTerm(id, btn) {
-      document.querySelectorAll('.dir-tab').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      paintOfficers(id);
-    }
-
-    function paintOfficers(termId) {
-      const list = JSON.parse(localStorage.getItem('access_directory')||'[]')
-        .filter(o => o.term===termId)
-        .sort((a,b) => (Number(a.order)||99)-(Number(b.order)||99));
-      document.getElementById('officersEl').innerHTML = list.map(o => {
-        const ini = ((o.first||'?').charAt(0)+(o.last||'').charAt(0)).toUpperCase();
-        const av  = o.photo
-          ? `<img class="officer-photo" src="${o.photo}" alt="${o.first}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="officer-init" style="display:none">${ini}</div>`
-          : `<div class="officer-init">${ini}</div>`;
-        return `<div class="officer-card">${av}<div class="officer-name">${o.first||''} ${o.last||''}</div><div class="officer-role">${o.role||''}</div></div>`;
-      }).join('');
-    }
-
-    /* ─────────────────────────────────────────────
+    /* ─────────────────────────────────────────
        VISITOR COUNTER
-    ───────────────────────────────────────────── */
-    function runCounter() {
-      const s  = S();
+    ───────────────────────────────────────── */
+    function runCounter(showCounter) {
+      if (showCounter === false) return;
       const el = document.getElementById('counterEl');
-      if (!s.showCounter || !el) return;
+      if (!el) return;
+
+      // Firestore-independent — just counts visits in localStorage as a lightweight tally
       const count = (parseInt(localStorage.getItem('access_visitor_count')||'0')||0) + 1;
       localStorage.setItem('access_visitor_count', count);
+
       const obs = new IntersectionObserver(entries => {
         if (!entries[0].isIntersecting) return;
         obs.disconnect();
         const dur = 1800; let start = null;
-        requestAnimationFrame(function step(ts){
+        requestAnimationFrame(function step(ts) {
           if (!start) start = ts;
           const p = Math.min((ts-start)/dur, 1);
           el.textContent = String(Math.floor(p*count)).padStart(7,'0');
@@ -614,29 +618,56 @@
       obs.observe(el);
     }
 
-    /* ─────────────────────────────────────────────
-       HELPERS
-    ───────────────────────────────────────────── */
-    function set(id, val)       { const el=document.getElementById(id); if(el&&val) el.textContent=val; }
-    function setHTML(id, val)   { const el=document.getElementById(id); if(el&&val) el.innerHTML=val; }
-    function setHref(id, href, label) {
-      const el=document.getElementById(id);
-      if(!el) return;
-      if(href) el.href=href;
-      if(label) el.textContent=label;
-    }
-    function fc(iconPath, text) {
-      return `<div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${iconPath}</svg><span>${text}</span></div>`;
+    /* ─────────────────────────────────────────
+       SCROLL-SPY
+    ───────────────────────────────────────── */
+    function initScrollSpy() {
+      const ids   = ['hero','pillars','events','about','news','directory','cta'];
+      const links = document.querySelectorAll('#navLinks a[data-section]');
+      const obs   = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          links.forEach(link => {
+            const active = link.getAttribute('data-section') === id ||
+              (id === 'hero' && link.getAttribute('href') === 'index.html');
+            link.classList.toggle('active', active);
+          });
+        });
+      }, { rootMargin: `-70px 0px -55% 0px`, threshold: 0 });
+      ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
     }
 
-    /* ─────────────────────────────────────────────
-       INIT
-    ───────────────────────────────────────────── */
-    applySettings();
-    renderEvents();
-    renderNews();
-    renderDirectory();
-    runCounter();
+    /* ─────────────────────────────────────────
+       HELPERS
+    ───────────────────────────────────────── */
+    function setText(id, val)     { const el = document.getElementById(id); if (el && val) el.textContent = val; }
+    function setHTML(id, val)     { const el = document.getElementById(id); if (el && val) el.innerHTML   = val; }
+    function setHref(id, href, label) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (href)  el.href        = href;
+      if (label) el.textContent = label;
+    }
+    function fc(iconPath, text) {
+      return `<div class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${iconPath}</svg>
+        <span>${text}</span>
+      </div>`;
+    }
+
+    /* ─────────────────────────────────────────
+       INIT — all Firestore reads in parallel
+    ───────────────────────────────────────── */
+    const settings = await applySettings();
+
+    await Promise.all([
+      renderEvents(settings.showEvents),
+      renderNews(settings.showNews),
+      renderDirectory(settings.showDirectory),
+    ]);
+
+    runCounter(settings.showCounter);
     initScrollSpy();
   </script>
 </body>
