@@ -24,8 +24,7 @@
       --serif: 'Fraunces', Georgia, serif;
       --sans:  'Outfit', sans-serif;
       --r-sm: 6px; --r-md: 12px; --r-lg: 20px;
-      --max: 1160px;
-      --nav-h: 70px;
+      --max: 1160px; --nav-h: 70px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -54,28 +53,10 @@
     .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
 
     /* ── PAGE HERO ── */
-    .page-hero {
-      padding-top: var(--nav-h);
-      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
-      position: relative; overflow: hidden;
-    }
-    .page-hero::before {
-      content: ''; position: absolute;
-      width: 500px; height: 500px; border-radius: 50%;
-      border: 80px solid rgba(245,197,24,0.06);
-      right: -100px; top: -160px; pointer-events: none;
-    }
-    .page-hero::after {
-      content: ''; position: absolute;
-      width: 240px; height: 240px; border-radius: 50%;
-      border: 40px solid rgba(255,255,255,0.04);
-      left: -60px; bottom: -80px; pointer-events: none;
-    }
-    .page-hero-inner {
-      position: relative; padding: 4rem 0 3.5rem;
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 2rem; flex-wrap: wrap;
-    }
+    .page-hero { padding-top: var(--nav-h); background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; border: 80px solid rgba(245,197,24,0.06); right: -100px; top: -160px; pointer-events: none; }
+    .page-hero::after  { content: ''; position: absolute; width: 240px; height: 240px; border-radius: 50%; border: 40px solid rgba(255,255,255,0.04); left: -60px; bottom: -80px; pointer-events: none; }
+    .page-hero-inner { position: relative; padding: 4rem 0 3.5rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .page-hero-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,197,24,.7); margin-bottom: .6rem; }
     .page-hero-title { font-family: var(--serif); font-size: clamp(2rem,5vw,3rem); font-weight: 600; color: var(--white); line-height: 1.15; }
     .page-hero-title em { font-style: italic; color: var(--yellow); }
@@ -85,58 +66,33 @@
     .hero-stat-label { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 3px; }
 
     /* ── FILTER BAR ── */
-    .filter-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      position: sticky; top: var(--nav-h); z-index: 100;
-    }
-    .filter-bar-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; padding: .9rem 0; flex-wrap: wrap;
-    }
+    .filter-bar { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: var(--nav-h); z-index: 100; }
+    .filter-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; flex-wrap: wrap; }
     .filter-tabs { display: flex; gap: .35rem; flex-wrap: wrap; }
-    .filter-tab {
-      padding: .38rem .9rem; border-radius: 99px;
-      border: 1.5px solid var(--border); background: transparent;
-      font-size: .78rem; font-weight: 600; color: var(--ink-muted);
-      cursor: pointer; transition: all .18s; font-family: var(--sans);
-    }
+    .filter-tab { padding: .38rem .9rem; border-radius: 99px; border: 1.5px solid var(--border); background: transparent; font-size: .78rem; font-weight: 600; color: var(--ink-muted); cursor: pointer; transition: all .18s; font-family: var(--sans); }
     .filter-tab:hover  { border-color: var(--blue-light); color: var(--blue); }
     .filter-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
-    .filter-right { display: flex; align-items: center; gap: .75rem; }
+    .filter-right { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
     .search-box { display: flex; align-items: center; gap: 8px; padding: .45rem .9rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; }
     .search-box svg { width: 14px; height: 14px; color: var(--ink-muted); flex-shrink: 0; }
     .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: .82rem; color: var(--ink); width: 180px; }
     .search-box input::placeholder { color: var(--ink-muted); }
     .sort-select { padding: .45rem .85rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
     .result-count { font-size: .78rem; color: var(--ink-muted); white-space: nowrap; }
-
-    /* ── MAIN CONTENT ── */
-    .page-body { padding: 2.5rem 0 5rem; }
-
-    /* View toggle */
     .view-toggle { display: flex; gap: 2px; }
     .view-btn { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink-muted); transition: all .18s; }
     .view-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
     .view-btn.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
     .view-btn svg { width: 13px; height: 13px; }
 
+    /* ── BODY ── */
+    .page-body { padding: 2.5rem 0 5rem; }
+
     /* ── LIST VIEW ── */
     .events-list { display: flex; flex-direction: column; gap: 1.25rem; }
-    .event-card {
-      display: grid; grid-template-columns: 100px 1fr auto;
-      gap: 1.5rem; align-items: stretch;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r-lg); overflow: hidden;
-      transition: box-shadow .2s, transform .2s;
-      cursor: pointer;
-    }
+    .event-card { display: grid; grid-template-columns: 100px 1fr auto; gap: 1.5rem; align-items: stretch; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: box-shadow .2s, transform .2s; cursor: pointer; }
     .event-card:hover { box-shadow: 0 8px 28px rgba(10,36,99,.1); transform: translateY(-2px); }
-    .event-date-col {
-      background: var(--blue); display: flex; flex-direction: column;
-      align-items: center; justify-content: center; padding: 1.5rem .75rem;
-      flex-shrink: 0;
-    }
+    .event-date-col { background: var(--blue); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem .75rem; flex-shrink: 0; }
     .event-month { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--yellow); }
     .event-day   { font-family: var(--serif); font-size: 2.2rem; font-weight: 600; color: var(--white); line-height: 1; }
     .event-year  { font-size: .62rem; color: rgba(255,255,255,.4); margin-top: 3px; }
@@ -148,26 +104,25 @@
     .event-info-item { display: flex; align-items: center; gap: 5px; font-size: .75rem; color: var(--ink-muted); }
     .event-info-item svg { width: 12px; height: 12px; flex-shrink: 0; opacity: .6; }
     .event-cover-col { width: 140px; flex-shrink: 0; overflow: hidden; }
-    .event-cover { width: 100%; height: 100%; object-fit: cover; }
-    .event-cover-ph { width: 100%; height: 100%; min-height: 120px; background: linear-gradient(135deg, var(--blue-pale), #d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    .event-cover { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .event-cover-ph { width: 100%; height: 100%; min-height: 120px; background: linear-gradient(135deg,var(--blue-pale),#d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
 
     /* ── GRID VIEW ── */
     .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
     .event-grid-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: box-shadow .2s, transform .2s; cursor: pointer; display: flex; flex-direction: column; }
     .event-grid-card:hover { box-shadow: 0 12px 32px rgba(10,36,99,.1); transform: translateY(-3px); }
     .grid-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--blue-pale); display: block; }
-    .grid-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--blue-pale), #d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .grid-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,var(--blue-pale),#d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
     .grid-date-strip { background: var(--blue); display: flex; align-items: center; gap: .6rem; padding: .5rem 1rem; }
-    .grid-date-badge { display: flex; gap: 4px; align-items: baseline; }
     .grid-day   { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--white); line-height: 1; }
     .grid-month { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--yellow); }
-    .grid-body { padding: 1.1rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+    .grid-body  { padding: 1.1rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
     .grid-title { font-family: var(--serif); font-size: .98rem; font-weight: 700; color: var(--blue); line-height: 1.3; }
     .grid-desc  { font-size: .8rem; color: var(--ink-muted); line-height: 1.55; flex: 1; }
     .grid-footer { padding: .75rem 1.25rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
     .grid-loc   { font-size: .72rem; color: var(--ink-muted); display: flex; align-items: center; gap: 4px; }
     .grid-loc svg { width: 11px; height: 11px; opacity: .6; }
-    .btn-event { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 700; padding: .3rem .75rem; background: var(--blue); color: var(--white); border-radius: 99px; transition: background .2s; }
+    .btn-event  { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 700; padding: .3rem .75rem; background: var(--blue); color: var(--white); border-radius: 99px; transition: background .2s; }
     .btn-event:hover { background: var(--blue-mid); }
 
     /* ── BADGE ── */
@@ -175,16 +130,23 @@
     .badge-upcoming { background: var(--blue-pale); color: var(--blue-mid); }
     .badge-ongoing  { background: #e6f5ee; color: #1a7a46; }
     .badge-past     { background: #f0f0f4; color: var(--ink-muted); }
-    .badge-draft    { background: rgba(245,197,24,.13); color: var(--yellow-deep); }
     .badge-cat      { background: var(--off); color: var(--ink-mid); border: 1px solid var(--border); }
 
-    /* ── MODAL (event detail) ── */
+    /* ── SKELETON ── */
+    .skel { background: linear-gradient(90deg, var(--off) 25%, #e8eaf0 50%, var(--off) 75%); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 6px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skel-list { display: flex; flex-direction: column; gap: 1.25rem; }
+    .skel-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; display: grid; grid-template-columns: 100px 1fr; height: 110px; }
+    .skel-date { background: var(--blue-pale); }
+    .skel-body { padding: 1.25rem; display: flex; flex-direction: column; gap: .6rem; justify-content: center; }
+
+    /* ── MODAL ── */
     .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.4); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1.5rem; overflow-y: auto; }
     .modal-backdrop.open { display: flex; }
     .modal { background: var(--white); border-radius: 20px; width: 100%; max-width: 640px; margin: auto; box-shadow: 0 32px 80px rgba(10,36,99,.2); animation: modalIn .25s ease; overflow: hidden; }
-    @keyframes modalIn { from { opacity:0; transform:translateY(20px) scale(.96); } to { opacity:1; transform:none; } }
+    @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(.96)} to{opacity:1;transform:none} }
     .modal-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--blue-pale); display: block; }
-    .modal-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .modal-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
     .modal-body { padding: 1.75rem 2rem; }
     .modal-meta { display: flex; align-items: center; gap: 6px; margin-bottom: .75rem; flex-wrap: wrap; }
     .modal-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: 1rem; }
@@ -218,20 +180,15 @@
       .nav-toggle { display: flex; }
       .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--blue); padding: 1rem 1.5rem 1.5rem; border-bottom: 3px solid var(--yellow); z-index: 199; }
       .nav-links.open a { padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
-      .filter-bar-inner { gap: .75rem; }
-      .search-box input { width: 130px; }
       .page-hero-stats { display: none; }
-      .modal-body { padding: 1.25rem 1.25rem; }
-    }
-    @media (max-width: 480px) {
-      .event-card { grid-template-columns: 72px 1fr; }
-      .event-day  { font-size: 1.8rem; }
+      .modal-body { padding: 1.25rem; }
+      .modal-title { font-size: 1.25rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── NAVBAR ── -->
+  <!-- NAVBAR -->
   <nav>
     <div class="wrap nav-wrap">
       <a href="index.html" class="nav-brand">
@@ -255,8 +212,7 @@
     </div>
   </nav>
 
-
-  <!-- ── PAGE HERO ── -->
+  <!-- PAGE HERO -->
   <div class="page-hero">
     <div class="wrap page-hero-inner">
       <div>
@@ -265,47 +221,37 @@
         <p class="page-hero-sub">Stay up to date with everything happening at ACCeSS — workshops, competitions, socials, and more.</p>
       </div>
       <div class="page-hero-stats">
-        <div>
-          <div class="hero-stat-num" id="statUpcoming">0</div>
-          <div class="hero-stat-label">Upcoming</div>
-        </div>
-        <div>
-          <div class="hero-stat-num" id="statOngoing">0</div>
-          <div class="hero-stat-label">Ongoing</div>
-        </div>
-        <div>
-          <div class="hero-stat-num" id="statTotal">0</div>
-          <div class="hero-stat-label">Total Events</div>
-        </div>
+        <div><div class="hero-stat-num" id="statUpcoming">—</div><div class="hero-stat-label">Upcoming</div></div>
+        <div><div class="hero-stat-num" id="statOngoing">—</div><div class="hero-stat-label">Ongoing</div></div>
+        <div><div class="hero-stat-num" id="statTotal">—</div><div class="hero-stat-label">Total Events</div></div>
       </div>
     </div>
   </div>
 
-
-  <!-- ── FILTER BAR ── -->
+  <!-- FILTER BAR -->
   <div class="filter-bar">
     <div class="wrap filter-bar-inner">
       <div class="filter-tabs">
-        <button class="filter-tab active" data-filter="all"      onclick="setFilter('all',this)">All</button>
-        <button class="filter-tab"        data-filter="upcoming" onclick="setFilter('upcoming',this)">Upcoming</button>
-        <button class="filter-tab"        data-filter="ongoing"  onclick="setFilter('ongoing',this)">Ongoing</button>
-        <button class="filter-tab"        data-filter="past"     onclick="setFilter('past',this)">Past</button>
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+        <button class="filter-tab" data-filter="ongoing">Ongoing</button>
+        <button class="filter-tab" data-filter="past">Past</button>
       </div>
       <div class="filter-right">
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Search events…" oninput="render()"/>
+          <input type="text" id="searchInput" placeholder="Search events…"/>
         </div>
-        <select class="sort-select" id="sortSelect" onchange="render()">
+        <select class="sort-select" id="sortSelect">
           <option value="date-asc">Date ↑</option>
           <option value="date-desc">Date ↓</option>
           <option value="alpha">A – Z</option>
         </select>
         <div class="view-toggle">
-          <button class="view-btn active" id="btnList" onclick="setView('list')" title="List view">
+          <button class="view-btn active" id="btnList" title="List view">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           </button>
-          <button class="view-btn" id="btnGrid" onclick="setView('grid')" title="Grid view">
+          <button class="view-btn" id="btnGrid" title="Grid view">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
           </button>
         </div>
@@ -314,31 +260,34 @@
     </div>
   </div>
 
-
-  <!-- ── MAIN BODY ── -->
+  <!-- MAIN BODY -->
   <main class="page-body">
     <div class="wrap">
-      <div id="eventsOutput"></div>
+      <!-- Skeleton while loading -->
+      <div class="skel-list" id="skeleton">
+        <div class="skel-card"><div class="skel-date"></div><div class="skel-body"><div class="skel" style="height:14px;width:40%"></div><div class="skel" style="height:20px;width:75%"></div><div class="skel" style="height:12px;width:60%"></div></div></div>
+        <div class="skel-card"><div class="skel-date"></div><div class="skel-body"><div class="skel" style="height:14px;width:30%"></div><div class="skel" style="height:20px;width:80%"></div><div class="skel" style="height:12px;width:50%"></div></div></div>
+        <div class="skel-card"><div class="skel-date"></div><div class="skel-body"><div class="skel" style="height:14px;width:45%"></div><div class="skel" style="height:20px;width:65%"></div><div class="skel" style="height:12px;width:55%"></div></div></div>
+      </div>
+      <div id="eventsOutput" style="display:none"></div>
     </div>
   </main>
 
-
-  <!-- ── EVENT DETAIL MODAL ── -->
-  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <!-- EVENT DETAIL MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="eventModal">
       <div id="modalCover"></div>
       <div class="modal-body">
-        <div class="modal-meta" id="modalMeta"></div>
-        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-meta"    id="modalMeta"></div>
+        <div class="modal-title"   id="modalTitle"></div>
         <div class="modal-details" id="modalDetails"></div>
-        <p class="modal-desc" id="modalDesc"></p>
+        <p   class="modal-desc"    id="modalDesc"></p>
         <div class="modal-actions" id="modalActions"></div>
       </div>
     </div>
   </div>
 
-
-  <!-- ── FOOTER ── -->
+  <!-- FOOTER -->
   <footer>
     <div class="wrap footer-bottom-wrap">
       <p>&copy; <span id="footerYear">2026</span> <span class="footer-accent" id="footerName">BU ACCeSS</span>. All Rights Reserved.</p>
@@ -346,47 +295,34 @@
     </div>
   </footer>
 
+  <script type="module">
+    import { loadSettings, getAll, COLS } from "./firebase-config.js";
 
-  <script>
-    /* ── Settings ── */
-    const SETTINGS_DEFAULTS = {
-      logoUrl:'logo.png', siteName:'BU ACCeSS',
-      colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E',
-      ctaLabel:'Join Us', ctaLink:'index.html#cta',
-    };
-    function S() {
-      try { return { ...SETTINGS_DEFAULTS, ...JSON.parse(localStorage.getItem('access_settings')||'{}') }; }
-      catch(e) { return { ...SETTINGS_DEFAULTS }; }
-    }
-
-    /* ── Apply branding ── */
-    function applyBranding() {
-      const s = S();
-      const root = document.documentElement;
-      if (s.colorPrimary) root.style.setProperty('--blue',   s.colorPrimary);
-      if (s.colorAccent)  root.style.setProperty('--yellow', s.colorAccent);
-      if (s.colorText)    root.style.setProperty('--ink',    s.colorText);
-
-      const logo = s.logoUrl || 'logo.png';
-      const navLogo = document.getElementById('navLogo');
-      if (navLogo) { navLogo.src = logo; navLogo.style.display = 'block'; }
-
-      const brandName = document.getElementById('navBrandName');
-      if (brandName && s.siteName) brandName.textContent = s.siteName;
-
-      const ctaBtn = document.getElementById('navCtaBtn');
-      if (ctaBtn) { ctaBtn.textContent = s.ctaLabel||'Join Us'; ctaBtn.href = s.ctaLink||'index.html#cta'; }
-
-      const footerName = document.getElementById('footerName');
-      if (footerName && s.siteName) footerName.textContent = s.siteName;
+    /* ── Branding ── */
+    async function applyBranding() {
+      const s = await loadSettings();
+      const r = document.documentElement;
+      if (s.colorPrimary) r.style.setProperty('--blue',   s.colorPrimary);
+      if (s.colorAccent)  r.style.setProperty('--yellow', s.colorAccent);
+      if (s.colorText)    r.style.setProperty('--ink',    s.colorText);
+      const nl = document.getElementById('navLogo');
+      if (nl) { nl.src = s.logoUrl||'logo.png'; nl.style.display='block'; }
+      const bn = document.getElementById('navBrandName');
+      if (bn && s.siteName) bn.textContent = s.siteName;
+      const cta = document.getElementById('navCtaBtn');
+      if (cta) { cta.textContent = s.ctaLabel||'Join Us'; cta.href = s.ctaLink||'index.html#cta'; }
       document.getElementById('footerYear').textContent = new Date().getFullYear();
+      const fn = document.getElementById('footerName');
+      if (fn && s.siteName) fn.textContent = s.siteName;
+      return s;
     }
 
-    /* ── Data ── */
-    function loadEvents() {
-      return JSON.parse(localStorage.getItem('access_events') || '[]');
-    }
+    /* ── State ── */
+    let allEvents    = [];
+    let activeFilter = 'all';
+    let viewMode     = 'list';
 
+    /* ── Auto-compute status ── */
     function autoStatus(e) {
       if (e.status === 'draft') return 'draft';
       if (!e.date) return e.status || 'upcoming';
@@ -397,30 +333,23 @@
       return 'past';
     }
 
-    /* ── State ── */
-    let activeFilter = 'all';
-    let viewMode     = 'list';
+    /* ── Load from Firestore ── */
+    async function loadEvents() {
+      const raw   = await getAll(COLS.EVENTS);
+      allEvents   = raw
+        .filter(e => e.status !== 'draft')
+        .map(e => ({ ...e, _s: autoStatus(e) }));
 
-    function setFilter(f, btn) {
-      activeFilter = f;
-      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      // Stats
+      document.getElementById('statTotal').textContent    = allEvents.length;
+      document.getElementById('statUpcoming').textContent = allEvents.filter(e=>e._s==='upcoming').length;
+      document.getElementById('statOngoing').textContent  = allEvents.filter(e=>e._s==='ongoing').length;
+
+      // Hide skeleton, show output
+      document.getElementById('skeleton').style.display    = 'none';
+      document.getElementById('eventsOutput').style.display = 'block';
+
       render();
-    }
-
-    function setView(v) {
-      viewMode = v;
-      document.getElementById('btnList').classList.toggle('active', v==='list');
-      document.getElementById('btnGrid').classList.toggle('active', v==='grid');
-      render();
-    }
-
-    /* ── Stats ── */
-    function updateStats(events) {
-      const pub = events.filter(e => e._s !== 'draft');
-      document.getElementById('statTotal').textContent    = pub.length;
-      document.getElementById('statUpcoming').textContent = pub.filter(e => e._s==='upcoming').length;
-      document.getElementById('statOngoing').textContent  = pub.filter(e => e._s==='ongoing').length;
     }
 
     /* ── Render ── */
@@ -428,24 +357,14 @@
       const q    = document.getElementById('searchInput').value.toLowerCase();
       const sort = document.getElementById('sortSelect').value;
 
-      let events = loadEvents()
-        .map(e => ({ ...e, _s: autoStatus(e) }))
-        .filter(e => e._s !== 'draft');
-
-      updateStats(events);
-
-      // Filter
+      let events = [...allEvents];
       if (activeFilter !== 'all') events = events.filter(e => e._s === activeFilter);
-
-      // Search
       if (q) events = events.filter(e =>
         (e.title||'').toLowerCase().includes(q) ||
         (e.desc||'').toLowerCase().includes(q) ||
         (e.location||'').toLowerCase().includes(q) ||
         (e.category||'').toLowerCase().includes(q)
       );
-
-      // Sort
       if (sort === 'date-asc')  events.sort((a,b) => (a.date||'') < (b.date||'') ? -1 : 1);
       if (sort === 'date-desc') events.sort((a,b) => (a.date||'') > (b.date||'') ? -1 : 1);
       if (sort === 'alpha')     events.sort((a,b) => (a.title||'').localeCompare(b.title||''));
@@ -459,8 +378,8 @@
         out.innerHTML = `
           <div class="empty-state">
             <div class="empty-icon">📅</div>
-            <h3>${q ? 'No results found' : activeFilter === 'all' ? 'No events yet' : `No ${activeFilter} events`}</h3>
-            <p>${q ? `No events match "${q}". Try a different search term.` : 'Check back soon — events will appear here once added by the organization.'}</p>
+            <h3>${q ? 'No results found' : activeFilter==='all' ? 'No events yet' : `No ${activeFilter} events`}</h3>
+            <p>${q ? `Nothing matched "${q}". Try a different search term.` : 'Check back soon — events will appear here once posted by the organization.'}</p>
           </div>`;
         return;
       }
@@ -470,20 +389,24 @@
       } else {
         out.innerHTML = `<div class="events-grid">${events.map(gridCard).join('')}</div>`;
       }
+
+      // Wire click listeners
+      out.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', () => openModal(el.dataset.id));
+      });
     }
 
     /* ── List card ── */
     function listCard(e) {
-      const d = e.date ? new Date(e.date) : null;
+      const d     = e.date ? new Date(e.date) : null;
       const month = d ? d.toLocaleString('default',{month:'short'}).toUpperCase() : '—';
       const day   = d ? d.getDate() : '—';
       const year  = d ? d.getFullYear() : '';
-      const statusBadge = badgeHTML(e._s);
       const coverHTML = e.image
         ? `<div class="event-cover-col"><img class="event-cover" src="${e.image}" alt="${e.title}" onerror="this.parentElement.innerHTML='<div class=event-cover-ph>📅</div>'"/></div>`
         : `<div class="event-cover-col"><div class="event-cover-ph">📅</div></div>`;
       return `
-        <div class="event-card" onclick="openModal('${e.id}')">
+        <div class="event-card" data-id="${e.id}">
           <div class="event-date-col">
             <div class="event-month">${month}</div>
             <div class="event-day">${day}</div>
@@ -491,13 +414,13 @@
           </div>
           <div class="event-body">
             <div class="event-meta">
-              ${statusBadge}
+              ${badgeHTML(e._s)}
               ${e.category ? `<span class="badge badge-cat">${e.category}</span>` : ''}
             </div>
-            <div class="event-title">${e.title||'Untitled Event'}</div>
+            <div class="event-title">${e.title||'Untitled'}</div>
             ${e.desc ? `<p class="event-desc">${e.desc.substring(0,140)}${e.desc.length>140?'…':''}</p>` : ''}
             <div class="event-info">
-              ${e.date ? `<span class="event-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${formatDate(e.date)}${e.time?' · '+e.time:''}</span>` : ''}
+              ${d ? `<span class="event-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${formatDate(e.date)}${e.time?' · '+e.time:''}</span>` : ''}
               ${e.location ? `<span class="event-info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${e.location}</span>` : ''}
             </div>
           </div>
@@ -510,17 +433,15 @@
       const d     = e.date ? new Date(e.date) : null;
       const month = d ? d.toLocaleString('default',{month:'short'}).toUpperCase() : '';
       const day   = d ? d.getDate() : '';
-      const coverHTML = e.image
+      const cover = e.image
         ? `<img class="grid-cover" src="${e.image}" alt="${e.title}" onerror="this.outerHTML='<div class=grid-cover-ph>📅</div>'"/>`
         : `<div class="grid-cover-ph">📅</div>`;
       return `
-        <div class="event-grid-card" onclick="openModal('${e.id}')">
-          ${coverHTML}
+        <div class="event-grid-card" data-id="${e.id}">
+          ${cover}
           <div class="grid-date-strip">
-            <div class="grid-date-badge">
-              <span class="grid-day">${day}</span>
-              <span class="grid-month">${month}</span>
-            </div>
+            <span class="grid-day">${day}</span>
+            <span class="grid-month">${month}</span>
             ${badgeHTML(e._s)}
             ${e.category ? `<span class="badge badge-cat" style="margin-left:auto">${e.category}</span>` : ''}
           </div>
@@ -540,26 +461,22 @@
 
     /* ── Modal ── */
     function openModal(id) {
-      const e = loadEvents().find(x => x.id === id);
+      const e = allEvents.find(x => x.id === id);
       if (!e) return;
-      const status = autoStatus(e);
 
       // Cover
-      const coverEl = document.getElementById('modalCover');
-      if (e.image) {
-        coverEl.innerHTML = `<img class="modal-cover" src="${e.image}" alt="${e.title}" onerror="this.outerHTML='<div class=modal-cover-ph>📅</div>'"/>`;
-      } else {
-        coverEl.innerHTML = `<div class="modal-cover-ph">📅</div>`;
-      }
+      document.getElementById('modalCover').innerHTML = e.image
+        ? `<img class="modal-cover" src="${e.image}" alt="${e.title}" onerror="this.outerHTML='<div class=modal-cover-ph>📅</div>'"/>`
+        : `<div class="modal-cover-ph">📅</div>`;
 
-      // Meta badges
+      // Meta
       document.getElementById('modalMeta').innerHTML =
-        badgeHTML(status) + (e.category ? ` <span class="badge badge-cat">${e.category}</span>` : '');
+        badgeHTML(e._s) + (e.category ? ` <span class="badge badge-cat">${e.category}</span>` : '');
 
       // Title
-      document.getElementById('modalTitle').textContent = e.title || 'Untitled Event';
+      document.getElementById('modalTitle').textContent = e.title || 'Untitled';
 
-      // Details rows
+      // Details
       const rows = [];
       if (e.date) rows.push(detailRow(`<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>`, 'Date', `${formatDate(e.date)}${e.time?' at '+e.time:''}`));
       if (e.location) rows.push(detailRow(`<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`, 'Location', e.location));
@@ -568,59 +485,84 @@
 
       // Description
       const descEl = document.getElementById('modalDesc');
-      descEl.textContent = e.desc || 'No description provided.';
-      descEl.style.display = e.desc ? 'block' : 'none';
+      descEl.textContent  = e.desc || 'No description provided.';
+      descEl.style.display = 'block';
 
       // Actions
-      const actionsEl = document.getElementById('modalActions');
-      actionsEl.innerHTML = e.link
+      document.getElementById('modalActions').innerHTML = e.link
         ? `<a class="btn-modal-primary" href="${e.link}" target="_blank" rel="noopener">Register / Learn More →</a>
-           <button class="btn-modal-close" onclick="closeModal()">Close</button>`
-        : `<button class="btn-modal-close" onclick="closeModal()">Close</button>`;
+           <button class="btn-modal-close" id="closeModalBtn">Close</button>`
+        : `<button class="btn-modal-close" id="closeModalBtn">Close</button>`;
 
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
       document.getElementById('modalBackdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
+
+      // Update URL without reload
+      history.replaceState(null,'',`?event=${id}`);
     }
 
     function closeModal() {
       document.getElementById('modalBackdrop').classList.remove('open');
       document.body.style.overflow = '';
+      history.replaceState(null,'','events.html');
     }
 
-    function handleBackdropClick(e) {
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
       if (e.target === document.getElementById('modalBackdrop')) closeModal();
-    }
-
+    });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── Filter tabs ── */
+    document.querySelectorAll('.filter-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    /* ── View toggle ── */
+    document.getElementById('btnList').addEventListener('click', () => {
+      viewMode = 'list';
+      document.getElementById('btnList').classList.add('active');
+      document.getElementById('btnGrid').classList.remove('active');
+      render();
+    });
+    document.getElementById('btnGrid').addEventListener('click', () => {
+      viewMode = 'grid';
+      document.getElementById('btnGrid').classList.add('active');
+      document.getElementById('btnList').classList.remove('active');
+      render();
+    });
+
+    /* ── Search + sort ── */
+    document.getElementById('searchInput').addEventListener('input', render);
+    document.getElementById('sortSelect').addEventListener('change', render);
 
     /* ── Helpers ── */
     function badgeHTML(status) {
-      const map = { upcoming:'badge-upcoming', ongoing:'badge-ongoing', past:'badge-past', draft:'badge-draft' };
+      const map = { upcoming:'badge-upcoming', ongoing:'badge-ongoing', past:'badge-past' };
       return `<span class="badge ${map[status]||'badge-past'}">${status||'past'}</span>`;
     }
-
-    function formatDate(dateStr) {
-      return new Date(dateStr).toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
+    function formatDate(d) {
+      return new Date(d).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
     }
-
     function detailRow(iconPath, label, value) {
-      return `
-        <div class="modal-detail-row">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${iconPath}</svg>
-          <span><span class="modal-detail-label">${label}:</span> ${value}</span>
-        </div>`;
-    }
-
-    /* ── URL param: open modal directly ── */
-    function checkUrlParam() {
-      const id = new URLSearchParams(location.search).get('event');
-      if (id) openModal(id);
+      return `<div class="modal-detail-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${iconPath}</svg>
+        <span><span class="modal-detail-label">${label}:</span> ${value}</span>
+      </div>`;
     }
 
     /* ── Init ── */
-    applyBranding();
-    render();
-    checkUrlParam();
+    await applyBranding();
+    await loadEvents();
+
+    // Open modal from URL param
+    const urlEvent = new URLSearchParams(location.search).get('event');
+    if (urlEvent) openModal(urlEvent);
   </script>
 </body>
 </html>
