@@ -70,11 +70,10 @@
     .filter-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; flex-wrap: wrap; }
     .filter-tabs { display: flex; gap: .35rem; flex-wrap: wrap; }
     .filter-tab { padding: .38rem .9rem; border-radius: 99px; border: 1.5px solid var(--border); background: transparent; font-size: .78rem; font-weight: 600; color: var(--ink-muted); cursor: pointer; transition: all .18s; font-family: var(--sans); }
-    .filter-tab:hover { border-color: var(--blue-light); color: var(--blue); }
+    .filter-tab:hover  { border-color: var(--blue-light); color: var(--blue); }
     .filter-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
-    .filter-tab.tab-project   { }
-    .filter-tab.tab-project.active   { background: #1A7A46; border-color: #1A7A46; }
-    .filter-tab.tab-editorial.active { background: var(--yellow-deep); border-color: var(--yellow-deep); }
+    .filter-tab[data-type="project"].active   { background: #1A7A46; border-color: #1A7A46; }
+    .filter-tab[data-type="editorial"].active { background: var(--yellow-deep); border-color: var(--yellow-deep); }
     .filter-right { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
     .search-box { display: flex; align-items: center; gap: 8px; padding: .45rem .9rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; }
     .search-box svg { width: 14px; height: 14px; color: var(--ink-muted); flex-shrink: 0; }
@@ -83,18 +82,15 @@
     .sort-select { padding: .45rem .85rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
     .result-count { font-size: .78rem; color: var(--ink-muted); white-space: nowrap; }
 
-    /* ── FEATURED POST (first published) ── */
+    /* ── BODY ── */
+    .page-body { padding: 2.5rem 0 5rem; }
+
+    /* ── FEATURED ── */
     .featured-wrap { margin-bottom: 2.5rem; }
-    .featured-card {
-      display: grid; grid-template-columns: 1fr 1fr;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r-lg); overflow: hidden;
-      transition: box-shadow .25s, transform .25s; cursor: pointer;
-      min-height: 320px;
-    }
+    .featured-card { display: grid; grid-template-columns: 1fr 1fr; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: box-shadow .25s, transform .25s; cursor: pointer; min-height: 320px; }
     .featured-card:hover { box-shadow: 0 16px 48px rgba(10,36,99,.12); transform: translateY(-3px); }
     .featured-cover { background: center / cover no-repeat; min-height: 280px; }
-    .featured-cover-ph { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; min-height: 280px; }
+    .featured-cover-ph { background: linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; min-height: 280px; }
     .featured-body { padding: 2.5rem 2rem; display: flex; flex-direction: column; justify-content: center; gap: .85rem; }
     .featured-label { font-size: .65rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--yellow-deep); }
     .featured-title { font-family: var(--serif); font-size: clamp(1.2rem,2.5vw,1.6rem); font-weight: 700; color: var(--blue); line-height: 1.25; }
@@ -105,22 +101,21 @@
     .featured-read::after { content: '→'; }
 
     /* ── CARDS GRID ── */
-    .page-body { padding: 2.5rem 0 5rem; }
     .section-label { font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.25rem; }
     .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
     .news-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: box-shadow .22s, transform .22s; cursor: pointer; display: flex; flex-direction: column; }
     .news-card:hover { box-shadow: 0 10px 32px rgba(10,36,99,.1); transform: translateY(-3px); }
     .news-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--blue-pale); display: block; }
-    .news-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--blue-pale), #d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .news-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,var(--blue-pale),#d0e2fc); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
     .news-body { padding: 1.1rem 1.25rem; flex: 1; display: flex; flex-direction: column; gap: .4rem; }
-    .news-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .news-date { font-size: .72rem; color: var(--ink-muted); }
+    .news-meta  { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .news-date  { font-size: .72rem; color: var(--ink-muted); }
     .news-title { font-family: var(--serif); font-size: .98rem; font-weight: 700; color: var(--blue); line-height: 1.3; }
     .news-excerpt { font-size: .8rem; color: var(--ink-muted); line-height: 1.6; flex: 1; }
     .news-footer { padding: .75rem 1.25rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
     .news-author { font-size: .72rem; color: var(--ink-muted); }
-    .news-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-    .tag-chip { font-size: .62rem; font-weight: 600; padding: .18rem .5rem; background: var(--off); border: 1px solid var(--border); border-radius: 99px; color: var(--ink-muted); }
+    .news-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
+    .tag-chip   { font-size: .62rem; font-weight: 600; padding: .18rem .5rem; background: var(--off); border: 1px solid var(--border); border-radius: 99px; color: var(--ink-muted); }
 
     /* ── BADGE ── */
     .badge { display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 99px; }
@@ -128,29 +123,37 @@
     .badge-project   { background: #e6f5ee; color: #1a7a46; }
     .badge-editorial { background: rgba(245,197,24,.15); color: var(--yellow-deep); }
 
+    /* ── SKELETON ── */
+    .skel { background: linear-gradient(90deg,var(--off) 25%,#e8eaf0 50%,var(--off) 75%); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 6px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
+    .skel-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .skel-cover { width: 100%; aspect-ratio: 16/9; }
+    .skel-body  { padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: .6rem; }
+
     /* ── MODAL ── */
     .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.45); backdrop-filter: blur(6px); z-index: 500; align-items: flex-start; justify-content: center; padding: 2rem 1.5rem; overflow-y: auto; }
     .modal-backdrop.open { display: flex; }
     .modal { background: var(--white); border-radius: 20px; width: 100%; max-width: 680px; margin: auto; box-shadow: 0 32px 80px rgba(10,36,99,.2); animation: modalIn .25s ease; overflow: hidden; }
-    @keyframes modalIn { from { opacity:0; transform:translateY(20px) scale(.96); } to { opacity:1; transform:none; } }
+    @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(.96)} to{opacity:1;transform:none} }
     .modal-cover-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--blue-pale); display: block; }
-    .modal-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .modal-cover-ph { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
     .modal-inner { padding: 2rem; }
     .modal-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: .75rem; flex-wrap: wrap; }
-    .modal-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: .5rem; }
+    .modal-title  { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: .5rem; }
     .modal-byline { font-size: .8rem; color: var(--ink-muted); margin-bottom: 1.25rem; }
     .modal-body-text { font-size: .92rem; color: var(--ink-mid); line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
     .modal-body-text p { margin-bottom: .85rem; }
     .modal-body-text b, .modal-body-text strong { font-weight: 600; color: var(--ink); }
     .modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
     .modal-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1.25rem; border-top: 1px solid var(--border); }
-    .btn-modal-link { display: inline-flex; align-items: center; gap: 7px; padding: .65rem 1.4rem; background: var(--blue); color: var(--white); border-radius: var(--r-sm); font-size: .86rem; font-weight: 600; transition: background .2s; }
+    .btn-modal-link  { display: inline-flex; align-items: center; gap: 7px; padding: .65rem 1.4rem; background: var(--blue); color: var(--white); border-radius: var(--r-sm); font-size: .86rem; font-weight: 600; transition: background .2s; }
     .btn-modal-link:hover { background: var(--blue-mid); }
     .btn-modal-close { padding: .65rem 1.2rem; border: 1.5px solid var(--border); color: var(--ink-mid); border-radius: var(--r-sm); font-size: .86rem; font-weight: 500; background: transparent; cursor: pointer; font-family: var(--sans); transition: background .2s; }
     .btn-modal-close:hover { background: var(--off); }
 
     /* ── EMPTY ── */
-    .empty-state { padding: 5rem 2rem; text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); }
+    .empty-state { padding: 5rem 2rem; text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); grid-column: 1/-1; }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
     .empty-state h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--blue); margin-bottom: .5rem; }
     .empty-state p  { font-size: .88rem; color: var(--ink-muted); max-width: 340px; margin: 0 auto; line-height: 1.6; }
@@ -212,9 +215,9 @@
         <p class="page-hero-sub">Announcements, editorials, and project updates from the Academic Consortium of Computer Science Students.</p>
       </div>
       <div class="page-hero-stats">
-        <div><div class="hero-stat-num" id="statNews">0</div><div class="hero-stat-label">News</div></div>
-        <div><div class="hero-stat-num" id="statProjects">0</div><div class="hero-stat-label">Projects</div></div>
-        <div><div class="hero-stat-num" id="statTotal">0</div><div class="hero-stat-label">Total Posts</div></div>
+        <div><div class="hero-stat-num" id="statNews">—</div><div class="hero-stat-label">News</div></div>
+        <div><div class="hero-stat-num" id="statProjects">—</div><div class="hero-stat-label">Projects</div></div>
+        <div><div class="hero-stat-num" id="statTotal">—</div><div class="hero-stat-label">Total Posts</div></div>
       </div>
     </div>
   </div>
@@ -223,17 +226,17 @@
   <div class="filter-bar">
     <div class="wrap filter-bar-inner">
       <div class="filter-tabs">
-        <button class="filter-tab active"              data-type=""          onclick="setFilter('',this)">All</button>
-        <button class="filter-tab"                     data-type="news"      onclick="setFilter('news',this)">News</button>
-        <button class="filter-tab tab-project"         data-type="project"   onclick="setFilter('project',this)">Projects</button>
-        <button class="filter-tab tab-editorial"       data-type="editorial" onclick="setFilter('editorial',this)">Editorials</button>
+        <button class="filter-tab active" data-type="">All</button>
+        <button class="filter-tab" data-type="news">News</button>
+        <button class="filter-tab" data-type="project">Projects</button>
+        <button class="filter-tab" data-type="editorial">Editorials</button>
       </div>
       <div class="filter-right">
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Search posts…" oninput="render()"/>
+          <input type="text" id="searchInput" placeholder="Search posts…"/>
         </div>
-        <select class="sort-select" id="sortSelect" onchange="render()">
+        <select class="sort-select" id="sortSelect">
           <option value="newest">Newest first</option>
           <option value="oldest">Oldest first</option>
           <option value="alpha">A – Z</option>
@@ -246,16 +249,27 @@
   <!-- MAIN BODY -->
   <main class="page-body">
     <div class="wrap">
-      <!-- Featured post slot -->
-      <div id="featuredWrap"></div>
-      <!-- Label + grid -->
-      <div id="gridLabel" class="section-label" style="display:none"></div>
-      <div class="news-grid" id="newsGrid"></div>
+      <!-- Skeleton -->
+      <div id="skeleton">
+        <div class="skel" style="height:320px;border-radius:var(--r-lg);margin-bottom:2.5rem"></div>
+        <div class="skel-grid">
+          <div class="skel-card"><div class="skel skel-cover"></div><div class="skel-body"><div class="skel" style="height:12px;width:40%"></div><div class="skel" style="height:18px;width:80%"></div><div class="skel" style="height:12px;width:65%"></div></div></div>
+          <div class="skel-card"><div class="skel skel-cover"></div><div class="skel-body"><div class="skel" style="height:12px;width:35%"></div><div class="skel" style="height:18px;width:75%"></div><div class="skel" style="height:12px;width:70%"></div></div></div>
+          <div class="skel-card"><div class="skel skel-cover"></div><div class="skel-body"><div class="skel" style="height:12px;width:45%"></div><div class="skel" style="height:18px;width:70%"></div><div class="skel" style="height:12px;width:60%"></div></div></div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div id="contentWrap" style="display:none">
+        <div id="featuredWrap"></div>
+        <div id="gridLabel" class="section-label" style="display:none"></div>
+        <div class="news-grid" id="newsGrid"></div>
+      </div>
     </div>
   </main>
 
   <!-- POST DETAIL MODAL -->
-  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="postModal">
       <div id="modalCover"></div>
       <div class="modal-inner">
@@ -277,19 +291,18 @@
     </div>
   </footer>
 
-  <script>
-    /* ── Settings ── */
-    const SD = { logoUrl:'logo.png', siteName:'BU ACCeSS', colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E', ctaLabel:'Join Us', ctaLink:'index.html#cta' };
-    function S() { try { return { ...SD, ...JSON.parse(localStorage.getItem('access_settings')||'{}') }; } catch(e) { return { ...SD }; } }
+  <script type="module">
+    import { loadSettings, getAll, COLS } from "./firebase-config.js";
 
-    function applyBranding() {
-      const s = S();
+    /* ── Branding ── */
+    async function applyBranding() {
+      const s = await loadSettings();
       const r = document.documentElement;
       if (s.colorPrimary) r.style.setProperty('--blue',   s.colorPrimary);
       if (s.colorAccent)  r.style.setProperty('--yellow', s.colorAccent);
       if (s.colorText)    r.style.setProperty('--ink',    s.colorText);
-      const navLogo = document.getElementById('navLogo');
-      if (navLogo) { navLogo.src = s.logoUrl||'logo.png'; navLogo.style.display='block'; }
+      const nl = document.getElementById('navLogo');
+      if (nl) { nl.src = s.logoUrl||'logo.png'; nl.style.display='block'; }
       const bn = document.getElementById('navBrandName');
       if (bn && s.siteName) bn.textContent = s.siteName;
       const cta = document.getElementById('navCtaBtn');
@@ -299,50 +312,46 @@
       if (fn && s.siteName) fn.textContent = s.siteName;
     }
 
-    /* ── Data ── */
-    function loadPosts() {
-      return JSON.parse(localStorage.getItem('access_news')||'[]')
-        .filter(p => p.status === 'published');
-    }
-
     /* ── State ── */
+    let allPosts   = [];
     let activeType = '';
-    function setFilter(type, btn) {
-      activeType = type;
-      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      render();
-    }
 
-    /* ── Stats ── */
-    function updateStats(all) {
-      document.getElementById('statTotal').textContent    = all.length;
-      document.getElementById('statNews').textContent     = all.filter(p=>p.type==='news').length;
-      document.getElementById('statProjects').textContent = all.filter(p=>p.type==='project').length;
+    /* ── Load from Firestore ── */
+    async function loadPosts() {
+      const raw = await getAll(COLS.NEWS, { orderByField: 'date', orderDir: 'desc' });
+      allPosts  = raw.filter(p => p.status === 'published');
+
+      // Stats
+      document.getElementById('statTotal').textContent    = allPosts.length;
+      document.getElementById('statNews').textContent     = allPosts.filter(p=>p.type==='news').length;
+      document.getElementById('statProjects').textContent = allPosts.filter(p=>p.type==='project').length;
+
+      // Show content
+      document.getElementById('skeleton').style.display    = 'none';
+      document.getElementById('contentWrap').style.display = 'block';
+
+      render();
     }
 
     /* ── Render ── */
     function render() {
       const q    = document.getElementById('searchInput').value.toLowerCase();
       const sort = document.getElementById('sortSelect').value;
-      const all  = loadPosts();
-      updateStats(all);
 
-      let posts = [...all];
+      let posts = [...allPosts];
       if (activeType) posts = posts.filter(p => p.type === activeType);
       if (q) posts = posts.filter(p =>
         (p.title||'').toLowerCase().includes(q) ||
         (p.excerpt||'').toLowerCase().includes(q) ||
-        (p.body||'').toLowerCase().includes(q) ||
         (p.author||'').toLowerCase().includes(q) ||
         (p.tags||'').toLowerCase().includes(q)
       );
-
       if (sort === 'newest') posts.sort((a,b) => (b.date||b.createdAt||'') > (a.date||a.createdAt||'') ? 1 : -1);
       if (sort === 'oldest') posts.sort((a,b) => (a.date||a.createdAt||'') < (b.date||b.createdAt||'') ? -1 : 1);
       if (sort === 'alpha')  posts.sort((a,b) => (a.title||'').localeCompare(b.title||''));
 
-      document.getElementById('resultCount').textContent = `${posts.length} post${posts.length!==1?'s':''}`;
+      document.getElementById('resultCount').textContent =
+        `${posts.length} post${posts.length!==1?'s':''}`;
 
       const featuredWrap = document.getElementById('featuredWrap');
       const gridLabel    = document.getElementById('gridLabel');
@@ -352,32 +361,36 @@
         featuredWrap.innerHTML = '';
         gridLabel.style.display = 'none';
         grid.innerHTML = `
-          <div class="empty-state" style="grid-column:1/-1">
+          <div class="empty-state">
             <div class="empty-icon">📰</div>
             <h3>${q ? 'No results found' : 'No posts yet'}</h3>
-            <p>${q ? `Nothing matched "${q}". Try a different search term.` : 'Posts will appear here once published by the organization.'}</p>
+            <p>${q ? `Nothing matched "${q}". Try a different search.` : 'Posts will appear here once published by the organization.'}</p>
           </div>`;
         return;
       }
 
-      // Show featured only when not searching/filtering by type and not sorted alpha
-      const showFeatured = !q && !activeType && sort !== 'alpha' && posts.length > 0;
+      // Featured card — only when no search/filter active
+      const showFeatured = !q && !activeType && sort !== 'alpha';
       let gridPosts = posts;
 
       if (showFeatured) {
-        const featured = posts[0];
+        featuredWrap.innerHTML = `<div class="featured-wrap">${featuredCard(posts[0])}</div>`;
         gridPosts = posts.slice(1);
-        featuredWrap.innerHTML = featuredCard(featured);
-        featuredWrap.className = 'featured-wrap';
+        featuredWrap.querySelector('[data-id]')?.addEventListener('click', e => {
+          openModal(e.currentTarget.dataset.id);
+        });
       } else {
         featuredWrap.innerHTML = '';
-        featuredWrap.className = '';
       }
 
       if (gridPosts.length > 0) {
         gridLabel.style.display = 'block';
-        gridLabel.textContent = showFeatured ? 'More Posts' : (activeType ? activeType.charAt(0).toUpperCase()+activeType.slice(1)+'s' : 'All Posts');
+        gridLabel.textContent = showFeatured ? 'More Posts'
+          : (activeType ? activeType.charAt(0).toUpperCase()+activeType.slice(1)+'s' : 'All Posts');
         grid.innerHTML = gridPosts.map(newsCard).join('');
+        grid.querySelectorAll('[data-id]').forEach(el => {
+          el.addEventListener('click', () => openModal(el.dataset.id));
+        });
       } else {
         gridLabel.style.display = 'none';
         grid.innerHTML = '';
@@ -388,10 +401,9 @@
     function featuredCard(p) {
       const coverStyle = p.cover ? `style="background-image:url('${p.cover}')"` : '';
       const coverClass = p.cover ? 'featured-cover' : 'featured-cover-ph';
-      const coverContent = p.cover ? '' : typeEmoji(p.type);
       return `
-        <div class="featured-card" onclick="openModal('${p.id}')">
-          <div class="${coverClass}" ${coverStyle}>${coverContent}</div>
+        <div class="featured-card" data-id="${p.id}">
+          <div class="${coverClass}" ${coverStyle}>${p.cover ? '' : typeEmoji(p.type)}</div>
           <div class="featured-body">
             <span class="featured-label">Featured · ${typeName(p.type)}</span>
             <div class="featured-title">${p.title||'Untitled'}</div>
@@ -407,13 +419,13 @@
 
     /* ── News card ── */
     function newsCard(p) {
-      const coverHTML = p.cover
+      const cover = p.cover
         ? `<img class="news-cover" src="${p.cover}" alt="${p.title}" onerror="this.outerHTML='<div class=news-cover-ph>${typeEmoji(p.type)}</div>'"/>`
         : `<div class="news-cover-ph">${typeEmoji(p.type)}</div>`;
       const tags = (p.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
       return `
-        <div class="news-card" onclick="openModal('${p.id}')">
-          ${coverHTML}
+        <div class="news-card" data-id="${p.id}">
+          ${cover}
           <div class="news-body">
             <div class="news-meta">
               ${badgeHTML(p.type)}
@@ -431,30 +443,25 @@
 
     /* ── Modal ── */
     function openModal(id) {
-      const p = loadPosts().find(x => x.id === id);
+      const p = allPosts.find(x => x.id === id);
       if (!p) return;
 
-      // Cover
-      const coverEl = document.getElementById('modalCover');
-      if (p.cover) {
-        coverEl.innerHTML = `<img class="modal-cover-img" src="${p.cover}" alt="${p.title}" onerror="this.outerHTML='<div class=modal-cover-ph>${typeEmoji(p.type)}</div>'"/>`;
-      } else {
-        coverEl.innerHTML = `<div class="modal-cover-ph">${typeEmoji(p.type)}</div>`;
-      }
+      document.getElementById('modalCover').innerHTML = p.cover
+        ? `<img class="modal-cover-img" src="${p.cover}" alt="${p.title}" onerror="this.outerHTML='<div class=modal-cover-ph>${typeEmoji(p.type)}</div>'"/>`
+        : `<div class="modal-cover-ph">${typeEmoji(p.type)}</div>`;
 
-      // Meta
-      document.getElementById('modalMeta').innerHTML = badgeHTML(p.type) +
+      document.getElementById('modalMeta').innerHTML =
+        badgeHTML(p.type) +
         (p.date ? `<span style="font-size:.75rem;color:var(--ink-muted)">${formatDate(p.date)}</span>` : '');
 
-      // Title + byline
       document.getElementById('modalTitle').textContent  = p.title || 'Untitled';
-      document.getElementById('modalByline').textContent = p.author ? `By ${p.author}` : '';
-      document.getElementById('modalByline').style.display = p.author ? 'block' : 'none';
+      const byline = document.getElementById('modalByline');
+      byline.textContent   = p.author ? `By ${p.author}` : '';
+      byline.style.display = p.author ? 'block' : 'none';
 
-      // Body — supports plain text and basic HTML
+      // Body — supports plain text or basic HTML
       const bodyEl = document.getElementById('modalBody');
       if (p.body) {
-        // Sanitize by rendering plain paragraphs if no HTML tags detected
         const hasHtml = /<[a-z][\s\S]*>/i.test(p.body);
         bodyEl.innerHTML = hasHtml
           ? p.body
@@ -465,56 +472,65 @@
         bodyEl.innerHTML = '<p style="color:var(--ink-muted);font-style:italic">No content provided.</p>';
       }
 
-      // Tags
       const tags = (p.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
       const tagsEl = document.getElementById('modalTags');
-      tagsEl.innerHTML = tags.map(t=>`<span class="tag-chip">${t}</span>`).join('');
+      tagsEl.innerHTML    = tags.map(t=>`<span class="tag-chip">${t}</span>`).join('');
       tagsEl.style.display = tags.length ? 'flex' : 'none';
 
-      // Footer actions
       document.getElementById('modalFooter').innerHTML = p.link
         ? `<a class="btn-modal-link" href="${p.link}" target="_blank" rel="noopener">Read Full Article →</a>
-           <button class="btn-modal-close" onclick="closeModal()">Close</button>`
-        : `<button class="btn-modal-close" onclick="closeModal()">Close</button>`;
+           <button class="btn-modal-close" id="closeModalBtn">Close</button>`
+        : `<button class="btn-modal-close" id="closeModalBtn">Close</button>`;
 
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
       document.getElementById('modalBackdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
+      history.replaceState(null,'',`?post=${id}`);
     }
 
     function closeModal() {
       document.getElementById('modalBackdrop').classList.remove('open');
       document.body.style.overflow = '';
+      history.replaceState(null,'','news.html');
     }
-    function handleBackdropClick(e) {
+
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
       if (e.target === document.getElementById('modalBackdrop')) closeModal();
-    }
+    });
     document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
 
+    /* ── Filter tabs ── */
+    document.querySelectorAll('.filter-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeType = btn.dataset.type;
+        render();
+      });
+    });
+
+    /* ── Search + sort ── */
+    document.getElementById('searchInput').addEventListener('input', render);
+    document.getElementById('sortSelect').addEventListener('change', render);
+
     /* ── Helpers ── */
-    function typeName(type) {
-      return { news:'News', project:'Project', editorial:'Editorial' }[type] || 'Post';
-    }
-    function typeEmoji(type) {
-      return { news:'📰', project:'💻', editorial:'✍️' }[type] || '📰';
-    }
-    function badgeHTML(type) {
-      const cls = { news:'badge-news', project:'badge-project', editorial:'badge-editorial' }[type] || 'badge-news';
-      return `<span class="badge ${cls}">${typeName(type)}</span>`;
+    function typeName(t)  { return {news:'News',project:'Project',editorial:'Editorial'}[t]||'Post'; }
+    function typeEmoji(t) { return {news:'📰',project:'💻',editorial:'✍️'}[t]||'📰'; }
+    function badgeHTML(t) {
+      const cls = {news:'badge-news',project:'badge-project',editorial:'badge-editorial'}[t]||'badge-news';
+      return `<span class="badge ${cls}">${typeName(t)}</span>`;
     }
     function formatDate(d) {
-      return new Date(d).toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
-    }
-
-    /* ── URL param: open post directly ── */
-    function checkUrlParam() {
-      const id = new URLSearchParams(location.search).get('post');
-      if (id) openModal(id);
+      return new Date(d).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
     }
 
     /* ── Init ── */
-    applyBranding();
-    render();
-    checkUrlParam();
+    await applyBranding();
+    await loadPosts();
+
+    // Open post from URL param
+    const urlPost = new URLSearchParams(location.search).get('post');
+    if (urlPost) openModal(urlPost);
   </script>
 </body>
 </html>
