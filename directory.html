@@ -77,7 +77,7 @@
     .search-box svg { width: 14px; height: 14px; color: var(--ink-muted); flex-shrink: 0; }
     .search-box input { border: none; outline: none; background: transparent; font-family: var(--sans); font-size: .82rem; color: var(--ink); width: 180px; }
     .search-box input::placeholder { color: var(--ink-muted); }
-    .dept-select { padding: .45rem .85rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
+    .committee-select { padding: .45rem .85rem; background: var(--off); border: 1px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: .82rem; color: var(--ink); cursor: pointer; outline: none; }
     .result-count { font-size: .78rem; color: var(--ink-muted); white-space: nowrap; }
     .view-toggle { display: flex; gap: 2px; }
     .view-btn { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink-muted); transition: all .18s; }
@@ -88,32 +88,26 @@
     /* ── BODY ── */
     .page-body { padding: 2.5rem 0 5rem; }
 
-    /* dept group heading */
-    .dept-heading {
-      font-family: var(--serif); font-size: 1rem; font-weight: 700;
-      color: var(--blue); margin: 2rem 0 1rem;
+    /* Committee group heading */
+    .committee-heading {
+      font-family: var(--serif); font-size: 1.05rem; font-weight: 700;
+      color: var(--blue); margin: 2.5rem 0 1.25rem;
       padding-bottom: .5rem; border-bottom: 2px solid var(--yellow);
       display: flex; align-items: center; gap: .75rem;
     }
-    .dept-heading span { font-family: var(--sans); font-size: .72rem; font-weight: 600; color: var(--ink-muted); }
+    .committee-heading:first-child { margin-top: 0; }
+    .committee-heading .count { font-family: var(--sans); font-size: .72rem; font-weight: 600; color: var(--ink-muted); }
 
     /* ── GRID VIEW ── */
     .officers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 1.25rem; }
-    .officer-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r-lg); overflow: hidden;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 1.75rem 1rem 1.1rem; text-align: center;
-      position: relative; cursor: pointer;
-      transition: box-shadow .22s, transform .22s;
-    }
+    .officer-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; align-items: center; padding: 1.75rem 1rem 1.1rem; text-align: center; position: relative; cursor: pointer; transition: box-shadow .22s, transform .22s; }
     .officer-card:hover { box-shadow: 0 10px 32px rgba(10,36,99,.1); transform: translateY(-3px); }
     .officer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
     .officer-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); margin-bottom: .85rem; display: block; }
     .officer-init  { width: 80px; height: 80px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--blue-mid); margin: 0 auto .85rem; }
     .officer-name  { font-family: var(--serif); font-size: .95rem; font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: .3rem; }
     .officer-role  { font-size: .75rem; color: var(--ink-muted); font-weight: 500; margin-bottom: .2rem; }
-    .officer-dept-tag { font-size: .68rem; color: var(--blue-light); font-weight: 600; }
+    .officer-committee { font-size: .68rem; color: var(--blue-light); font-weight: 600; }
     .officer-socials { display: flex; gap: 6px; margin-top: .75rem; justify-content: center; }
     .officer-social-btn { width: 26px; height: 26px; border-radius: 6px; background: var(--off); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: all .18s; }
     .officer-social-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
@@ -121,35 +115,30 @@
 
     /* ── LIST VIEW ── */
     .officers-list { display: flex; flex-direction: column; gap: .85rem; }
-    .officer-row {
-      display: grid; grid-template-columns: 56px 1fr auto;
-      gap: 1.25rem; align-items: center;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--r-md); padding: .9rem 1.25rem;
-      cursor: pointer; transition: box-shadow .2s, transform .2s;
-    }
+    .officer-row { display: grid; grid-template-columns: 56px 1fr auto; gap: 1.25rem; align-items: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); padding: .9rem 1.25rem; cursor: pointer; transition: box-shadow .2s, transform .2s; }
     .officer-row:hover { box-shadow: 0 6px 20px rgba(10,36,99,.08); transform: translateX(3px); }
     .row-photo { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blue-pale); flex-shrink: 0; display: block; }
     .row-init  { width: 48px; height: 48px; border-radius: 50%; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--blue-mid); flex-shrink: 0; }
-    .row-info  { }
     .row-name  { font-family: var(--serif); font-size: .95rem; font-weight: 700; color: var(--blue); }
     .row-role  { font-size: .78rem; color: var(--ink-muted); margin-top: 2px; }
-    .row-dept  { display: inline-block; font-size: .68rem; font-weight: 600; padding: .18rem .55rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; margin-top: 4px; }
+    .row-committee { display: inline-block; font-size: .68rem; font-weight: 600; padding: .18rem .55rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; margin-top: 4px; }
     .row-actions { display: flex; gap: 6px; flex-shrink: 0; }
     .row-action-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--off); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: all .18s; }
     .row-action-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
     .row-action-btn svg { width: 13px; height: 13px; }
 
+    /* ── SKELETON ── */
+    .skel { background: linear-gradient(90deg,var(--off) 25%,#e8eaf0 50%,var(--off) 75%); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 6px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 1.25rem; }
+    .skel-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.75rem 1rem; display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+    .skel-avatar { width: 80px; height: 80px; border-radius: 50%; }
+
     /* ── MODAL ── */
     .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,36,99,.45); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1.5rem; }
     .modal-backdrop.open { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 20px;
-      width: 100%; max-width: 480px;
-      box-shadow: 0 32px 80px rgba(10,36,99,.2);
-      animation: modalIn .25s ease; overflow: hidden;
-    }
-    @keyframes modalIn { from { opacity:0; transform:translateY(20px) scale(.96); } to { opacity:1; transform:none; } }
+    .modal { background: var(--white); border-radius: 20px; width: 100%; max-width: 480px; box-shadow: 0 32px 80px rgba(10,36,99,.2); animation: modalIn .25s ease; overflow: hidden; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(.96)} to{opacity:1;transform:none} }
     .modal-header-band { background: var(--blue); padding: 2.5rem 2rem 1.5rem; position: relative; text-align: center; }
     .modal-header-band::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--yellow); }
     .modal-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,.2); margin: 0 auto 1rem; display: block; }
@@ -157,7 +146,7 @@
     .modal-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--white); }
     .modal-role { font-size: .82rem; color: rgba(255,255,255,.65); margin-top: .3rem; }
     .modal-body { padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
-    .modal-dept-badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .25rem .75rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; }
+    .modal-committee-badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .25rem .75rem; background: var(--blue-pale); color: var(--blue-mid); border-radius: 99px; }
     .modal-bio { font-size: .88rem; color: var(--ink-mid); line-height: 1.7; font-weight: 300; }
     .modal-contact-row { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--ink-mid); }
     .modal-contact-row svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--blue-light); }
@@ -223,41 +212,43 @@
     </div>
   </nav>
 
-
   <!-- PAGE HERO -->
   <div class="page-hero">
     <div class="wrap page-hero-inner">
       <div>
         <p class="page-hero-eyebrow">BU ACCeSS</p>
         <h1 class="page-hero-title">Officer <em>Directory</em></h1>
-        <p class="page-hero-sub">Meet the dedicated officers who lead and serve the Academic Consortium of Computer Science Students.</p>
+        <p class="page-hero-sub">Meet the dedicated officers and standing committees that lead and serve the Academic Consortium of Computer Science Students.</p>
       </div>
       <div class="page-hero-stats">
-        <div><div class="hero-stat-num" id="statOfficers">0</div><div class="hero-stat-label">Officers</div></div>
-        <div><div class="hero-stat-num" id="statDepts">0</div><div class="hero-stat-label">Departments</div></div>
-        <div><div class="hero-stat-num" id="statTerms">0</div><div class="hero-stat-label">Terms</div></div>
+        <div><div class="hero-stat-num" id="statOfficers">—</div><div class="hero-stat-label">Officers</div></div>
+        <div><div class="hero-stat-num" id="statCommittees">—</div><div class="hero-stat-label">Committees</div></div>
+        <div><div class="hero-stat-num" id="statTerms">—</div><div class="hero-stat-label">Terms</div></div>
       </div>
     </div>
   </div>
 
-
   <!-- FILTER BAR -->
   <div class="filter-bar">
     <div class="wrap filter-bar-inner">
-      <div class="term-tabs" id="termTabsEl"></div>
+      <div class="term-tabs" id="termTabsEl">
+        <!-- populated by JS -->
+        <div class="skel" style="width:130px;height:32px;border-radius:99px"></div>
+        <div class="skel" style="width:150px;height:32px;border-radius:99px"></div>
+      </div>
       <div class="filter-right">
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Search officers…" oninput="render()"/>
+          <input type="text" id="searchInput" placeholder="Search officers…"/>
         </div>
-        <select class="dept-select" id="deptFilter" onchange="render()">
-          <option value="">All Departments</option>
+        <select class="committee-select" id="committeeFilter">
+          <option value="">All Committees</option>
         </select>
         <div class="view-toggle">
-          <button class="view-btn active" id="btnGrid" onclick="setView('grid')" title="Grid view">
+          <button class="view-btn active" id="btnGrid" title="Grid view">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
           </button>
-          <button class="view-btn" id="btnList" onclick="setView('list')" title="List view">
+          <button class="view-btn" id="btnList" title="List view">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           </button>
         </div>
@@ -266,15 +257,24 @@
     </div>
   </div>
 
-
   <!-- MAIN BODY -->
   <main class="page-body">
-    <div class="wrap" id="pageOutput"></div>
+    <div class="wrap">
+      <!-- Skeleton -->
+      <div id="skeleton">
+        <div class="skel-grid">
+          <div class="skel-card"><div class="skel skel-avatar"></div><div class="skel" style="height:14px;width:70%"></div><div class="skel" style="height:12px;width:55%"></div></div>
+          <div class="skel-card"><div class="skel skel-avatar"></div><div class="skel" style="height:14px;width:60%"></div><div class="skel" style="height:12px;width:65%"></div></div>
+          <div class="skel-card"><div class="skel skel-avatar"></div><div class="skel" style="height:14px;width:75%"></div><div class="skel" style="height:12px;width:50%"></div></div>
+          <div class="skel-card"><div class="skel skel-avatar"></div><div class="skel" style="height:14px;width:65%"></div><div class="skel" style="height:12px;width:60%"></div></div>
+        </div>
+      </div>
+      <div id="outputArea" style="display:none"></div>
+    </div>
   </main>
 
-
   <!-- OFFICER DETAIL MODAL -->
-  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="officerModal">
       <div class="modal-header-band">
         <div id="modalAvatar"></div>
@@ -283,11 +283,10 @@
       </div>
       <div class="modal-body" id="modalBody"></div>
       <div class="modal-footer">
-        <button class="btn-close" onclick="closeModal()">Close</button>
+        <button class="btn-close" id="closeModalBtn">Close</button>
       </div>
     </div>
   </div>
-
 
   <!-- FOOTER -->
   <footer>
@@ -297,14 +296,12 @@
     </div>
   </footer>
 
+  <script type="module">
+    import { loadSettings, getAll, COLS } from "./firebase-config.js";
 
-  <script>
-    /* ── Settings ── */
-    const SD = { logoUrl:'logo.png', siteName:'BU ACCeSS', colorPrimary:'#0A2463', colorAccent:'#F5C518', colorText:'#0D1B3E', ctaLabel:'Join Us', ctaLink:'index.html#cta' };
-    function S() { try { return { ...SD, ...JSON.parse(localStorage.getItem('access_settings')||'{}') }; } catch(e) { return {...SD}; } }
-
-    function applyBranding() {
-      const s = S();
+    /* ── Branding ── */
+    async function applyBranding() {
+      const s = await loadSettings();
       const r = document.documentElement;
       if (s.colorPrimary) r.style.setProperty('--blue',   s.colorPrimary);
       if (s.colorAccent)  r.style.setProperty('--yellow', s.colorAccent);
@@ -320,169 +317,177 @@
       if (fn && s.siteName) fn.textContent = s.siteName;
     }
 
-    /* ── Data ── */
-    function loadOfficers() { return JSON.parse(localStorage.getItem('access_directory')||'[]'); }
-    function loadTerms()    { return JSON.parse(localStorage.getItem('access_terms')||'[]'); }
-
     /* ── State ── */
-    let activeTerm = null;
-    let viewMode   = 'grid';
+    let allOfficers   = [];
+    let allTerms      = [];
+    let activeTerm    = null;
+    let viewMode      = 'grid';
 
-    /* ── Init terms ── */
-    function initTerms() {
-      const terms    = loadTerms();
-      const officers = loadOfficers();
+    /* ── Load from Firestore ── */
+    async function loadAll() {
+      [allOfficers, allTerms] = await Promise.all([
+        getAll(COLS.DIRECTORY),
+        getAll(COLS.TERMS),
+      ]);
+
+      // Hide skeleton, show output
+      document.getElementById('skeleton').style.display   = 'none';
+      document.getElementById('outputArea').style.display = 'block';
 
       // Only show terms that have officers
-      const validTerms = terms.filter(t => officers.some(o => o.term === t.id));
-
-      // If no terms in store but officers exist, group by raw term id
-      const fallbackTermIds = [...new Set(officers.map(o => o.term).filter(Boolean))];
+      const validTerms = allTerms.filter(t => allOfficers.some(o => o.term === t.id));
+      const fallbackIds = [...new Set(allOfficers.map(o => o.term).filter(Boolean))];
 
       // Stats
-      document.getElementById('statTerms').textContent = validTerms.length || fallbackTermIds.length;
+      document.getElementById('statTerms').textContent = validTerms.length || fallbackIds.length;
 
-      if (validTerms.length === 0 && fallbackTermIds.length === 0) {
+      if (validTerms.length === 0 && fallbackIds.length === 0) {
         renderEmpty('no-data');
         return;
       }
 
-      // Set active term to most recent
-      if (validTerms.length > 0) {
-        activeTerm = validTerms[validTerms.length - 1].id;
-        // Build tabs
-        document.getElementById('termTabsEl').innerHTML = validTerms.map(t => `
-          <button class="term-tab ${t.id===activeTerm?'active':''}"
-            onclick="setTerm('${t.id}',this)">${t.name}</button>
-        `).join('');
-      } else {
-        // No term names, just use IDs
-        activeTerm = fallbackTermIds[fallbackTermIds.length - 1];
-        document.getElementById('termTabsEl').innerHTML = fallbackTermIds.map(id => `
-          <button class="term-tab ${id===activeTerm?'active':''}"
-            onclick="setTerm('${id}',this)">${id}</button>
-        `).join('');
-      }
+      activeTerm = (validTerms.length > 0 ? validTerms : fallbackIds.map(id=>({id,name:id})))
+        .slice(-1)[0].id;
 
-      buildDeptFilter();
+      renderTermTabs(validTerms.length > 0 ? validTerms : fallbackIds.map(id=>({id,name:id})));
+      buildCommitteeFilter();
       updateStats();
       render();
     }
 
-    function setTerm(id, btn) {
-      activeTerm = id;
-      document.querySelectorAll('.term-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      buildDeptFilter();
-      updateStats();
-      render();
+    /* ── Term tabs ── */
+    function renderTermTabs(terms) {
+      const el = document.getElementById('termTabsEl');
+      el.innerHTML = terms.map(t => `
+        <button class="term-tab ${t.id===activeTerm?'active':''}" data-id="${t.id}">${t.name}</button>
+      `).join('');
+
+      el.querySelectorAll('.term-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          el.querySelectorAll('.term-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTerm = btn.dataset.id;
+          buildCommitteeFilter();
+          updateStats();
+          render();
+        });
+      });
     }
 
-    /* ── Dept filter ── */
-    function buildDeptFilter() {
-      const officers = loadOfficers().filter(o => o.term === activeTerm);
-      const depts    = [...new Set(officers.map(o => o.dept).filter(Boolean))].sort();
-      const sel      = document.getElementById('deptFilter');
-      const cur      = sel.value;
-      sel.innerHTML  = '<option value="">All Departments</option>' +
-        depts.map(d => `<option value="${d}" ${d===cur?'selected':''}>${d}</option>`).join('');
+    /* ── Committee filter ── */
+    function buildCommitteeFilter() {
+      const officers    = allOfficers.filter(o => o.term === activeTerm);
+      const committees  = [...new Set(officers.map(o => o.dept).filter(Boolean))].sort();
+      const sel         = document.getElementById('committeeFilter');
+      const cur         = sel.value;
+      sel.innerHTML     = '<option value="">All Committees</option>' +
+        committees.map(c => `<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');
     }
 
     /* ── Stats ── */
     function updateStats() {
-      const all      = loadOfficers();
-      const forTerm  = all.filter(o => o.term === activeTerm);
-      const depts    = [...new Set(forTerm.map(o => o.dept).filter(Boolean))];
-      document.getElementById('statOfficers').textContent = all.length;
-      document.getElementById('statDepts').textContent    = depts.length;
+      const forTerm    = allOfficers.filter(o => o.term === activeTerm);
+      const committees = [...new Set(forTerm.map(o => o.dept).filter(Boolean))];
+      document.getElementById('statOfficers').textContent  = allOfficers.length;
+      document.getElementById('statCommittees').textContent = committees.length;
     }
 
-    /* ── View ── */
-    function setView(v) {
-      viewMode = v;
-      document.getElementById('btnGrid').classList.toggle('active', v==='grid');
-      document.getElementById('btnList').classList.toggle('active', v==='list');
+    /* ── View toggle ── */
+    document.getElementById('btnGrid').addEventListener('click', () => {
+      viewMode = 'grid';
+      document.getElementById('btnGrid').classList.add('active');
+      document.getElementById('btnList').classList.remove('active');
       render();
-    }
+    });
+    document.getElementById('btnList').addEventListener('click', () => {
+      viewMode = 'list';
+      document.getElementById('btnList').classList.add('active');
+      document.getElementById('btnGrid').classList.remove('active');
+      render();
+    });
 
     /* ── Render ── */
     function render() {
-      if (!activeTerm) return;
+      const q          = document.getElementById('searchInput').value.toLowerCase();
+      const fCommittee = document.getElementById('committeeFilter').value;
+      let officers     = allOfficers.filter(o => o.term === activeTerm);
 
-      const q       = document.getElementById('searchInput').value.toLowerCase();
-      const deptFil = document.getElementById('deptFilter').value;
-      let officers  = loadOfficers().filter(o => o.term === activeTerm);
-
-      if (deptFil) officers = officers.filter(o => o.dept === deptFil);
-      if (q)       officers = officers.filter(o =>
+      if (fCommittee) officers = officers.filter(o => o.dept === fCommittee);
+      if (q) officers = officers.filter(o =>
         (`${o.first} ${o.last}`).toLowerCase().includes(q) ||
         (o.role||'').toLowerCase().includes(q) ||
         (o.dept||'').toLowerCase().includes(q) ||
         (o.bio||'').toLowerCase().includes(q)
       );
-
       officers.sort((a,b) => (Number(a.order)||99) - (Number(b.order)||99));
 
       document.getElementById('resultCount').textContent =
         `${officers.length} officer${officers.length!==1?'s':''}`;
 
-      const out = document.getElementById('pageOutput');
+      const area = document.getElementById('outputArea');
 
       if (officers.length === 0) {
         renderEmpty(q ? 'no-results' : 'no-officers', q);
         return;
       }
 
+      // Group by Standing Committee when not filtering/searching
+      const shouldGroup = !q && !fCommittee;
+
       if (viewMode === 'grid') {
-        // Group by department
-        const depts = deptFil
-          ? [deptFil]
-          : [...new Set(officers.map(o => o.dept||'General').filter(Boolean))];
-
-        const ungrouped = depts.length <= 1 || q || deptFil;
-
-        if (ungrouped) {
-          out.innerHTML = `<div class="officers-grid">${officers.map(gridCard).join('')}</div>`;
-        } else {
-          out.innerHTML = depts.map(dept => {
-            const group = officers.filter(o => (o.dept||'General') === dept);
+        if (shouldGroup) {
+          const committees = [...new Set(officers.map(o => o.dept||'General'))];
+          area.innerHTML = committees.map(c => {
+            const group = officers.filter(o => (o.dept||'General') === c);
             if (!group.length) return '';
             return `
-              <div class="dept-heading">${dept} <span>${group.length} officer${group.length!==1?'s':''}</span></div>
-              <div class="officers-grid" style="margin-bottom:1rem">${group.map(gridCard).join('')}</div>`;
+              <div class="committee-heading">
+                ${c}
+                <span class="count">${group.length} officer${group.length!==1?'s':''}</span>
+              </div>
+              <div class="officers-grid" style="margin-bottom:1.5rem">${group.map(gridCard).join('')}</div>`;
           }).join('');
+        } else {
+          area.innerHTML = `<div class="officers-grid">${officers.map(gridCard).join('')}</div>`;
         }
       } else {
-        // Group by dept in list view too
-        const depts = deptFil
-          ? [deptFil]
-          : [...new Set(officers.map(o => o.dept||'General'))];
-
-        const ungrouped = depts.length <= 1 || q || deptFil;
-
-        if (ungrouped) {
-          out.innerHTML = `<div class="officers-list">${officers.map(listRow).join('')}</div>`;
-        } else {
-          out.innerHTML = depts.map(dept => {
-            const group = officers.filter(o => (o.dept||'General') === dept);
+        if (shouldGroup) {
+          const committees = [...new Set(officers.map(o => o.dept||'General'))];
+          area.innerHTML = committees.map(c => {
+            const group = officers.filter(o => (o.dept||'General') === c);
             if (!group.length) return '';
             return `
-              <div class="dept-heading">${dept} <span>${group.length} officer${group.length!==1?'s':''}</span></div>
-              <div class="officers-list" style="margin-bottom:1rem">${group.map(listRow).join('')}</div>`;
+              <div class="committee-heading">
+                ${c}
+                <span class="count">${group.length} officer${group.length!==1?'s':''}</span>
+              </div>
+              <div class="officers-list" style="margin-bottom:1.5rem">${group.map(listRow).join('')}</div>`;
           }).join('');
+        } else {
+          area.innerHTML = `<div class="officers-list">${officers.map(listRow).join('')}</div>`;
         }
       }
+
+      // Wire click listeners
+      area.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', () => openModal(el.dataset.id));
+      });
+
+      // Wire social link clicks — stop propagation so modal doesn't open
+      area.querySelectorAll('.officer-social-btn, .row-action-btn').forEach(btn => {
+        btn.addEventListener('click', e => e.stopPropagation());
+      });
     }
 
     function renderEmpty(reason, q) {
-      const out = document.getElementById('pageOutput');
+      const area = document.getElementById('outputArea');
       const msgs = {
-        'no-data':     ['No officers listed yet.', 'Officers will appear here once added by the organization through the admin panel.'],
-        'no-results':  [`No results for "${q}"`, 'Try a different name, role, or department.'],
+        'no-data':     ['No officers listed yet.', 'Officers will appear here once added by the organization.'],
+        'no-results':  [`No results for "${q}"`, 'Try a different name, role, or committee.'],
         'no-officers': ['No officers for this term.', 'This term has no officers listed yet.'],
       };
       const [h, p] = msgs[reason] || msgs['no-data'];
-      out.innerHTML = `
+      area.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">👥</div>
           <h3>${h}</h3>
@@ -493,107 +498,115 @@
     /* ── Card builders ── */
     function ini(o) { return ((o.first||'?').charAt(0)+(o.last||'').charAt(0)).toUpperCase(); }
 
-    function avatarHTML(o, size, cls) {
-      return o.photo
-        ? `<img class="${cls}" style="width:${size}px;height:${size}px" src="${o.photo}" alt="${o.first}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="officer-init" style="width:${size}px;height:${size}px;display:none">${ini(o)}</div>`
-        : `<div class="officer-init" style="width:${size}px;height:${size}px">${ini(o)}</div>`;
-    }
-
     function gridCard(o) {
-      const socialBtns = [
-        o.fb    ? `<a class="officer-social-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
-        o.email ? `<a class="officer-social-btn" href="mailto:${o.email}" title="Email" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
+      const av = o.photo
+        ? `<img class="officer-photo" src="${o.photo}" alt="${o.first}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+           <div class="officer-init" style="display:none">${ini(o)}</div>`
+        : `<div class="officer-init">${ini(o)}</div>`;
+
+      const socials = [
+        o.fb    ? `<a class="officer-social-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
+        o.email ? `<a class="officer-social-btn" href="mailto:${o.email}" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
       ].filter(Boolean).join('');
 
       return `
-        <div class="officer-card" onclick="openModal('${o.id}')">
-          ${avatarHTML(o, 80, 'officer-photo')}
+        <div class="officer-card" data-id="${o.id}">
+          ${av}
           <div class="officer-name">${o.first||''} ${o.last||''}</div>
           <div class="officer-role">${o.role||''}</div>
-          ${o.dept ? `<div class="officer-dept-tag">${o.dept}</div>` : ''}
-          ${socialBtns ? `<div class="officer-socials">${socialBtns}</div>` : ''}
+          ${o.dept ? `<div class="officer-committee">${o.dept}</div>` : ''}
+          ${socials ? `<div class="officer-socials">${socials}</div>` : ''}
         </div>`;
     }
 
     function listRow(o) {
-      const avatarEl = o.photo
+      const av = o.photo
         ? `<img class="row-photo" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=row-init>${ini(o)}</div>'"/>`
         : `<div class="row-init">${ini(o)}</div>`;
-
-      const actionBtns = [
-        o.email ? `<a class="row-action-btn" href="mailto:${o.email}" title="Send email" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
-        o.fb    ? `<a class="row-action-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
+      const actions = [
+        o.email ? `<a class="row-action-btn" href="mailto:${o.email}" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>` : '',
+        o.fb    ? `<a class="row-action-btn" href="${o.fb}" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>` : '',
       ].filter(Boolean).join('');
-
       return `
-        <div class="officer-row" onclick="openModal('${o.id}')">
-          ${avatarEl}
-          <div class="row-info">
+        <div class="officer-row" data-id="${o.id}">
+          ${av}
+          <div>
             <div class="row-name">${o.first||''} ${o.last||''}</div>
             <div class="row-role">${o.role||''}</div>
-            ${o.dept ? `<span class="row-dept">${o.dept}</span>` : ''}
+            ${o.dept ? `<span class="row-committee">${o.dept}</span>` : ''}
           </div>
-          <div class="row-actions">${actionBtns}</div>
+          <div class="row-actions">${actions}</div>
         </div>`;
     }
 
     /* ── Modal ── */
     function openModal(id) {
-      const o = loadOfficers().find(x => x.id === id);
+      const o = allOfficers.find(x => x.id === id);
       if (!o) return;
 
-      // Avatar
       const avatarEl = document.getElementById('modalAvatar');
-      if (o.photo) {
-        avatarEl.innerHTML = `<img class="modal-avatar" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=modal-avatar-init>${ini(o)}</div>'"/>`;
-      } else {
-        avatarEl.innerHTML = `<div class="modal-avatar-init">${ini(o)}</div>`;
-      }
+      avatarEl.innerHTML = o.photo
+        ? `<img class="modal-avatar" src="${o.photo}" alt="${o.first}" onerror="this.outerHTML='<div class=modal-avatar-init>${ini(o)}</div>'"/>`
+        : `<div class="modal-avatar-init">${ini(o)}</div>`;
 
       document.getElementById('modalName').textContent = `${o.first||''} ${o.last||''}`.trim();
       document.getElementById('modalRole').textContent = o.role || '';
 
-      // Body
       const rows = [];
-      if (o.dept)  rows.push(`<span class="modal-dept-badge">${o.dept}</span>`);
-      if (o.bio)   rows.push(`<p class="modal-bio">${o.bio}</p>`);
+      // Standing Committee badge
+      if (o.dept) rows.push(`
+        <div>
+          <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.4rem">Standing Committee</div>
+          <span class="modal-committee-badge">${o.dept}</span>
+        </div>`);
+      if (o.bio) rows.push(`<p class="modal-bio">${o.bio}</p>`);
       if (o.email) rows.push(`
         <div class="modal-contact-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <a href="mailto:${o.email}">${o.email}</a>
         </div>`);
-
-      // Social links
-      const socialLinks = [
-        o.fb ? `<a class="modal-social-btn" href="${o.fb}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>` : '',
-      ].filter(Boolean);
-      if (socialLinks.length) rows.push(`<div class="modal-social-row">${socialLinks.join('')}</div>`);
+      if (o.fb) rows.push(`
+        <div class="modal-social-row">
+          <a class="modal-social-btn" href="${o.fb}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+        </div>`);
 
       document.getElementById('modalBody').innerHTML = rows.join('') ||
         '<p style="font-size:.85rem;color:var(--ink-muted);font-style:italic">No additional information available.</p>';
 
       document.getElementById('modalBackdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
+      history.replaceState(null,'',`?officer=${id}`);
     }
 
     function closeModal() {
       document.getElementById('modalBackdrop').classList.remove('open');
       document.body.style.overflow = '';
+      history.replaceState(null,'','directory.html');
     }
-    function handleBackdropClick(e) {
-      if (e.target === document.getElementById('modalBackdrop')) closeModal();
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    /* ── URL param: open officer directly ── */
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
+      if (e.target === document.getElementById('modalBackdrop')) closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+
+    /* ── Search + committee filter ── */
+    document.getElementById('searchInput').addEventListener('input', render);
+    document.getElementById('committeeFilter').addEventListener('change', render);
+
+    /* ── URL param ── */
     function checkUrlParam() {
       const id = new URLSearchParams(location.search).get('officer');
-      if (id) openModal(id);
+      if (id && allOfficers.length) openModal(id);
     }
 
     /* ── Init ── */
-    applyBranding();
-    initTerms();
+    await applyBranding();
+    await loadAll();
     checkUrlParam();
   </script>
 </body>
