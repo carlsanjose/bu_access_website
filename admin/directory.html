@@ -82,11 +82,15 @@
 
     /* Term tabs */
     .term-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
-    .term-tab { padding: .4rem 1rem; border-radius: 99px; border: 1.5px solid var(--border); background: var(--white); font-size: .78rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .18s; font-family: var(--sans); }
+    .term-tab { padding: .4rem 1rem; border-radius: 99px; border: 1.5px solid var(--border); background: var(--white); font-size: .78rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .18s; font-family: var(--sans); display: inline-flex; align-items: center; gap: 6px; }
     .term-tab:hover { border-color: var(--blue-light); color: var(--blue); }
     .term-tab.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
     .term-tab.add-term { background: transparent; border-style: dashed; color: var(--blue-light); }
     .term-tab.add-term:hover { background: var(--blue-pale); border-color: var(--blue-mid); color: var(--blue); }
+    /* Delete × button inside each term tab */
+    .term-tab-del { width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .65rem; flex-shrink: 0; background: rgba(0,0,0,.12); border: none; cursor: pointer; color: inherit; font-family: var(--sans); transition: background .18s, color .18s; padding: 0; line-height: 1; }
+    .term-tab.active .term-tab-del { background: rgba(255,255,255,.2); color: var(--white); }
+    .term-tab-del:hover { background: #B91C1C !important; color: var(--white) !important; }
 
     /* Toolbar */
     .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
@@ -409,8 +413,8 @@
   <!-- Confirm delete -->
   <div class="confirm-modal" id="confirmModal">
     <div class="confirm-box">
-      <h3>Remove Officer?</h3>
-      <p>This will permanently remove the officer from Firestore.</p>
+      <h3 id="confirmTitle">Remove Officer?</h3>
+      <p  id="confirmDesc">This will permanently remove the officer from Firestore.</p>
       <div class="confirm-actions">
         <button class="btn-cancel" id="confirmCancelBtn">Cancel</button>
         <button class="btn-danger" id="confirmDeleteBtn">Remove</button>
@@ -476,11 +480,15 @@
       el.innerHTML = allTerms.map(t => `
         <button class="term-tab ${t.id === activeTerm ? 'active' : ''}" data-id="${t.id}">
           ${t.name}
+          <span class="term-tab-del" data-del-id="${t.id}" title="Delete this term">✕</span>
         </button>`).join('') +
         `<button class="term-tab add-term" id="addTermTabBtn">+ New Term</button>`;
 
+      // Tab switch — clicking the tab label (not the ✕)
       el.querySelectorAll('.term-tab:not(.add-term)').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          // Ignore clicks on the ✕ button
+          if (e.target.classList.contains('term-tab-del')) return;
           activeTerm = btn.dataset.id;
           el.querySelectorAll('.term-tab').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -488,6 +496,15 @@
           render();
         });
       });
+
+      // Delete term — clicking the ✕
+      el.querySelectorAll('.term-tab-del').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          askDeleteTerm(btn.dataset.delId);
+        });
+      });
+
       document.getElementById('addTermTabBtn')?.addEventListener('click', openTermModal);
     }
 
@@ -772,9 +789,75 @@
       termSaveBtn.textContent = 'Add Term';
     }
 
-    /* ── Delete ── */
+    /* ── Delete Term ── */
+    let deleteTermId = null;
+
+    function askDeleteTerm(id) {
+      if (allTerms.length === 1) {
+        showToast('Cannot delete the last remaining term.', 'error');
+        return;
+      }
+      const term     = allTerms.find(t => t.id === id);
+      const officers = allOfficers.filter(o => o.term === id);
+      deleteTermId   = id;
+
+      document.getElementById('confirmTitle').textContent = `Delete "${term?.name||'this term'}"?`;
+      document.getElementById('confirmDesc').textContent  =
+        officers.length > 0
+          ? `This will permanently delete the term and all ${officers.length} officer${officers.length!==1?'s':''} assigned to it. This cannot be undone.`
+          : 'This will permanently delete the term. No officers are assigned to it.';
+
+      document.getElementById('confirmModal').classList.add('open');
+      document.getElementById('confirmDeleteBtn').onclick = confirmDeleteTerm;
+    }
+
+    async function confirmDeleteTerm() {
+      if (!deleteTermId) return;
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      confirmBtn.disabled = true;
+
+      const term     = allTerms.find(t => t.id === deleteTermId);
+      const officers = allOfficers.filter(o => o.term === deleteTermId);
+
+      // Delete all officers in this term first
+      await Promise.all(officers.map(o => deleteDocument(COLS.DIRECTORY, o.id)));
+
+      // Then delete the term itself
+      const ok = await deleteDocument(COLS.TERMS, deleteTermId);
+
+      if (ok) {
+        await logActivity(
+          `deleted term "<strong>${term?.name||deleteTermId}</strong>"${officers.length ? ` and ${officers.length} officer${officers.length!==1?'s':''}` : ''}`,
+          'yellow'
+        );
+
+        // Switch active term to the nearest remaining one
+        allTerms    = allTerms.filter(t => t.id !== deleteTermId);
+        allOfficers = allOfficers.filter(o => o.term !== deleteTermId);
+        activeTerm  = allTerms.length ? allTerms[allTerms.length - 1].id : null;
+
+        closeConfirm();
+        renderTermTabs();
+        populateTermSelect();
+        buildDeptFilter();
+        render();
+        showToast('Term deleted.', 'success');
+      } else {
+        showToast('Delete failed. Please try again.', 'error');
+      }
+
+      deleteTermId        = null;
+      confirmBtn.disabled = false;
+    }
+
+    /* ── Delete officer ── */
     function askDelete(id) {
       deleteId = id;
+      const o  = allOfficers.find(x => x.id === id);
+      document.getElementById('confirmTitle').textContent = 'Remove Officer?';
+      document.getElementById('confirmDesc').textContent  =
+        `This will permanently remove ${o ? o.first+' '+o.last : 'this officer'} from Firestore.`;
+      document.getElementById('confirmDeleteBtn').onclick = confirmDelete;
       document.getElementById('confirmModal').classList.add('open');
     }
 
